@@ -108,6 +108,10 @@ export function PuzzlePlayer({
     });
     setFeedback({ kind: "success", message });
     setStatus("complete");
+    window.requestAnimationFrame(() => {
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    });
   };
 
   const nextPuzzle = useMemo(() => {

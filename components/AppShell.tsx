@@ -54,13 +54,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-3">
             <Link
               href="/daily"
-              className="button-primary hidden min-h-[44px] px-4 text-sm sm:inline-flex"
+              className="header-daily button-primary min-h-[44px] px-4 text-sm"
             >
               <Icon name="flame" size={17} />
               Play daily
             </Link>
             <button
-              className="button-quiet min-h-[44px] w-11 px-0 md:hidden"
+              className="mobile-menu-trigger button-quiet min-h-[44px] w-11 px-0"
               type="button"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}

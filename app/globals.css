@@ -94,6 +94,14 @@ h4,
   min-height: 100vh;
 }
 
+.header-daily.button-primary {
+  display: none;
+}
+
+.mobile-menu-trigger.button-quiet {
+  display: inline-flex;
+}
+
 .page-width {
   width: min(1180px, calc(100% - 40px));
   margin: 0 auto;
@@ -291,6 +299,9 @@ h4,
 }
 .completion-card {
   animation: completion-card 520ms var(--ease-settle) both;
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--surface);
 }
 .completion-mark {
   animation: completion-mark 480ms 140ms var(--ease-settle) both;
@@ -478,5 +489,17 @@ h4,
   .page-width,
   .page-width-narrow {
     width: min(100% - 28px, 1180px);
+  }
+}
+
+@media (min-width: 640px) {
+  .header-daily.button-primary {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-menu-trigger.button-quiet {
+    display: none;
   }
 }
