@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Icon } from "@/components/Icon";
 import { PuzzleCard, TypeGlyph } from "@/components/Ui";
 import { Card } from "@/components/ui/card";
-import { getDailyPuzzle, puzzles } from "@/lib/puzzles";
+import { puzzles } from "@/lib/puzzles/catalogue";
+import { getDailyPuzzle } from "@/lib/puzzles/queries";
 import { puzzleCategories } from "@/lib/puzzle-categories";
 
 export const metadata: Metadata = {

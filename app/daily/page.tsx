@@ -8,14 +8,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useProgress } from "@/hooks/useProgress";
-import { getDailyPuzzle } from "@/lib/puzzles";
+import { getDailyPuzzle } from "@/lib/puzzles/queries";
 import { formatDate, formatDuration, localDateKey } from "@/lib/storage";
 import { puzzleTypeLabels } from "@/lib/types";
 
 export default function DailyPage() {
   const { progress, hydrated } = useProgress();
-  const puzzle = getDailyPuzzle();
   const today = localDateKey();
+  const puzzle = getDailyPuzzle(today);
   const completed =
     hydrated &&
     progress.lastDailyPuzzleDate === today &&

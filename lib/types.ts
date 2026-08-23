@@ -110,7 +110,8 @@ export interface TriviaPuzzle extends PuzzleBase {
 
 export interface CodeBreakerClue {
   guess: string;
-  clue: string;
+  exact: number;
+  misplaced: number;
 }
 
 export interface CodeBreakerPuzzle extends PuzzleBase {

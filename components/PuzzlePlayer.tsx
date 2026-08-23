@@ -11,7 +11,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { puzzles } from "@/lib/puzzles";
+import { puzzles } from "@/lib/puzzles/catalogue";
 import {
   formatDuration,
   loadProgress,

@@ -1,0 +1,55 @@
+import { createSequencePuzzle } from "@/lib/puzzles/generators/sequence";
+
+export const sequencePuzzles = [
+  createSequencePuzzle({
+    id: "sequence-1",
+    title: "Double down",
+    description: "What number comes next?",
+    difficulty: "Easy",
+    estimatedTime: "2 min",
+    rule: { kind: "multiply", start: 3, factor: 2 },
+    length: 5,
+  }),
+  createSequencePuzzle({
+    id: "sequence-2",
+    title: "Growing gaps",
+    description: "Find the next number in the sequence.",
+    difficulty: "Medium",
+    estimatedTime: "3 min",
+    rule: {
+      kind: "increasing-gap",
+      start: 2,
+      firstGap: 3,
+      gapIncrease: 3,
+    },
+    length: 6,
+  }),
+  createSequencePuzzle({
+    id: "sequence-3",
+    title: "Three steps ahead",
+    description: "Can you spot the rule?",
+    difficulty: "Medium",
+    estimatedTime: "3 min",
+    rule: { kind: "alternating", start: 2, multiplyBy: 2, add: 1 },
+    length: 6,
+  }),
+  createSequencePuzzle({
+    id: "sequence-4",
+    title: "Square feeling",
+    description: "One number is missing. What belongs here?",
+    difficulty: "Hard",
+    estimatedTime: "4 min",
+    rule: { kind: "power", exponent: 2 },
+    length: 6,
+    missingIndex: 4,
+  }),
+  createSequencePuzzle({
+    id: "sequence-5",
+    title: "A little Fibonacci",
+    description: "What number would Fibonacci choose?",
+    difficulty: "Hard",
+    estimatedTime: "4 min",
+    rule: { kind: "fibonacci", first: 1, second: 1 },
+    length: 7,
+  }),
+];

@@ -8,16 +8,18 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useProgress } from "@/hooks/useProgress";
-import { getDailyPuzzle, puzzles } from "@/lib/puzzles";
+import { puzzles } from "@/lib/puzzles/catalogue";
+import { getDailyPuzzle } from "@/lib/puzzles/queries";
 import { localDateKey } from "@/lib/storage";
 import { puzzleTypeLabels } from "@/lib/types";
 
 export default function HomePage() {
   const { progress, hydrated } = useProgress();
-  const daily = getDailyPuzzle();
+  const today = localDateKey();
+  const daily = getDailyPuzzle(today);
   const dailyComplete =
     hydrated &&
-    progress.lastDailyPuzzleDate === localDateKey() &&
+    progress.lastDailyPuzzleDate === today &&
     progress.dailyPuzzleCompleted;
   const recommended = puzzles
     .filter((puzzle) => puzzle.type !== "quickfire" && puzzle.id !== daily.id)

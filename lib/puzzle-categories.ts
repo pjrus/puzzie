@@ -1,4 +1,4 @@
-import { puzzles } from "@/lib/puzzles";
+import { puzzles } from "@/lib/puzzles/catalogue";
 import type { PuzzleType } from "@/lib/types";
 
 export type PuzzleCategorySlug =

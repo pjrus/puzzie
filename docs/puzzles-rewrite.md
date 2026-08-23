@@ -123,11 +123,7 @@ export function getPuzzlesByType<T extends PuzzleType>(
 
 ```ts
 export { puzzles } from "./catalogue";
-export {
-  getDailyPuzzle,
-  getPuzzleById,
-  getPuzzlesByType,
-} from "./queries";
+export { getDailyPuzzle, getPuzzleById, getPuzzlesByType } from "./queries";
 ```
 
 ## Improve daily puzzle selection
@@ -136,9 +132,7 @@ The current daily selection adds the character codes in a formatted date. Many d
 
 ```ts
 const millisecondsPerDay = 86_400_000;
-const dailyPuzzles = puzzles.filter(
-  (puzzle) => puzzle.type !== "quickfire",
-);
+const dailyPuzzles = puzzles.filter((puzzle) => puzzle.type !== "quickfire");
 
 export function getDailyPuzzle(date = new Date()): Puzzle {
   const dayNumber = Math.floor(

@@ -1,6 +1,6 @@
 import { PuzzlePlayer } from "@/components/PuzzlePlayer";
 import { InvalidPuzzle } from "@/components/player/PlayerStates";
-import { getPuzzleById } from "@/lib/puzzles";
+import { getPuzzleById } from "@/lib/puzzles/queries";
 
 export default async function PlayPage({
   params,

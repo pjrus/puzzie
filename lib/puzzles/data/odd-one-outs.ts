@@ -1,0 +1,66 @@
+import { createOddOneOutPuzzle } from "@/lib/puzzles/generators/odd-one-out";
+
+export const oddOneOutPuzzles = [
+  createOddOneOutPuzzle({
+    id: "odd-1",
+    title: "Fruit bowl",
+    description: "One of these does not belong.",
+    difficulty: "Easy",
+    estimatedTime: "2 min",
+    relatedItems: ["Apple", "Banana", "Orange"],
+    oddItem: "Carrot",
+    hints: ["Three are fruits.", "The odd one grows underground."],
+    explanation: "Apple, banana and orange are fruits; carrot is a vegetable.",
+  }),
+  createOddOneOutPuzzle({
+    id: "odd-2",
+    title: "Number line",
+    description: "Which number breaks the pattern?",
+    difficulty: "Easy",
+    estimatedTime: "2 min",
+    relatedItems: ["11", "13", "17"],
+    oddItem: "15",
+    hints: [
+      "Three numbers are prime.",
+      "A prime number has exactly two factors.",
+    ],
+    explanation: "15 is not prime because it can be divided by 3 and 5.",
+  }),
+  createOddOneOutPuzzle({
+    id: "odd-3",
+    title: "Shape spotter",
+    description: "Find the shape with a different number of sides.",
+    difficulty: "Medium",
+    estimatedTime: "2 min",
+    relatedItems: ["Square", "Rectangle", "Rhombus"],
+    oddItem: "Triangle",
+    hints: ["Count the sides.", "Three shapes have four sides."],
+    explanation: "A triangle has three sides; the other shapes all have four.",
+  }),
+  createOddOneOutPuzzle({
+    id: "odd-4",
+    title: "Big ideas",
+    description: "One concept is not in the same family.",
+    difficulty: "Medium",
+    estimatedTime: "3 min",
+    relatedItems: ["Joy", "Anger", "Fear"],
+    oddItem: "Blue",
+    hints: ["Three are emotions.", "The odd one is a colour."],
+    explanation: "Joy, anger and fear are emotions; blue is a colour.",
+  }),
+  createOddOneOutPuzzle({
+    id: "odd-5",
+    title: "Aussie animals",
+    description: "Which animal is the odd one out?",
+    difficulty: "Hard",
+    estimatedTime: "3 min",
+    relatedItems: ["Platypus", "Echidna", "Emu"],
+    oddItem: "Kangaroo",
+    hints: [
+      "Three lay eggs.",
+      "The odd one is a mammal that gives birth to live young.",
+    ],
+    explanation:
+      "Platypus, echidna and emu lay eggs; kangaroos give birth to live young.",
+  }),
+];

@@ -20,6 +20,7 @@ import type {
   WordLadderPuzzle,
   WordScramblePuzzle,
 } from "@/lib/types";
+import { formatCodeBreakerClue } from "@/lib/puzzles/code-breaker";
 
 type AnswerProps = {
   onCorrect: (message?: string) => void;
@@ -600,7 +601,9 @@ export function CodeBreakerPuzzle({
               <span className="bg-[#31413d] px-3 py-2 font-mono font-black tracking-[0.2em]">
                 {clue.guess}
               </span>
-              <span className="text-[#d8e0da]">{clue.clue}</span>
+              <span className="text-[#d8e0da]">
+                {formatCodeBreakerClue(clue)}
+              </span>
             </div>
           ))}
         </div>
