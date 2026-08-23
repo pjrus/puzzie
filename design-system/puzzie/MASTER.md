@@ -8,7 +8,7 @@
 
 **Project:** Puzzie
 **Generated:** 2026-08-23 20:03:14
-**Category:** News/Media Platform
+**Category:** Consumer puzzle platform
 **Design Dials:** Variance 7/10 (Balanced / Modern) | Motion 4/10 (Standard) | Density 4/10 (Standard)
 
 ---
@@ -19,31 +19,31 @@
 
 | Role | Hex | CSS Variable |
 |------|-----|--------------|
-| Primary | `#DC2626` | `--color-primary` |
-| On Primary | `#FFFFFF` | `--color-on-primary` |
-| Secondary | `#EF4444` | `--color-secondary` |
-| On Secondary | `#000000` | `--color-on-secondary` |
-| Accent/CTA | `#1E40AF` | `--color-accent` |
-| On Accent/CTA | `#FFFFFF` | `--color-on-accent` |
-| Background | `#FEF2F2` | `--color-background` |
-| Foreground | `#450A0A` | `--color-foreground` |
-| Card | `#FFFFFF` | `--color-card` |
-| Card Foreground | `#450A0A` | `--color-card-foreground` |
-| Muted | `#F0EDF1` | `--color-muted` |
-| Muted Foreground | `#475569` | `--color-muted-foreground` |
-| Border | `#FECACA` | `--color-border` |
-| Destructive | `#DC2626` | `--color-destructive` |
-| On Destructive | `#FFFFFF` | `--color-on-destructive` |
-| Ring | `#DC2626` | `--color-ring` |
+| Primary | `#E9655E` | `--coral` |
+| On Primary | `#FFFAF7` | n/a |
+| Secondary | `#DCEBE3` | `--mint` |
+| On Secondary | `#17252C` | `--ink` |
+| Accent/CTA | `#F3CE79` | `--sun` |
+| On Accent/CTA | `#17252C` | `--ink` |
+| Background | `#F3EEE5` | `--paper` |
+| Foreground | `#17252C` | `--ink` |
+| Card | `#FFFDF8` | `--surface` |
+| Card Foreground | `#17252C` | `--ink` |
+| Muted | `#E9E4F3` | `--lavender` |
+| Muted Foreground | `#617077` | `--ink-muted` |
+| Border | `#D5CCC0` | `--line` |
+| Destructive | `#B94D49` | `--coral-dark` |
+| On Destructive | `#FFFAF7` | n/a |
+| Ring | `#E9655E` | `--coral` |
 
-**Color Notes:** Breaking red + link blue
+**Color Notes:** Warm paper, dark ink, coral action, and functional pastel blocks.
 
 ### Typography
 
-- **Heading Font:** Fredoka
-- **Body Font:** Nunito
-- **Mood:** playful, friendly, fun, creative, warm, approachable
-- **Google Fonts:** [Fredoka + Nunito](https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap)
+- **Heading Font:** Space Grotesk
+- **Body Font:** DM Sans
+- **Mood:** crisp, curious, warm, editorial, approachable
+- **Delivery:** Loaded with `next/font/google` in `app/layout.tsx`.
 
 **CSS Import:**
 ```css
@@ -85,7 +85,7 @@
   background: #1E40AF;
   color: white;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 0;
   font-weight: 600;
   transition: all 200ms ease;
   cursor: pointer;
@@ -102,7 +102,7 @@
   color: #DC2626;
   border: 2px solid #DC2626;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 0;
   font-weight: 600;
   transition: all 200ms ease;
   cursor: pointer;
@@ -114,7 +114,7 @@
 ```css
 .card {
   background: #FEF2F2;
-  border-radius: 12px;
+  border-radius: 0;
   padding: 24px;
   box-shadow: var(--shadow-md);
   transition: all 200ms ease;
@@ -133,7 +133,7 @@
 .input {
   padding: 12px 16px;
   border: 1px solid #E2E8F0;
-  border-radius: 8px;
+  border-radius: 0;
   font-size: 16px;
   transition: border-color 200ms ease;
 }

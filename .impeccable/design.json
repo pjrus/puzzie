@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-23T21:00:00+10:00",
+  "title": "Design System: Puzzie",
+  "extensions": {
+    "shadows": [
+      {
+        "name": "ambient-low",
+        "value": "0 4px 12px rgba(38, 33, 25, 0.08)",
+        "purpose": "Resting cards, logos, and compact actions."
+      },
+      {
+        "name": "ambient-high",
+        "value": "0 14px 30px rgba(38, 33, 25, 0.1)",
+        "purpose": "Featured daily surfaces and completion states."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-standard",
+        "value": "180ms ease",
+        "purpose": "Button, border, background, and shadow state changes."
+      },
+      {
+        "name": "stagger-rise",
+        "value": "420ms ease",
+        "purpose": "Single authored entrance for the primary home content."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ],
+    "typographyMeta": {
+      "display": { "displayName": "Space Grotesk", "purpose": "Headlines, puzzle marks, scores, and the Puzzie wordmark." },
+      "body": { "displayName": "DM Sans", "purpose": "Instructions, descriptions, metadata, and feedback." }
+    }
+  },
+  "narrative": {
+    "northStar": "The Puzzle Desk",
+    "overview": "Puzzie feels like a well-made puzzle sheet laid out on a warm desk: direct, tactile, and inviting without being childish. The system uses a warm paper ground, dark ink, a coral action colour, and small blocks of mint, sun, lavender, and blue to distinguish puzzle types and progress states.\n\nThe visual language is crisp and editorial. Strong alignment, square corners, flat colour fields, and restrained ambient shadows create depth while keeping the game readable at a glance.",
+    "keyCharacteristics": [
+      "Square-corner geometry with clear borders.",
+      "Warm paper surfaces with dark ink contrast.",
+      "Space Grotesk display type paired with DM Sans body copy.",
+      "Flat colour accents and subtle ambient shadows."
+    ],
+    "rules": [
+      { "name": "The Signal Colour Rule", "body": "Coral is reserved for actions and meaningful emphasis.", "section": "colors" },
+      { "name": "The Two-Voice Rule", "body": "Space Grotesk carries hierarchy and personality; DM Sans carries reading and interaction.", "section": "typography" },
+      { "name": "The Soft Lift Rule", "body": "Use spacing, layers, and subtle blurred shadows for depth. Never use hard offset block shadows as decoration.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep all UI corners square and consistent.",
+      "Do use flat colour fields and subtle blurred shadows to create hierarchy.",
+      "Do keep success, error, disabled, and focus states explicit and accessible."
+    ],
+    "donts": [
+      "Don't reintroduce rounded cards, pills, or hard offset shadows.",
+      "Don't use gradients, glass effects, or decorative blur.",
+      "Don't use colour alone to communicate puzzle state."
+    ]
+  }
+}
