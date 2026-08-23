@@ -17,6 +17,8 @@
   --shadow-small: 0 4px 12px rgba(38, 33, 25, 0.08);
   --font-body: "DM Sans", "Avenir Next", sans-serif;
   --font-display: "Space Grotesk", "Avenir Next", sans-serif;
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-snap: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 * {
@@ -131,7 +133,11 @@ h4,
   padding: 0 18px;
   font-weight: 800;
   text-decoration: none;
-  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, border-color 180ms ease;
+  transition:
+    transform 180ms var(--ease-snap),
+    box-shadow 180ms var(--ease-snap),
+    background-color 180ms ease,
+    border-color 180ms ease;
 }
 
 .button-primary {
@@ -191,7 +197,9 @@ h4,
   color: var(--ink);
   font-size: 1.05rem;
   font-weight: 700;
-  transition: border-color 180ms ease, box-shadow 180ms ease;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .text-input::placeholder {
@@ -216,7 +224,10 @@ h4,
   color: var(--ink);
   text-align: left;
   font-weight: 700;
-  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms var(--ease-snap);
   cursor: pointer;
 }
 
@@ -250,23 +261,216 @@ h4,
   color: white;
 }
 
-.stagger-in {
-  animation: rise-in 420ms ease both;
+.choice-button:active:not(:disabled) {
+  transform: translateY(1px) scale(0.995);
 }
 
-@keyframes rise-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.route-settle {
+  animation: route-settle 360ms var(--ease-settle) both;
+}
+.hero-copy-settle {
+  animation: hero-copy-settle 560ms var(--ease-settle) both;
+}
+.hero-puzzle-settle {
+  animation: hero-puzzle-settle 680ms 80ms var(--ease-settle) both;
+  transform-origin: 58% 50%;
+}
+.list-settle {
+  animation: list-settle 360ms var(--ease-settle) both;
+}
+.menu-settle {
+  animation: menu-settle 240ms var(--ease-settle) both;
+  transform-origin: top;
+}
+.hint-settle,
+.feedback-settle {
+  animation: feedback-settle 260ms var(--ease-settle) both;
+}
+.feedback-error {
+  animation: feedback-error 300ms var(--ease-snap) both;
+}
+.completion-card {
+  animation: completion-card 520ms var(--ease-settle) both;
+}
+.completion-mark {
+  animation: completion-mark 480ms 140ms var(--ease-settle) both;
+}
+.completion-stat {
+  animation: completion-stat 380ms var(--ease-settle) both;
+}
+.progress-fill {
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: progress-fill 620ms 160ms var(--ease-settle) forwards;
+}
+
+@keyframes route-settle {
+  from {
+    opacity: 0.7;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-copy-settle {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    clip-path: inset(0 0 12% 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0);
+  }
+}
+
+@keyframes hero-puzzle-settle {
+  from {
+    opacity: 0;
+    transform: translate(18px, 10px) rotate(1.5deg);
+    clip-path: inset(5% 0 0 7%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0) rotate(0);
+    clip-path: inset(0);
+  }
+}
+
+@keyframes list-settle {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes menu-settle {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scaleY(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes feedback-settle {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+    clip-path: inset(0 0 35% 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0);
+  }
+}
+
+@keyframes feedback-error {
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  35% {
+    opacity: 1;
+    transform: translateX(-5px);
+  }
+  70% {
+    transform: translateX(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes completion-card {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+    clip-path: inset(0 0 8% 0);
+    box-shadow: var(--shadow-small);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    clip-path: inset(0);
+    box-shadow: var(--shadow);
+  }
+}
+
+@keyframes completion-mark {
+  from {
+    opacity: 0;
+    transform: scale(0.7) rotate(-8deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes completion-stat {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes progress-fill {
+  to {
+    transform: scaleX(1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  html {
     scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  }
+
+  .route-settle,
+  .hero-copy-settle,
+  .hero-puzzle-settle,
+  .list-settle,
+  .menu-settle,
+  .hint-settle,
+  .feedback-settle,
+  .feedback-error,
+  .completion-card,
+  .completion-mark,
+  .completion-stat,
+  .progress-fill {
+    animation: none !important;
+    clip-path: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .button-primary,
+  .button-secondary,
+  .button-quiet,
+  .choice-button,
+  .text-input {
+    transition-duration: 80ms;
+  }
+
+  .button-primary:hover,
+  .choice-button:hover {
+    transform: none;
   }
 }
 
