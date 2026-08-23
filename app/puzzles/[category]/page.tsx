@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { PuzzleCollection } from "@/components/puzzles/PuzzleCollection";
+import { Button } from "@/components/ui/button";
 import {
   getCategoryPuzzles,
   getPuzzleCategory,
@@ -39,10 +40,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <div className="page-width pb-20 pt-10 lg:pt-16">
-      <Link href="/puzzles" className="button-quiet px-0">
-        <Icon name="arrow-left" size={17} />
-        All categories
-      </Link>
+      <Button asChild variant="ghost" className="px-0">
+        <Link href="/puzzles">
+          <Icon name="arrow-left" size={17} />
+          All categories
+        </Link>
+      </Button>
       <header className="mt-8 max-w-3xl">
         <p className="eyebrow">Puzzle category</p>
         <h1 className="mt-2 text-5xl font-semibold leading-[0.95] sm:text-6xl">
@@ -58,18 +61,23 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         aria-label="Puzzle categories"
       >
         {puzzleCategories.map((item) => (
-          <Link
+          <Button
             key={item.slug}
-            href={`/puzzles/${item.slug}`}
-            aria-current={item.slug === category.slug ? "page" : undefined}
-            className={`min-h-11 shrink-0 rounded-full border px-5 py-3 text-sm font-black ${
+            asChild
+            variant={item.slug === category.slug ? "outline" : "secondary"}
+            className={
               item.slug === category.slug
-                ? "border-[var(--ink)] bg-[var(--ink)] text-[var(--surface)]"
-                : "border-[var(--line)] bg-[var(--surface)] text-[var(--ink-muted)]"
-            }`}
+                ? "bg-[var(--ink)] text-[var(--surface)]"
+                : "bg-[var(--surface)] text-[var(--ink-muted)]"
+            }
           >
-            {item.label}
-          </Link>
+            <Link
+              href={`/puzzles/${item.slug}`}
+              aria-current={item.slug === category.slug ? "page" : undefined}
+            >
+              {item.label}
+            </Link>
+          </Button>
         ))}
       </nav>
 

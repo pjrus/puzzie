@@ -4,6 +4,9 @@ import Link from "next/link";
 import { Icon } from "@/components/Icon";
 import { SectionHeading, StatCard, TypeGlyph } from "@/components/Ui";
 import { statTypes } from "@/components/stats/shared";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { useProgress } from "@/hooks/useProgress";
 import { formatDuration } from "@/lib/storage";
 import { puzzleTypeLabels, type PuzzleType } from "@/lib/types";
@@ -50,9 +53,11 @@ export function StatsOverview() {
             A running tally of your little wins, kept right here on this device.
           </p>
         </div>
-        <Link href="/puzzles" className="button-primary">
-          Play another <Icon name="play" size={16} />
-        </Link>
+        <Button asChild>
+          <Link href="/puzzles">
+            Play another <Icon name="play" size={16} />
+          </Link>
+        </Button>
       </header>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -87,54 +92,56 @@ export function StatsOverview() {
       ) : (
         <>
           <div className="mt-8 grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
-            <section className="surface-card p-6 sm:p-8">
-              <SectionHeading eyebrow="At a glance" title="Your averages" />
-              <div className="mt-7 grid gap-3 sm:grid-cols-2">
-                <Metric label="Average score" value={`${averageScore} pts`} />
-                <Metric
-                  label="Average time"
-                  value={formatDuration(averageTime)}
-                />
-                <Metric
-                  label="Best category"
-                  value={bestCategory ? puzzleTypeLabels[bestCategory] : "—"}
-                />
-                <Metric
-                  label="Best streak"
-                  value={`${progress.bestStreak} days`}
-                />
-              </div>
+            <section>
+              <Card className="h-full p-6 sm:p-8">
+                <SectionHeading eyebrow="At a glance" title="Your averages" />
+                <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                  <Metric label="Average score" value={`${averageScore} pts`} />
+                  <Metric
+                    label="Average time"
+                    value={formatDuration(averageTime)}
+                  />
+                  <Metric
+                    label="Best category"
+                    value={bestCategory ? puzzleTypeLabels[bestCategory] : "—"}
+                  />
+                  <Metric
+                    label="Best streak"
+                    value={`${progress.bestStreak} days`}
+                  />
+                </div>
+              </Card>
             </section>
-            <section className="surface-card p-6 sm:p-8">
-              <SectionHeading eyebrow="By category" title="Where you shine" />
-              <div className="mt-6 space-y-4">
-                {statTypes
-                  .filter((type) => progress.categoryStats[type] > 0)
-                  .slice(0, 7)
-                  .map((type) => (
-                    <div key={type}>
-                      <div className="mb-1.5 flex items-center justify-between gap-3 text-sm font-extrabold">
-                        <span className="flex items-center gap-2">
-                          <TypeGlyph type={type} size="sm" />
-                          {puzzleTypeLabels[type]}
-                        </span>
-                        <span>{progress.categoryStats[type]}</span>
-                      </div>
-                      <div className="h-2 overflow-hidden bg-[var(--line)]">
-                        <div
-                          className="h-full bg-[var(--coral)]"
-                          style={{
-                            width: `${(progress.categoryStats[type] / maxSolved) * 100}%`,
-                          }}
+            <section>
+              <Card className="h-full p-6 sm:p-8">
+                <SectionHeading eyebrow="By category" title="Where you shine" />
+                <div className="mt-6 space-y-4">
+                  {statTypes
+                    .filter((type) => progress.categoryStats[type] > 0)
+                    .slice(0, 7)
+                    .map((type) => (
+                      <div key={type}>
+                        <div className="mb-1.5 flex items-center justify-between gap-3 text-sm font-extrabold">
+                          <span className="flex items-center gap-2">
+                            <TypeGlyph type={type} size="sm" />
+                            {puzzleTypeLabels[type]}
+                          </span>
+                          <span>{progress.categoryStats[type]}</span>
+                        </div>
+                        <Progress
+                          value={
+                            (progress.categoryStats[type] / maxSolved) * 100
+                          }
+                          aria-label={`${puzzleTypeLabels[type]} puzzles solved`}
                         />
                       </div>
-                    </div>
-                  ))}
-              </div>
+                    ))}
+                </div>
+              </Card>
             </section>
           </div>
 
-          <div className="surface-card mt-8 flex flex-col justify-between gap-5 p-6 sm:flex-row sm:items-center">
+          <Card className="mt-8 flex-col justify-between gap-5 p-6 sm:flex-row sm:items-center">
             <div>
               <p className="eyebrow">The paper trail</p>
               <h2 className="mt-1 text-2xl font-semibold">
@@ -144,10 +151,12 @@ export function StatsOverview() {
                 Review your completed puzzles, scores and solve times.
               </p>
             </div>
-            <Link href="/stats/history" className="button-secondary">
-              View history <Icon name="arrow-right" size={16} />
-            </Link>
-          </div>
+            <Button asChild variant="outline">
+              <Link href="/stats/history">
+                View history <Icon name="arrow-right" size={16} />
+              </Link>
+            </Button>
+          </Card>
         </>
       )}
     </div>
@@ -156,8 +165,8 @@ export function StatsOverview() {
 
 function EmptyStats() {
   return (
-    <div className="surface-card mt-8 grid gap-6 p-8 sm:grid-cols-[auto_1fr] sm:items-center">
-      <div className="grid h-20 w-20 place-items-center rounded-3xl bg-[var(--coral)]">
+    <Card className="mt-8 grid gap-6 p-8 sm:grid-cols-[auto_1fr] sm:items-center">
+      <div className="grid h-20 w-20 place-items-center bg-[var(--coral)]">
         <Icon name="bar-chart" size={34} />
       </div>
       <div>
@@ -168,17 +177,19 @@ function EmptyStats() {
         <p className="mt-2 text-[var(--ink-muted)]">
           Solve something small and this page will start keeping score.
         </p>
-        <Link href="/puzzles" className="button-secondary mt-5">
-          Browse puzzles <Icon name="arrow-right" size={16} />
-        </Link>
+        <Button asChild variant="outline" className="mt-5">
+          <Link href="/puzzles">
+            Browse puzzles <Icon name="arrow-right" size={16} />
+          </Link>
+        </Button>
       </div>
-    </div>
+    </Card>
   );
 }
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl bg-[var(--paper)] p-4">
+    <div className="bg-[var(--paper)] p-4">
       <p className="text-xs font-black uppercase tracking-[0.1em] text-[var(--ink-muted)]">
         {label}
       </p>

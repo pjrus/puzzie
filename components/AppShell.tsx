@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Icon, Logo } from "@/components/Icon";
+import { Button } from "@/components/ui/button";
 
 const links = [
   { href: "/", label: "Home" },
@@ -38,61 +39,77 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             aria-label="Primary navigation"
           >
             {links.map((link) => (
-              <Link
+              <Button
                 key={link.href}
-                href={link.href}
-                className={`px-4 py-2 text-sm font-extrabold transition-colors hover:bg-[var(--mint)] ${isActive(pathname, link.href) ? "bg-[var(--surface)] text-[var(--ink)] shadow-[var(--shadow-small)]" : "text-[var(--ink-muted)]"}`}
-                aria-current={
-                  isActive(pathname, link.href) ? "page" : undefined
+                asChild
+                variant="ghost"
+                size="sm"
+                className={
+                  isActive(pathname, link.href)
+                    ? "bg-[var(--surface)] text-[var(--ink)]"
+                    : undefined
                 }
               >
-                {link.label}
-              </Link>
+                <Link
+                  href={link.href}
+                  aria-current={
+                    isActive(pathname, link.href) ? "page" : undefined
+                  }
+                >
+                  {link.label}
+                </Link>
+              </Button>
             ))}
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link
-              href="/daily"
-              className="header-daily button-primary min-h-[44px] px-4 text-sm"
-            >
-              <Icon name="flame" size={17} />
-              Play daily
-            </Link>
-            <button
-              className="mobile-menu-trigger button-quiet min-h-[44px] w-11 px-0"
+            <Button asChild className="header-daily min-h-11 px-4">
+              <Link href="/daily">
+                <Icon name="flame" size={17} />
+                Play daily
+              </Link>
+            </Button>
+            <Button
+              className="mobile-menu-trigger"
               type="button"
+              variant="ghost"
+              size="icon"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((open) => !open)}
             >
               <Icon name={mobileOpen ? "x" : "menu"} size={22} />
-            </button>
+            </Button>
           </div>
         </div>
 
         {mobileOpen && (
           <nav
-            className="menu-settle page-width grid gap-2 border-t border-[var(--line)] py-3 md:hidden"
+            className="page-width grid gap-2 border-t border-[var(--line)] py-3 md:hidden"
             aria-label="Mobile navigation"
           >
             {links.map((link) => (
-              <Link
+              <Button
                 key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className={`flex min-h-12 items-center px-4 font-extrabold ${isActive(pathname, link.href) ? "bg-[var(--surface)]" : "text-[var(--ink-muted)]"}`}
-                aria-current={
-                  isActive(pathname, link.href) ? "page" : undefined
-                }
+                asChild
+                variant="ghost"
+                className={`justify-start ${isActive(pathname, link.href) ? "bg-[var(--surface)] text-[var(--ink)]" : ""}`}
               >
-                {link.label}
-              </Link>
+                <Link
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  aria-current={
+                    isActive(pathname, link.href) ? "page" : undefined
+                  }
+                >
+                  {link.label}
+                </Link>
+              </Button>
             ))}
           </nav>
         )}
       </header>
-      <main id="main-content" key={pathname} className="route-settle">
+      <main id="main-content" key={pathname}>
         {children}
       </main>
       <footer className="page-width mt-16 flex flex-col gap-2 border-t border-[var(--line)] py-8 text-sm text-[var(--ink-muted)] sm:flex-row sm:items-center sm:justify-between">

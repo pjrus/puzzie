@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { Icon } from "@/components/Icon";
 import { TypeGlyph } from "@/components/Ui";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { useProgress } from "@/hooks/useProgress";
 import { formatDate, formatDuration } from "@/lib/storage";
 import { puzzleTypeLabels } from "@/lib/types";
@@ -13,10 +15,12 @@ export function StatsHistory() {
 
   return (
     <div className="page-width pb-20 pt-10 lg:pt-16">
-      <Link href="/stats" className="button-quiet px-0">
-        <Icon name="arrow-left" size={17} />
-        Stats overview
-      </Link>
+      <Button asChild variant="ghost" className="px-0">
+        <Link href="/stats">
+          <Icon name="arrow-left" size={17} />
+          Stats overview
+        </Link>
+      </Button>
       <header className="mt-8 max-w-3xl">
         <p className="eyebrow">The paper trail</p>
         <h1 className="mt-2 text-5xl font-semibold leading-[0.95] sm:text-6xl">
@@ -28,7 +32,7 @@ export function StatsHistory() {
         </p>
       </header>
 
-      <div className="surface-card mt-8 overflow-hidden" aria-live="polite">
+      <Card className="mt-8 overflow-hidden" aria-live="polite">
         {!hydrated ? (
           <p className="p-6 text-[var(--ink-muted)]">Loading results…</p>
         ) : history.length === 0 ? (
@@ -37,9 +41,11 @@ export function StatsHistory() {
             <p className="mt-2 text-[var(--ink-muted)]">
               Complete a puzzle and it will appear here.
             </p>
-            <Link href="/puzzles" className="button-primary mt-6">
-              Browse puzzles <Icon name="arrow-right" size={16} />
-            </Link>
+            <Button asChild className="mt-6">
+              <Link href="/puzzles">
+                Browse puzzles <Icon name="arrow-right" size={16} />
+              </Link>
+            </Button>
           </div>
         ) : (
           history.map((entry, index) => (
@@ -70,7 +76,7 @@ export function StatsHistory() {
             </article>
           ))
         )}
-      </div>
+      </Card>
     </div>
   );
 }

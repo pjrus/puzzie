@@ -4,6 +4,9 @@ import Link from "next/link";
 import { HomeCategories } from "@/components/home/HomeCategories";
 import { Icon } from "@/components/Icon";
 import { PuzzleCard, SectionHeading, StatCard } from "@/components/Ui";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { useProgress } from "@/hooks/useProgress";
 import { getDailyPuzzle, puzzles } from "@/lib/puzzles";
 import { localDateKey } from "@/lib/storage";
@@ -27,9 +30,9 @@ export default function HomePage() {
     <div>
       <section className="page-width grid gap-8 pb-12 pt-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch lg:pb-20 lg:pt-16">
         <div className="flex flex-col justify-center">
-          <div className="hero-copy-settle max-w-xl">
+          <div className="max-w-xl">
             <p className="eyebrow inline-flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[var(--coral)]" />
+              <span className="h-2 w-2 bg-[var(--coral)]" />
               Your five-minute brain break
             </p>
             <h1 className="mt-5 text-[clamp(3.4rem,9vw,6rem)] font-semibold leading-[0.9] tracking-[-0.03em]">
@@ -40,16 +43,19 @@ export default function HomePage() {
               moving.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link
-                href={dailyComplete ? "/puzzles" : "/daily"}
-                className="button-primary px-6"
-              >
-                <Icon name="play" size={17} />
-                {dailyComplete ? "Find another puzzle" : "Play today's puzzle"}
-              </Link>
-              <Link href="/puzzles" className="button-quiet px-4">
-                Explore all puzzles <Icon name="arrow-right" size={16} />
-              </Link>
+              <Button asChild size="lg">
+                <Link href={dailyComplete ? "/puzzles" : "/daily"}>
+                  <Icon name="play" size={17} />
+                  {dailyComplete
+                    ? "Find another puzzle"
+                    : "Play today's puzzle"}
+                </Link>
+              </Button>
+              <Button asChild variant="ghost">
+                <Link href="/puzzles">
+                  Explore all puzzles <Icon name="arrow-right" size={16} />
+                </Link>
+              </Button>
             </div>
           </div>
 
@@ -83,7 +89,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="hero-puzzle-settle relative min-h-[420px] overflow-hidden border border-[var(--ink)] bg-[var(--ink)] p-6 text-[var(--surface)] shadow-[var(--shadow)] sm:p-8">
+        <Card className="relative min-h-[420px] overflow-hidden border-[var(--ink)] bg-[var(--ink)] p-6 text-[var(--surface)] sm:p-8">
           <div className="relative z-10 flex h-full flex-col justify-between">
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -94,13 +100,16 @@ export default function HomePage() {
                   {daily.title}
                 </h2>
               </div>
-              <span className="rounded-full border border-[#61716c] px-3 py-1 text-xs font-black text-[#b6c7bc]">
+              <Badge
+                variant="outline"
+                className="border-[#61716c] text-[#b6c7bc]"
+              >
                 {daily.difficulty}
-              </span>
+              </Badge>
             </div>
 
             <div className="my-8 flex items-center justify-center">
-              <div className="relative grid h-52 w-52 rotate-[-5deg] place-items-center rounded-[38px] border-2 border-[var(--ink)] bg-[var(--coral)] text-[var(--ink)] shadow-[var(--shadow-small)] transition-transform duration-300 hover:rotate-2 hover:scale-[1.02]">
+              <div className="relative grid h-52 w-52 rotate-[-5deg] place-items-center border-2 border-[var(--ink)] bg-[var(--coral)] text-[var(--ink)]">
                 <div className="text-center">
                   <span className="display-font block text-7xl font-semibold leading-none">
                     ?
@@ -109,7 +118,7 @@ export default function HomePage() {
                     solve me
                   </span>
                 </div>
-                <span className="absolute -right-5 -top-5 grid h-14 w-14 place-items-center rounded-full border-2 border-[var(--ink)] bg-[var(--mint)] text-[var(--ink)]">
+                <span className="absolute -right-5 -top-5 grid h-14 w-14 place-items-center border-2 border-[var(--ink)] bg-[var(--mint)] text-[var(--ink)]">
                   <Icon name="spark" size={24} />
                 </span>
               </div>
@@ -125,17 +134,16 @@ export default function HomePage() {
                 </p>
               </div>
               {dailyComplete ? (
-                <span className="inline-flex items-center gap-2 rounded-full bg-[var(--mint)] px-3 py-2 text-sm font-black text-[var(--ink)]">
+                <Badge className="gap-2 bg-[var(--mint)] px-3 py-2 text-[var(--ink)]">
                   <Icon name="check" size={15} />
                   Done today
-                </span>
+                </Badge>
               ) : (
-                <Link
-                  href="/daily"
-                  className="button-primary min-h-11 px-4 text-sm"
-                >
-                  Start <Icon name="arrow-right" size={15} />
-                </Link>
+                <Button asChild size="sm">
+                  <Link href="/daily">
+                    Start <Icon name="arrow-right" size={15} />
+                  </Link>
+                </Button>
               )}
             </div>
           </div>
@@ -143,7 +151,7 @@ export default function HomePage() {
             className="pointer-events-none absolute -right-14 top-16 h-40 w-40 rotate-12 border-[22px] border-[#354845]"
             aria-hidden="true"
           />
-        </div>
+        </Card>
       </section>
 
       <section className="page-width pb-14 pt-8">
@@ -152,9 +160,11 @@ export default function HomePage() {
           title="Try another one"
           description="A few good places to start when you have a spare minute."
           action={
-            <Link href="/puzzles" className="button-secondary">
-              View all <Icon name="arrow-right" size={16} />
-            </Link>
+            <Button asChild variant="outline">
+              <Link href="/puzzles">
+                View all <Icon name="arrow-right" size={16} />
+              </Link>
+            </Button>
           }
         />
         <div className="mt-7 grid gap-5 md:grid-cols-3">
@@ -167,7 +177,7 @@ export default function HomePage() {
       <HomeCategories />
 
       <section className="page-width pb-20 pt-4">
-        <div className="surface-card grid gap-6 bg-[var(--mint)] p-6 sm:grid-cols-[1fr_auto] sm:items-center sm:p-8">
+        <Card className="grid gap-6 bg-[var(--mint)] p-6 sm:grid-cols-[1fr_auto] sm:items-center sm:p-8">
           <div>
             <p className="eyebrow">Small steps count</p>
             <h2 className="mt-1 text-3xl font-semibold">
@@ -178,10 +188,12 @@ export default function HomePage() {
               brain gym habit going.
             </p>
           </div>
-          <Link href="/stats" className="button-secondary whitespace-nowrap">
-            See your stats <Icon name="bar-chart" size={16} />
-          </Link>
-        </div>
+          <Button asChild variant="outline" className="whitespace-nowrap">
+            <Link href="/stats">
+              See your stats <Icon name="bar-chart" size={16} />
+            </Link>
+          </Button>
+        </Card>
       </section>
     </div>
   );

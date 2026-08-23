@@ -1,5 +1,9 @@
 import Link from "next/link";
 import { Icon, type IconName } from "@/components/Icon";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import type { Difficulty, Puzzle, PuzzleType } from "@/lib/types";
 import { puzzleTypeLabels } from "@/lib/types";
 
@@ -30,11 +34,9 @@ export function DifficultyBadge({ difficulty }: { difficulty: Difficulty }) {
         ? "bg-[#f8e8bb] text-[#785b1e]"
         : "bg-[#f4d9d6] text-[#95403d]";
   return (
-    <span
-      className={`inline-flex rounded-full px-2.5 py-1 text-[0.69rem] font-black uppercase tracking-[0.08em] ${className}`}
-    >
+    <Badge variant="ghost" className={className}>
       {difficulty}
-    </span>
+    </Badge>
   );
 }
 
@@ -47,9 +49,9 @@ export function TypeGlyph({
 }) {
   const accent = typeAccent[type];
   const sizes = {
-    sm: "h-10 w-10 rounded-[13px] text-sm",
-    md: "h-14 w-14 rounded-[17px] text-lg",
-    lg: "h-20 w-20 rounded-[22px] text-2xl",
+    sm: "h-10 w-10 text-sm",
+    md: "h-14 w-14 text-lg",
+    lg: "h-20 w-20 text-2xl",
   };
   return (
     <span
@@ -83,8 +85,8 @@ export function StatCard({
   detail?: string;
 }) {
   return (
-    <div
-      className="surface-card flex min-h-[132px] flex-col justify-between p-5"
+    <Card
+      className="min-h-[132px] justify-between p-5"
       style={{ backgroundColor: accent }}
     >
       <div className="flex items-center justify-between gap-3">
@@ -105,49 +107,50 @@ export function StatCard({
           </div>
         )}
       </div>
-    </div>
+    </Card>
   );
 }
 
 export function PuzzleCard({
   puzzle,
   compact = false,
-  motionDelay = 0,
 }: {
   puzzle: Puzzle;
   compact?: boolean;
-  motionDelay?: number;
 }) {
   return (
-    <article
-      className={`surface-card list-settle group flex flex-col ${compact ? "p-4" : "p-5"} transition-transform duration-200 hover:-translate-y-1`}
-      style={{ animationDelay: `${motionDelay}ms` }}
-    >
-      <div className="flex items-start justify-between gap-3">
-        <TypeGlyph type={puzzle.type} size={compact ? "sm" : "md"} />
-        <DifficultyBadge difficulty={puzzle.difficulty} />
-      </div>
-      <div className="mt-5 flex-1">
-        <p className="eyebrow">{puzzleTypeLabels[puzzle.type]}</p>
-        <h3 className={`${compact ? "text-lg" : "text-xl"} mt-1 font-semibold`}>
-          {puzzle.title}
-        </h3>
-        <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">
-          {puzzle.description}
-        </p>
-      </div>
-      <div className="mt-5 flex items-center justify-between gap-3 border-t border-[var(--line)] pt-4">
-        <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[var(--ink-muted)]">
-          <Icon name="clock" size={14} />
-          {puzzle.estimatedTime}
-        </span>
-        <Link
-          href={`/play/${puzzle.id}`}
-          className="button-secondary min-h-10 px-3 text-sm"
-        >
-          Play <Icon name="arrow-right" size={15} />
-        </Link>
-      </div>
+    <article>
+      <Card className={`h-full ${compact ? "p-4" : "p-5"}`}>
+        <div className="flex items-start justify-between gap-3">
+          <TypeGlyph type={puzzle.type} size={compact ? "sm" : "md"} />
+          <DifficultyBadge difficulty={puzzle.difficulty} />
+        </div>
+        <div className="mt-5 flex-1">
+          <p className="eyebrow">{puzzleTypeLabels[puzzle.type]}</p>
+          <h3
+            className={`${compact ? "text-lg" : "text-xl"} mt-1 font-semibold`}
+          >
+            {puzzle.title}
+          </h3>
+          <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">
+            {puzzle.description}
+          </p>
+        </div>
+        <div className="mt-5">
+          <Separator />
+          <div className="flex items-center justify-between gap-3 pt-4">
+            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[var(--ink-muted)]">
+              <Icon name="clock" size={14} />
+              {puzzle.estimatedTime}
+            </span>
+            <Button asChild variant="outline" size="sm">
+              <Link href={`/play/${puzzle.id}`}>
+                Play <Icon name="arrow-right" size={15} />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </Card>
     </article>
   );
 }

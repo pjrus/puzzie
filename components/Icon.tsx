@@ -159,7 +159,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <span className="inline-flex items-center gap-2" aria-label="Puzzie home">
       <span
-        className="grid h-9 w-9 place-items-center rounded-[11px] border-2 border-[var(--ink)] bg-[var(--coral)] text-[var(--ink)] shadow-[var(--shadow-small)]"
+        className="grid h-9 w-9 place-items-center border-2 border-[var(--ink)] bg-[var(--coral)] text-[var(--ink)]"
         aria-hidden="true"
       >
         <span className="text-lg font-black tracking-[-0.03em]">pz</span>

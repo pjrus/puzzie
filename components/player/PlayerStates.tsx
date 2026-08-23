@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Icon } from "@/components/Icon";
 import type { PlayerResult } from "@/components/player/types";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { formatDuration } from "@/lib/storage";
 import type { Puzzle } from "@/lib/types";
 
@@ -18,18 +20,17 @@ export function CompletionCard({
   return (
     <div className="page-width-narrow pb-20 pt-10">
       <div className="flex items-center justify-between gap-4">
-        <Link
-          href={daily ? "/daily" : "/puzzles"}
-          className="button-quiet px-0"
-        >
-          <Icon name="arrow-left" size={17} />
-          Back to {daily ? "daily" : "puzzles"}
-        </Link>
+        <Button asChild variant="ghost" className="px-0">
+          <Link href={daily ? "/daily" : "/puzzles"}>
+            <Icon name="arrow-left" size={17} />
+            Back to {daily ? "daily" : "puzzles"}
+          </Link>
+        </Button>
         <span className="text-sm font-extrabold text-[var(--ink-muted)]">
           {daily ? "Daily puzzle" : "Puzzle complete"}
         </span>
       </div>
-      <div className="surface-card mt-8 overflow-hidden border-[var(--ink)] bg-[var(--ink)] p-7 text-[var(--surface)] sm:p-10">
+      <Card className="mt-8 overflow-hidden border-[var(--ink)] bg-[var(--ink)] p-7 text-[var(--surface)] sm:p-10">
         <div className="flex items-center gap-3">
           <span className="grid h-12 w-12 place-items-center bg-[var(--mint)] text-[var(--ink)]">
             <Icon name="check" size={25} />
@@ -65,24 +66,28 @@ export function CompletionCard({
           </div>
         ) : null}
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link
-            href={
-              nextPuzzle && nextPuzzle.type !== "quickfire"
-                ? `/play/${nextPuzzle.id}`
-                : "/puzzles"
-            }
-            className="button-primary"
+          <Button asChild>
+            <Link
+              href={
+                nextPuzzle && nextPuzzle.type !== "quickfire"
+                  ? `/play/${nextPuzzle.id}`
+                  : "/puzzles"
+              }
+            >
+              Next puzzle <Icon name="arrow-right" size={16} />
+            </Link>
+          </Button>
+          <Button
+            asChild
+            variant="outline"
+            className="border-[#71837c] text-[var(--surface)] hover:bg-[var(--surface)] hover:text-[var(--ink)]"
           >
-            Next puzzle <Icon name="arrow-right" size={16} />
-          </Link>
-          <Link
-            href="/stats"
-            className="button-secondary border-[#71837c] text-[var(--surface)] hover:bg-[var(--surface)] hover:text-[var(--ink)]"
-          >
-            See my stats <Icon name="bar-chart" size={16} />
-          </Link>
+            <Link href="/stats">
+              See my stats <Icon name="bar-chart" size={16} />
+            </Link>
+          </Button>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }
@@ -96,11 +101,13 @@ export function FailedPuzzle({
 }) {
   return (
     <div className="page-width-narrow pb-20 pt-10">
-      <Link href={daily ? "/daily" : "/puzzles"} className="button-quiet px-0">
-        <Icon name="arrow-left" size={17} />
-        Back to {daily ? "daily" : "puzzles"}
-      </Link>
-      <div className="surface-card mt-8 border-[#e7bdb7] bg-[#fff1ed] p-7 sm:p-10">
+      <Button asChild variant="ghost" className="px-0">
+        <Link href={daily ? "/daily" : "/puzzles"}>
+          <Icon name="arrow-left" size={17} />
+          Back to {daily ? "daily" : "puzzles"}
+        </Link>
+      </Button>
+      <Card className="mt-8 border-[var(--coral-border)] bg-[var(--coral-soft)] p-7 sm:p-10">
         <p className="eyebrow">Almost there</p>
         <h1 className="mt-2 text-4xl font-semibold">That one got away.</h1>
         <p className="mt-3 max-w-lg text-[var(--ink-muted)]">
@@ -108,14 +115,16 @@ export function FailedPuzzle({
           attempt. Give your brain a reset and try another puzzle.
         </p>
         <div className="mt-7 flex flex-wrap gap-3">
-          <Link href={`/play/${puzzle.id}`} className="button-primary">
-            Try again <Icon name="refresh" size={16} />
-          </Link>
-          <Link href="/puzzles" className="button-secondary">
-            Choose another
-          </Link>
+          <Button asChild>
+            <Link href={`/play/${puzzle.id}`}>
+              Try again <Icon name="refresh" size={16} />
+            </Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href="/puzzles">Choose another</Link>
+          </Button>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }
@@ -147,7 +156,7 @@ function ResultStat({
 export function InvalidPuzzle() {
   return (
     <div className="page-width-narrow pb-20 pt-16">
-      <div className="surface-card p-8 text-center">
+      <Card className="p-8 text-center">
         <p className="eyebrow">Puzzle fog</p>
         <h1 className="mt-2 text-4xl font-semibold">
           That puzzle wandered off.
@@ -155,10 +164,12 @@ export function InvalidPuzzle() {
         <p className="mt-3 text-[var(--ink-muted)]">
           Try another one and your brain will be back on track.
         </p>
-        <Link href="/puzzles" className="button-primary mt-6">
-          Browse puzzles <Icon name="arrow-right" size={16} />
-        </Link>
-      </div>
+        <Button asChild className="mt-6">
+          <Link href="/puzzles">
+            Browse puzzles <Icon name="arrow-right" size={16} />
+          </Link>
+        </Button>
+      </Card>
     </div>
   );
 }

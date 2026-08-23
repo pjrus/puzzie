@@ -4,6 +4,9 @@ import Link from "next/link";
 import { Icon } from "@/components/Icon";
 import { DifficultyBadge, TypeGlyph } from "@/components/Ui";
 import { PuzzlePlayer } from "@/components/PuzzlePlayer";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { useProgress } from "@/hooks/useProgress";
 import { getDailyPuzzle } from "@/lib/puzzles";
 import { formatDate, formatDuration, localDateKey } from "@/lib/storage";
@@ -25,10 +28,12 @@ export default function DailyPage() {
     return (
       <div className="page-width pb-20 pt-10 lg:pt-16">
         <div className="mx-auto max-w-3xl">
-          <Link href="/" className="button-quiet px-0">
-            <Icon name="arrow-left" size={17} />
-            Back home
-          </Link>
+          <Button asChild variant="ghost" className="px-0">
+            <Link href="/">
+              <Icon name="arrow-left" size={17} />
+              Back home
+            </Link>
+          </Button>
           <div className="mt-8 flex items-start justify-between gap-5">
             <div>
               <p className="eyebrow">Today's puzzle · {formatDate(today)}</p>
@@ -40,7 +45,7 @@ export default function DailyPage() {
             </div>
             <TypeGlyph type={puzzle.type} size="lg" />
           </div>
-          <div className="surface-card mt-8 overflow-hidden bg-[var(--mint)] p-6 sm:p-8">
+          <Card className="mt-8 overflow-hidden bg-[var(--mint)] p-6 sm:p-8">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <p className="eyebrow">Daily result</p>
@@ -49,10 +54,10 @@ export default function DailyPage() {
                   {puzzleTypeLabels[puzzle.type]} · {puzzle.difficulty}
                 </p>
               </div>
-              <span className="inline-flex items-center gap-2 rounded-full bg-[var(--surface)] px-4 py-2 font-black">
+              <Badge className="gap-2 bg-[var(--surface)] px-4 py-2 text-[var(--ink)]">
                 <Icon name="check" size={17} />
                 Complete
-              </span>
+              </Badge>
             </div>
             <div className="mt-7 grid gap-3 sm:grid-cols-3">
               <ResultTile label="Score" value={`+${result.score}`} />
@@ -68,14 +73,16 @@ export default function DailyPage() {
             <p className="mt-6 border-t border-[#bad7ca] pt-5 font-extrabold text-[var(--mint-dark)]">
               Come back tomorrow for a fresh little challenge.
             </p>
-          </div>
+          </Card>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link href="/puzzles" className="button-primary">
-              Find another puzzle <Icon name="arrow-right" size={16} />
-            </Link>
-            <Link href="/stats" className="button-secondary">
-              See your stats
-            </Link>
+            <Button asChild>
+              <Link href="/puzzles">
+                Find another puzzle <Icon name="arrow-right" size={16} />
+              </Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/stats">See your stats</Link>
+            </Button>
           </div>
         </div>
       </div>
@@ -102,9 +109,12 @@ export default function DailyPage() {
             <TypeGlyph type={puzzle.type} size="lg" />
           </div>
           <div className="mt-7 flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-[var(--surface)] px-3 py-1.5 text-sm font-extrabold">
+            <Badge
+              variant="outline"
+              className="bg-[var(--surface)] text-sm normal-case tracking-normal"
+            >
               {puzzleTypeLabels[puzzle.type]}
-            </span>
+            </Badge>
             <DifficultyBadge difficulty={puzzle.difficulty} />
             <span className="text-sm font-extrabold text-[var(--ink-muted)]">
               {puzzle.estimatedTime} · {puzzle.points} points
@@ -119,11 +129,11 @@ export default function DailyPage() {
 
 function ResultTile({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-[#bad7ca] bg-[var(--surface)] p-4">
+    <Card className="border-[#bad7ca] bg-[var(--surface)] p-4">
       <p className="text-xs font-black uppercase tracking-[0.1em] text-[var(--ink-muted)]">
         {label}
       </p>
       <p className="display-font mt-1 text-2xl font-semibold">{value}</p>
-    </div>
+    </Card>
   );
 }

@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 import type {
   CodeBreakerPuzzle,
   ConnectionsPuzzle,
@@ -37,13 +41,9 @@ function AnswerForm({
   return (
     <form onSubmit={onSubmit} className="mt-7 space-y-4">
       <div>{children}</div>
-      <button
-        type="submit"
-        className="button-primary w-full sm:w-auto"
-        disabled={disabled}
-      >
+      <Button type="submit" className="w-full sm:w-auto" disabled={disabled}>
         {label}
-      </button>
+      </Button>
     </form>
   );
 }
@@ -62,18 +62,21 @@ function ChoiceList({
   return (
     <div className="grid gap-3">
       {options.map((option, index) => (
-        <button
+        <Button
           key={option}
           type="button"
-          className={`choice-button ${selected === option ? "is-selected" : ""}`}
+          variant="choice"
+          data-selected={selected === option}
           onClick={() => onSelect(option)}
           disabled={disabled}
         >
-          <span className="choice-marker">
+          <span
+            className={`grid size-[30px] shrink-0 place-items-center border text-xs font-extrabold ${selected === option ? "border-[var(--coral)] bg-[var(--coral)] text-white" : "border-[var(--line)] bg-[var(--surface)] text-[var(--ink-muted)]"}`}
+          >
             {String.fromCharCode(65 + index)}
           </span>
           <span>{option}</span>
-        </button>
+        </Button>
       ))}
     </div>
   );
@@ -103,19 +106,19 @@ export function SequencePuzzle({
       >
         What comes next?
       </label>
-      <div className="flex flex-wrap items-center gap-2 rounded-2xl bg-[var(--mint)] p-4 sm:gap-3">
+      <div className="flex flex-wrap items-center gap-2 bg-[var(--mint)] p-4 sm:gap-3">
         {puzzle.sequence.map((item, index) => (
           <span
             key={`${item}-${index}`}
-            className={`grid h-12 min-w-12 place-items-center rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 display-font text-xl font-semibold ${item === "?" ? "border-[var(--coral)] bg-[#fff0ed] text-[var(--coral-dark)]" : ""}`}
+            className={`grid h-12 min-w-12 place-items-center border border-[var(--line)] bg-[var(--surface)] px-3 display-font text-xl font-semibold ${item === "?" ? "border-[var(--coral)] bg-[var(--coral-soft)] text-[var(--coral-dark)]" : ""}`}
           >
             {item}
           </span>
         ))}
       </div>
-      <input
+      <Input
         id="sequence-answer"
-        className="text-input mt-4 max-w-[220px]"
+        className="mt-4 max-w-[220px]"
         type="number"
         inputMode="numeric"
         value={value}
@@ -152,7 +155,7 @@ export function WordScramblePuzzle({
         {puzzle.letters.map((letter, index) => (
           <span
             key={`${letter}-${index}`}
-            className="grid h-14 w-12 place-items-center rounded-xl border border-[var(--line)] bg-[var(--sun)] display-font text-2xl font-semibold shadow-[var(--shadow-small)]"
+            className="grid h-14 w-12 place-items-center border border-[var(--line)] bg-[var(--sun)] display-font text-2xl font-semibold"
           >
             {letter}
           </span>
@@ -161,9 +164,9 @@ export function WordScramblePuzzle({
       <label htmlFor="scramble-answer" className="sr-only">
         Your answer
       </label>
-      <input
+      <Input
         id="scramble-answer"
-        className="text-input mt-5 max-w-sm uppercase"
+        className="mt-5 max-w-sm uppercase"
         autoCapitalize="characters"
         value={value}
         onChange={(event) => setValue(event.target.value)}
@@ -231,11 +234,11 @@ export function PatternPuzzle({
       disabled={disabled}
     >
       <p className="text-sm font-black">Which tile completes the pattern?</p>
-      <div className="mt-4 flex flex-wrap gap-2 rounded-2xl bg-[var(--blue)] p-4">
+      <div className="mt-4 flex flex-wrap gap-2 bg-[var(--blue)] p-4">
         {puzzle.pattern.map((item, index) => (
           <span
             key={`${item}-${index}`}
-            className={`grid h-16 min-w-16 place-items-center rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-4 display-font text-3xl font-semibold ${item === "?" ? "border-[var(--coral)] bg-[#fff0ed] text-[var(--coral-dark)]" : ""}`}
+            className={`grid h-16 min-w-16 place-items-center border border-[var(--line)] bg-[var(--surface)] px-4 display-font text-3xl font-semibold ${item === "?" ? "border-[var(--coral)] bg-[var(--coral-soft)] text-[var(--coral-dark)]" : ""}`}
           >
             {item}
           </span>
@@ -275,9 +278,9 @@ export function MathsPuzzle({
       <label htmlFor="maths-answer" className="sr-only">
         Your answer
       </label>
-      <input
+      <Input
         id="maths-answer"
-        className="text-input mt-5 max-w-sm"
+        className="mt-5 max-w-sm"
         type="number"
         inputMode="decimal"
         value={value}
@@ -308,15 +311,15 @@ export function RiddlePuzzle({
       }}
       disabled={disabled}
     >
-      <div className="rounded-2xl border border-[var(--line)] bg-[#f7f1e8] p-5 text-lg font-extrabold leading-8">
+      <div className="border border-[var(--line)] bg-[#f7f1e8] p-5 text-lg font-extrabold leading-8">
         {puzzle.riddle}
       </div>
       <label htmlFor="riddle-answer" className="sr-only">
         Your answer
       </label>
-      <input
+      <Input
         id="riddle-answer"
-        className="text-input mt-5 max-w-sm"
+        className="mt-5 max-w-sm"
         value={value}
         onChange={(event) => setValue(event.target.value)}
         placeholder="I think it is…"
@@ -379,9 +382,10 @@ export function ConnectionsPuzzle({
       </div>
       <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
         {puzzle.words.map((word) => (
-          <button
+          <Button
             key={word}
             type="button"
+            variant="choice"
             onClick={() => toggleWord(word)}
             disabled={
               disabled ||
@@ -391,10 +395,10 @@ export function ConnectionsPuzzle({
                   ?.words.includes(word),
               )
             }
-            className={`min-h-16 rounded-xl border px-2 text-xs font-black transition ${found.some((group) => puzzle.groups.find((item) => item.name === group)?.words.includes(word)) ? "border-[var(--mint-dark)] bg-[var(--mint)] text-[var(--mint-dark)]" : selected.includes(word) ? "border-[var(--coral)] bg-[#fff0ed] text-[var(--coral-dark)]" : "border-[var(--line)] bg-[var(--surface)] hover:border-[var(--coral)]"}`}
+            className={`min-h-16 justify-center px-2 text-center text-xs ${found.some((group) => puzzle.groups.find((item) => item.name === group)?.words.includes(word)) ? "border-[var(--mint-dark)] bg-[var(--mint)] text-[var(--mint-dark)]" : selected.includes(word) ? "border-[var(--coral)] bg-[var(--coral-soft)] text-[var(--coral-dark)]" : ""}`}
           >
             {word}
-          </button>
+          </Button>
         ))}
       </div>
       {message && (
@@ -405,17 +409,17 @@ export function ConnectionsPuzzle({
           {message}
         </p>
       )}
-      <button
+      <Button
         type="button"
-        className="button-primary mt-5"
+        className="mt-5"
         onClick={submitGroup}
         disabled={selected.length !== 4 || disabled}
       >
         Submit group{" "}
-        <span className="rounded-full bg-white/20 px-2 py-0.5 text-xs">
+        <span className="border border-white/40 px-2 py-0.5 text-xs">
           {selected.length}/4
         </span>
-      </button>
+      </Button>
     </div>
   );
 }
@@ -459,7 +463,7 @@ export function WordLadderPuzzle({
         {path.map((word, index) => (
           <span
             key={`${word}-${index}`}
-            className={`rounded-xl border px-3 py-2 display-font font-semibold ${word === puzzle.target ? "border-[var(--mint-dark)] bg-[var(--mint)]" : "border-[var(--line)] bg-[var(--surface)]"}`}
+            className={`border px-3 py-2 display-font font-semibold ${word === puzzle.target ? "border-[var(--mint-dark)] bg-[var(--mint)]" : "border-[var(--line)] bg-[var(--surface)]"}`}
           >
             {word}
           </span>
@@ -480,21 +484,17 @@ export function WordLadderPuzzle({
         <label htmlFor="ladder-answer" className="sr-only">
           Next word
         </label>
-        <input
+        <Input
           id="ladder-answer"
-          className="text-input uppercase"
+          className="uppercase"
           value={value}
           onChange={(event) => setValue(event.target.value)}
           placeholder="Next word"
           disabled={disabled}
         />
-        <button
-          className="button-primary shrink-0 px-4"
-          type="submit"
-          disabled={disabled}
-        >
+        <Button className="shrink-0 px-4" type="submit" disabled={disabled}>
           Add rung
-        </button>
+        </Button>
       </form>
       <p className="mt-3 text-xs font-bold text-[var(--ink-muted)]">
         {path.length - 1} steps · change exactly one letter each time
@@ -590,28 +590,28 @@ export function CodeBreakerPuzzle({
   };
   return (
     <div className="mt-7">
-      <div className="rounded-2xl border border-[var(--line)] bg-[var(--ink)] p-5 text-[var(--surface)]">
+      <Card className="border-[var(--line)] bg-[var(--ink)] p-5 text-[var(--surface)]">
         <p className="text-xs font-black uppercase tracking-[0.12em] text-[#b6c7bc]">
           Clue grid
         </p>
         <div className="mt-4 space-y-3">
           {puzzle.clues.map((clue) => (
             <div key={clue.guess} className="flex items-center gap-3 text-sm">
-              <span className="rounded-lg bg-[#31413d] px-3 py-2 font-mono font-black tracking-[0.2em]">
+              <span className="bg-[#31413d] px-3 py-2 font-mono font-black tracking-[0.2em]">
                 {clue.guess}
               </span>
               <span className="text-[#d8e0da]">{clue.clue}</span>
             </div>
           ))}
         </div>
-      </div>
+      </Card>
       <form onSubmit={submit} className="mt-5 flex max-w-md gap-2">
         <label htmlFor="code-answer" className="sr-only">
           Four digit code
         </label>
-        <input
+        <Input
           id="code-answer"
-          className="text-input font-mono tracking-[0.35em]"
+          className="font-mono tracking-[0.35em]"
           type="text"
           inputMode="numeric"
           pattern="[0-9]{4}"
@@ -621,13 +621,13 @@ export function CodeBreakerPuzzle({
           placeholder="0000"
           disabled={disabled}
         />
-        <button
-          className="button-primary shrink-0 px-4"
+        <Button
+          className="shrink-0 px-4"
           type="submit"
           disabled={disabled || value.length !== 4}
         >
           Try code
-        </button>
+        </Button>
       </form>
       <p className="mt-3 text-xs font-bold text-[var(--ink-muted)]">
         {guesses.length} of {puzzle.maxAttempts} attempts used
@@ -678,19 +678,20 @@ export function SudokuPuzzle({
   };
   return (
     <div className="mt-7 grid gap-6 sm:grid-cols-[auto_1fr] sm:items-start">
-      <div className="w-fit overflow-hidden rounded-2xl border-2 border-[var(--ink)] bg-[var(--ink)] p-1">
+      <div className="w-fit overflow-hidden border-2 border-[var(--ink)] bg-[var(--ink)] p-1">
         <div className="grid grid-cols-4 gap-1">
           {grid.flatMap((row, rowIndex) =>
             row.map((cell, columnIndex) => (
-              <button
+              <Button
                 key={`${rowIndex}-${columnIndex}`}
                 type="button"
+                variant="choice"
                 onClick={() => setSelected([rowIndex, columnIndex])}
-                className={`grid h-16 w-16 place-items-center border border-[var(--line)] display-font text-2xl font-semibold sm:h-18 sm:w-18 ${given(rowIndex, columnIndex) ? "bg-[var(--mint)]" : selected?.[0] === rowIndex && selected?.[1] === columnIndex ? "bg-[#fff0ed] text-[var(--coral-dark)]" : "bg-[var(--surface)]"}`}
+                className={`grid h-16 min-h-0 w-16 place-items-center justify-center border border-[var(--line)] p-0 display-font text-2xl font-semibold sm:h-18 sm:w-18 ${given(rowIndex, columnIndex) ? "bg-[var(--mint)]" : selected?.[0] === rowIndex && selected?.[1] === columnIndex ? "bg-[var(--coral-soft)] text-[var(--coral-dark)]" : "bg-[var(--surface)]"}`}
                 aria-label={`Row ${rowIndex + 1}, column ${columnIndex + 1}, ${given(rowIndex, columnIndex) ? `given ${cell}` : cell ? `entered ${cell}` : "blank"}`}
               >
                 {cell || ""}
-              </button>
+              </Button>
             )),
           )}
         </div>
@@ -701,10 +702,12 @@ export function SudokuPuzzle({
         </p>
         <div className="mt-4 grid max-w-xs grid-cols-4 gap-2">
           {[1, 2, 3, 4].map((value) => (
-            <button
+            <Button
               key={value}
               type="button"
-              className={`choice-button justify-center ${number === value ? "is-selected" : ""}`}
+              variant="choice"
+              data-selected={number === value}
+              className="justify-center"
               onClick={() => {
                 setNumber(value);
                 updateCell(value);
@@ -712,26 +715,22 @@ export function SudokuPuzzle({
               disabled={!selected || disabled}
             >
               {value}
-            </button>
+            </Button>
           ))}
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
-          <button
+          <Button
             type="button"
-            className="button-secondary min-h-11 text-sm"
+            variant="outline"
+            size="sm"
             onClick={() => updateCell(0)}
             disabled={!selected || disabled}
           >
             Clear square
-          </button>
-          <button
-            type="button"
-            className="button-primary min-h-11 text-sm"
-            onClick={check}
-            disabled={disabled}
-          >
+          </Button>
+          <Button type="button" size="sm" onClick={check} disabled={disabled}>
             Check grid
-          </button>
+          </Button>
         </div>
       </div>
     </div>
@@ -814,13 +813,13 @@ export function QuickfirePuzzle({
   };
   if (!question || finished)
     return (
-      <div className="surface-card mt-7 p-6">
+      <Card className="mt-7 p-6">
         <p className="eyebrow">Sprint complete</p>
         <h3 className="mt-2 text-3xl font-semibold">Nice pace.</h3>
         <p className="mt-2 text-[var(--ink-muted)]">
           Your results are being counted.
         </p>
-      </div>
+      </Card>
     );
   return (
     <div className="mt-7">
@@ -835,12 +834,11 @@ export function QuickfirePuzzle({
           {seconds}s
         </span>
       </div>
-      <div className="mt-3 h-2 overflow-hidden rounded-full bg-[var(--line)]">
-        <div
-          className="h-full rounded-full bg-[var(--coral)] transition-[width]"
-          style={{ width: `${(seconds / puzzle.duration) * 100}%` }}
-        />
-      </div>
+      <Progress
+        className="mt-3"
+        value={(seconds / puzzle.duration) * 100}
+        aria-label="Time remaining"
+      />
       <form onSubmit={submit} className="mt-8">
         <p className="text-2xl font-semibold leading-9">{question.prompt}</p>
         {question.kind === "choice" ? (
@@ -853,10 +851,10 @@ export function QuickfirePuzzle({
             />
           </div>
         ) : (
-          <input
+          <Input
             autoFocus
             id="quickfire-answer"
-            className="text-input mt-5 max-w-sm"
+            className="mt-5 max-w-sm"
             type={question.kind === "number" ? "number" : "text"}
             inputMode={question.kind === "number" ? "numeric" : "text"}
             value={value}
@@ -871,15 +869,15 @@ export function QuickfirePuzzle({
             Words are not case-sensitive.
           </p>
         )}
-        <button
+        <Button
           type="submit"
-          className="button-primary mt-6"
+          className="mt-6"
           disabled={
             disabled || (question.kind === "choice" ? !selected : !value.trim())
           }
         >
           Next answer <span aria-hidden="true">↗</span>
-        </button>
+        </Button>
       </form>
       <p className="mt-5 text-sm font-extrabold text-[var(--ink-muted)]">
         {correct} correct · {score} points

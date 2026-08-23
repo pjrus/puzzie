@@ -7,6 +7,10 @@ import { PuzzleRenderer } from "@/components/player/PuzzleRenderer";
 import { CompletionCard, FailedPuzzle } from "@/components/player/PlayerStates";
 import type { PlayerFeedback, PlayerResult } from "@/components/player/types";
 import { DifficultyBadge, typeAccent } from "@/components/Ui";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { puzzles } from "@/lib/puzzles";
 import {
   formatDuration,
@@ -125,13 +129,12 @@ export function PuzzlePlayer({
   return (
     <div className="page-width-narrow pb-20 pt-8 lg:pt-12">
       <div className="flex items-center justify-between gap-4">
-        <Link
-          href={daily ? "/daily" : "/puzzles"}
-          className="button-quiet px-0"
-        >
-          <Icon name="arrow-left" size={17} />
-          Back
-        </Link>
+        <Button asChild variant="ghost" className="px-0">
+          <Link href={daily ? "/daily" : "/puzzles"}>
+            <Icon name="arrow-left" size={17} />
+            Back
+          </Link>
+        </Button>
         <span className="text-sm font-extrabold text-[var(--ink-muted)]">
           {daily ? "Daily puzzle" : "Puzzle player"}
         </span>
@@ -139,7 +142,7 @@ export function PuzzlePlayer({
       <div className="mt-8 flex flex-wrap items-start justify-between gap-5 border-b border-[var(--line)] pb-7">
         <div className="flex items-start gap-4">
           <span
-            className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl"
+            className="grid h-12 w-12 shrink-0 place-items-center"
             style={{ backgroundColor: typeAccent[puzzle.type].bg }}
           >
             <span className="display-font text-xl font-semibold">
@@ -158,44 +161,44 @@ export function PuzzlePlayer({
         </div>
         <div className="flex items-center gap-2">
           <DifficultyBadge difficulty={puzzle.difficulty} />
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1.5 text-xs font-black text-[var(--ink-muted)]">
+          <Badge
+            variant="outline"
+            className="gap-1.5 bg-[var(--surface)] text-[var(--ink-muted)]"
+          >
             <Icon name="clock" size={14} />
             {puzzle.estimatedTime}
-          </span>
+          </Badge>
         </div>
       </div>
 
       <div className="mt-7 grid gap-3 sm:grid-cols-3">
-        <div className="surface-card flex items-center justify-between p-4">
+        <Card className="flex-row items-center justify-between p-4">
           <span className="text-sm font-extrabold text-[var(--ink-muted)]">
             Score
           </span>
           <span className="display-font text-2xl font-semibold">
             {puzzle.type === "quickfire" ? 0 : currentScore}
           </span>
-        </div>
-        <div className="surface-card flex items-center justify-between p-4">
+        </Card>
+        <Card className="flex-row items-center justify-between p-4">
           <span className="text-sm font-extrabold text-[var(--ink-muted)]">
             Attempts
           </span>
           <span className="display-font text-2xl font-semibold">
             {attempts}
           </span>
-        </div>
-        <div className="surface-card flex items-center justify-between p-4">
+        </Card>
+        <Card className="flex-row items-center justify-between p-4">
           <span className="text-sm font-extrabold text-[var(--ink-muted)]">
             Time
           </span>
           <span className="display-font text-2xl font-semibold">
             {puzzle.type === "quickfire" ? "60s" : formatDuration(elapsed)}
           </span>
-        </div>
+        </Card>
       </div>
 
-      <section
-        className="surface-card mt-5 p-6 sm:p-9"
-        aria-labelledby="puzzle-question"
-      >
+      <Card className="mt-5 p-6 sm:p-9" aria-labelledby="puzzle-question">
         <div className="flex items-center justify-between gap-4">
           <div>
             <p className="eyebrow">Your move</p>
@@ -203,9 +206,10 @@ export function PuzzlePlayer({
               Take your best shot.
             </h2>
           </div>
-          <button
+          <Button
             type="button"
-            className="button-secondary min-h-11 px-3 text-sm"
+            variant="outline"
+            size="sm"
             onClick={useHint}
             disabled={hintsUsed >= puzzle.hints.length}
           >
@@ -214,16 +218,15 @@ export function PuzzlePlayer({
             <span className="bg-[var(--mint)] px-2 py-0.5 text-xs">
               {Math.max(0, puzzle.hints.length - hintsUsed)}
             </span>
-          </button>
+          </Button>
         </div>
         {hint && (
-          <div
-            key={hintsUsed}
-            className="hint-settle mt-5 flex items-start gap-3 border border-[#e7cf86] bg-[#fff6d8] p-4 text-sm font-extrabold text-[#705716]"
-          >
+          <Alert key={hintsUsed} variant="info" role="status" className="mt-5">
             <Icon name="lightbulb" size={18} />
-            <p>{hint}</p>
-          </div>
+            <AlertDescription className="font-extrabold">
+              {hint}
+            </AlertDescription>
+          </Alert>
         )}
         <PuzzleRenderer
           puzzle={puzzle}
@@ -240,16 +243,19 @@ export function PuzzlePlayer({
             )
           }
         />
-      </section>
+      </Card>
       {feedback && (
-        <div
+        <Alert
           key={`${feedback.kind}-${attempts}-${hintsUsed}`}
-          className={`${feedback.kind === "error" ? "feedback-error" : "feedback-settle"} mt-5 flex items-start gap-3 border p-4 text-sm font-extrabold ${feedback.kind === "error" ? "border-[#e7bdb7] bg-[#fff1ed] text-[#95403d]" : "border-[#b8d7c6] bg-[var(--mint)] text-[var(--mint-dark)]"}`}
+          className="mt-5"
+          variant={feedback.kind === "error" ? "destructive" : "success"}
           role={feedback.kind === "error" ? "alert" : "status"}
         >
           <Icon name={feedback.kind === "error" ? "x" : "check"} size={18} />
-          <p>{feedback.message}</p>
-        </div>
+          <AlertDescription className="font-extrabold">
+            {feedback.message}
+          </AlertDescription>
+        </Alert>
       )}
       <p className="mt-5 text-center text-xs font-bold text-[var(--ink-muted)]">
         Hints cost 25 points · incorrect attempts cost 10 points · score never
