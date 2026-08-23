@@ -45,7 +45,10 @@ export default function DailyPage() {
             </div>
             <TypeGlyph type={puzzle.type} size="lg" />
           </div>
-          <Card tone="mint" className="mt-8 overflow-hidden p-6 sm:p-8">
+          <Card
+            tone="mint"
+            className="completion-card mt-8 overflow-hidden p-6 sm:p-8"
+          >
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <p className="eyebrow">Daily result</p>

@@ -58,6 +58,8 @@
   --ring: var(--coral);
   --font-body: "DM Sans", "Avenir Next", sans-serif;
   --font-display: "Space Grotesk", "Avenir Next", sans-serif;
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-snap: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 * {
@@ -158,9 +160,270 @@ h4,
   color: var(--ink-muted);
 }
 
+[data-slot="button"] {
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 120ms var(--ease-snap);
+}
+
+[data-slot="button"]:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+[data-slot="input"] {
+  transition:
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+[data-slot="progress-indicator"] {
+  transition: transform 220ms linear;
+}
+
+.route-settle {
+  animation: route-settle 360ms var(--ease-settle) both;
+}
+
+.home-copy-settle {
+  animation: home-copy-settle 560ms var(--ease-settle) both;
+}
+
+.home-puzzle-settle {
+  animation: home-puzzle-settle 680ms 80ms var(--ease-settle) both;
+  transform-origin: 58% 50%;
+}
+
+.list-settle {
+  animation: list-settle 360ms var(--ease-settle) both;
+}
+
+.grid > .list-settle:nth-child(2) {
+  animation-delay: 55ms;
+}
+
+.grid > .list-settle:nth-child(3) {
+  animation-delay: 110ms;
+}
+
+.grid > .list-settle:nth-child(4) {
+  animation-delay: 165ms;
+}
+
+.grid > .list-settle:nth-child(5) {
+  animation-delay: 220ms;
+}
+
+.grid > .list-settle:nth-child(6) {
+  animation-delay: 250ms;
+}
+
+.puzzle-card-motion {
+  transition:
+    border-color 180ms ease,
+    transform 180ms var(--ease-snap);
+}
+
+article:hover > .puzzle-card-motion {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.menu-settle {
+  animation: menu-settle 240ms var(--ease-settle) both;
+  transform-origin: top;
+}
+
+.hint-settle,
+.feedback-settle {
+  animation: feedback-settle 260ms var(--ease-settle) both;
+}
+
+.feedback-error {
+  animation: feedback-error 300ms var(--ease-snap) both;
+}
+
+.completion-card {
+  animation: completion-card 520ms var(--ease-settle) both;
+}
+
+.completion-mark {
+  animation: completion-mark 480ms 140ms var(--ease-settle) both;
+}
+
+.completion-stat {
+  animation: completion-stat 380ms var(--ease-settle) both;
+}
+
+@keyframes route-settle {
+  from {
+    opacity: 0.82;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes home-copy-settle {
+  from {
+    opacity: 0.35;
+    transform: translateY(14px);
+    clip-path: inset(0 0 14% 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0);
+  }
+}
+
+@keyframes home-puzzle-settle {
+  from {
+    opacity: 0.45;
+    transform: translate(18px, 10px) rotate(1.5deg);
+    clip-path: inset(5% 0 0 7%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0) rotate(0);
+    clip-path: inset(0);
+  }
+}
+
+@keyframes list-settle {
+  from {
+    opacity: 0.65;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes menu-settle {
+  from {
+    opacity: 0.7;
+    transform: translateY(-8px) scaleY(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes feedback-settle {
+  from {
+    opacity: 0.55;
+    transform: translateY(-6px);
+    clip-path: inset(0 0 35% 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0);
+  }
+}
+
+@keyframes feedback-error {
+  0% {
+    opacity: 0.55;
+    transform: translateX(0);
+  }
+  35% {
+    opacity: 1;
+    transform: translateX(-5px);
+  }
+  70% {
+    transform: translateX(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes completion-card {
+  from {
+    opacity: 0.45;
+    transform: translateY(14px) scale(0.985);
+    clip-path: inset(0 0 8% 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    clip-path: inset(0);
+  }
+}
+
+@keyframes completion-mark {
+  from {
+    opacity: 0.5;
+    transform: scale(0.7) rotate(-8deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes completion-stat {
+  from {
+    opacity: 0.55;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reduced-fade {
+  from {
+    opacity: 0.82;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
+  }
+
+  .route-settle,
+  .home-copy-settle,
+  .home-puzzle-settle,
+  .list-settle,
+  .menu-settle,
+  .hint-settle,
+  .feedback-settle,
+  .feedback-error,
+  .completion-card,
+  .completion-mark,
+  .completion-stat {
+    animation: reduced-fade 140ms ease-out both;
+    animation-delay: 0ms !important;
+    clip-path: none;
+    transform: none;
+  }
+
+  .puzzle-card-motion,
+  [data-slot="button"] {
+    transition-duration: 80ms;
+  }
+
+  article:hover > .puzzle-card-motion,
+  [data-slot="button"]:active:not(:disabled) {
+    transform: none;
+  }
+
+  [data-slot="progress-indicator"] {
+    transition-duration: 80ms;
   }
 }
 

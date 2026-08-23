@@ -30,7 +30,7 @@ export default function HomePage() {
     <div>
       <section className="page-width grid gap-8 pb-12 pt-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch lg:pb-20 lg:pt-16">
         <div className="flex flex-col justify-center">
-          <div className="max-w-xl">
+          <div className="home-copy-settle max-w-xl">
             <p className="eyebrow inline-flex items-center gap-2">
               <span className="h-2 w-2 bg-[var(--coral)]" />
               Your five-minute brain break
@@ -91,7 +91,7 @@ export default function HomePage() {
 
         <Card
           tone="dark"
-          className="relative min-h-[420px] overflow-hidden border-[var(--ink)] p-6 sm:p-8"
+          className="home-puzzle-settle relative min-h-[420px] overflow-hidden border-[var(--ink)] p-6 sm:p-8"
         >
           <div className="relative z-10 flex h-full flex-col justify-between">
             <div className="flex items-start justify-between gap-4">

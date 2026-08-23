@@ -57,6 +57,17 @@ components:
     backgroundColor: "{colors.surface}"
     rounded: "{rounded.none}"
     padding: "20px"
+  input:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.none}"
+    padding: "0 15px"
+    height: "52px"
+  badge:
+    backgroundColor: "{colors.mint}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.none}"
+    padding: "4px 10px"
 
 # Design System: Puzzie
 
@@ -66,14 +77,17 @@ components:
 
 Puzzie feels like a well-made puzzle sheet laid out on a warm desk: direct, tactile, and inviting without being childish. The system uses a warm paper ground, dark ink, a coral action colour, and small blocks of mint, sun, lavender, and blue to distinguish puzzle types and progress states.
 
-The visual language is crisp and editorial. Strong alignment, square corners, flat colour fields, and restrained ambient shadows create depth while keeping the game readable at a glance. The first interaction should always feel close: a clear puzzle, a confident action, and useful feedback.
+The visual language is crisp and editorial. Strong alignment, square corners, one-pixel borders, and flat colour fields establish hierarchy without relying on shadows or decorative effects. Purposeful motion makes the puzzle sheet feel handled: a featured tile settles into place, navigation maintains continuity, and feedback responds directly to the action that caused it.
 
 **Key Characteristics:**
 
 - Square-corner geometry with clear borders.
 - Warm paper surfaces with dark ink contrast.
 - Distinctive Space Grotesk display type paired with readable DM Sans body copy.
-- Flat colour accents and subtle, offset ambient shadows.
+- Flat colour accents with border-led, shadow-free depth.
+- CSS-only motion that explains arrival, selection, feedback, and completion.
+
+**The Puzzle-in-Hand Rule.** Motion should feel like arranging paper pieces on a desk: short, direct, and tied to a meaningful state change.
 
 ## Colors
 
@@ -131,16 +145,11 @@ Spacing follows a compact 4/8/16/24/32/48px rhythm. Dense controls remain touch-
 
 ## Elevation & Depth
 
-Depth is ambient, not theatrical. Flat colour planes and one-pixel borders establish structure; subtle blurred shadows lift active surfaces and featured areas. Hover movement is limited to a small upward shift with a slightly stronger soft shadow.
-
-### Shadow Vocabulary
-
-- **Ambient low** (`0 4px 12px rgba(38, 33, 25, 0.08)`): Resting cards, logos, and compact actions.
-- **Ambient high** (`0 14px 30px rgba(38, 33, 25, 0.1)`): Featured daily surfaces and completion states.
+Depth is tonal and structural. Warm surface blocks, dark featured planes, accent fills, borders, spacing, and controlled overlap establish the layer order; the system uses no shadows. Motion may clarify an arriving or changing layer, but it never substitutes for readable static hierarchy.
 
 ### Named Rules
 
-**The Soft Lift Rule.** Use spacing, layers, and subtle blurred shadows for depth. Never use hard offset block shadows as decoration.
+**The Flat Desk Rule.** Use borders, contrast, spacing, and overlap for depth. Do not add shadows, gradients, glass, or blur.
 
 ## Shapes
 
@@ -151,8 +160,8 @@ Every interface surface has square corners (`0px`). Borders are thin and deliber
 ### Buttons
 
 - **Shape:** Square corners (`0px`), 48px minimum height.
-- **Primary:** Coral fill with deep coral border and soft ambient shadow.
-- **Hover / Focus:** Lift by 2px on hover, stronger ambient shadow, and a clear coral focus ring.
+- **Primary:** Coral fill with a deep coral border.
+- **Hover / Focus:** A short colour transition confirms hover; press feedback moves the control by one pixel, and keyboard focus uses a clear coral ring.
 - **Secondary / Ghost:** Ink outline or transparent quiet action; hover changes the surface colour rather than changing shape.
 
 ### Chips
@@ -164,7 +173,7 @@ Every interface surface has square corners (`0px`). Borders are thin and deliber
 
 - **Corner Style:** Square (`0px`).
 - **Background:** Warm surface or one of the functional accent colours.
-- **Shadow Strategy:** Ambient low by default; ambient high only for featured or completed moments.
+- **Shadow Strategy:** None; contrast and one-pixel borders separate surfaces.
 - **Border:** One-pixel desk line, dark ink for hero and completion surfaces.
 - **Internal Padding:** 16–32px depending on density.
 
@@ -172,15 +181,22 @@ Every interface surface has square corners (`0px`). Borders are thin and deliber
 
 - **Style:** Square, one-pixel desk line, soft surface background, 52px minimum height.
 - **Focus:** Coral border with a restrained translucent focus ring.
-- **Error / Disabled:** Error uses coral-tinted surface and explicit feedback; disabled controls reduce opacity and remove lift.
+- **Error / Disabled:** Error uses a coral-tinted surface and explicit feedback; disabled controls reduce opacity and remain still.
 
 ### Navigation
 
-The header is a quiet paper strip with a thin divider. Active navigation uses a surface block and ambient low shadow. Desktop navigation is inline; mobile navigation collapses behind a labelled menu button.
+The header is a quiet paper strip with a thin divider. Active navigation uses a flat surface block. Desktop navigation is inline; mobile navigation expands beneath the header with a short directional transition.
 
 ### Puzzle Marks
 
 TypeGlyph provides a compact, colour-coded square mark for each puzzle family. The mark uses display type plus a small SVG icon so categories remain scannable without relying on colour alone.
+
+### Motion & Feedback
+
+- **Focal entrance:** Home copy uncovers over 560ms while the featured puzzle settles over 680ms using confident exponential deceleration.
+- **Routine continuity:** Route and mobile-menu changes complete within 240–360ms.
+- **State feedback:** Hints, validation outcomes, selections, and completion results respond within 120–520ms according to consequence.
+- **Reduced motion:** Spatial transforms and clipping are removed; brief opacity and colour feedback remain so state changes are still legible.
 
 ## Do's and Don'ts
 
@@ -189,13 +205,15 @@ TypeGlyph provides a compact, colour-coded square mark for each puzzle family. T
 - **Do** keep all UI corners square and consistent.
 - **Do** use Space Grotesk for display roles and DM Sans for reading roles.
 - **Do** keep body copy readable and limit prose to a comfortable measure.
-- **Do** use flat colour fields and subtle blurred shadows to create hierarchy.
+- **Do** use flat colour fields, borders, spacing, and overlap to create hierarchy.
+- **Do** reserve authored motion for navigation, state feedback, completion, and the featured home puzzle.
 - **Do** keep success, error, disabled, and focus states explicit and accessible.
 
 ### Don't:
 
-- **Don't** reintroduce rounded cards, pills, or hard offset shadows.
-- **Don't** use gradients, glass effects, or decorative blur.
+- **Don't** reintroduce rounded cards, pills, or shadows.
+- **Don't** use gradients, glass effects, decorative blur, or looping ornamental motion.
+- **Don't** animate layout dimensions when a transform can communicate the same relationship.
 - **Don't** use colour alone to communicate puzzle state.
 - **Don't** substitute emoji or arbitrary glyphs for the existing SVG icon language.
 - **Don't** add display font weights that are not loaded through `next/font`.

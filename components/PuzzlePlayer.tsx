@@ -221,7 +221,12 @@ export function PuzzlePlayer({
           </Button>
         </div>
         {hint && (
-          <Alert key={hintsUsed} variant="info" role="status" className="mt-5">
+          <Alert
+            key={hintsUsed}
+            variant="info"
+            role="status"
+            className="hint-settle mt-5"
+          >
             <Icon name="lightbulb" size={18} />
             <AlertDescription className="font-extrabold">
               {hint}
@@ -247,7 +252,7 @@ export function PuzzlePlayer({
       {feedback && (
         <Alert
           key={`${feedback.kind}-${attempts}-${hintsUsed}`}
-          className="mt-5"
+          className={`${feedback.kind === "error" ? "feedback-error" : "feedback-settle"} mt-5`}
           variant={feedback.kind === "error" ? "destructive" : "success"}
           role={feedback.kind === "error" ? "alert" : "status"}
         >

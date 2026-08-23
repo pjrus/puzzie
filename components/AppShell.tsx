@@ -85,7 +85,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         {mobileOpen && (
           <nav
-            className="page-width grid gap-2 border-t border-[var(--line)] py-3 md:hidden"
+            className="menu-settle page-width grid gap-2 border-t border-[var(--line)] py-3 md:hidden"
             aria-label="Mobile navigation"
           >
             {links.map((link) => (
@@ -109,7 +109,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </nav>
         )}
       </header>
-      <main id="main-content" key={pathname}>
+      <main id="main-content" key={pathname} className="route-settle">
         {children}
       </main>
       <footer className="page-width mt-16 flex flex-col gap-2 border-t border-[var(--line)] py-8 text-sm text-[var(--ink-muted)] sm:flex-row sm:items-center sm:justify-between">

@@ -119,8 +119,8 @@ export function PuzzleCard({
   compact?: boolean;
 }) {
   return (
-    <article>
-      <Card className={`h-full ${compact ? "p-4" : "p-5"}`}>
+    <article className="list-settle">
+      <Card className={`puzzle-card-motion h-full ${compact ? "p-4" : "p-5"}`}>
         <div className="flex items-start justify-between gap-3">
           <TypeGlyph type={puzzle.type} size={compact ? "sm" : "md"} />
           <DifficultyBadge difficulty={puzzle.difficulty} />

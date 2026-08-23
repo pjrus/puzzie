@@ -32,10 +32,10 @@ export function CompletionCard({
       </div>
       <Card
         tone="dark"
-        className="mt-8 overflow-hidden border-[var(--ink)] p-7 sm:p-10"
+        className="completion-card mt-8 overflow-hidden border-[var(--ink)] p-7 sm:p-10"
       >
         <div className="flex items-center gap-3">
-          <span className="grid h-12 w-12 place-items-center bg-[var(--mint)] text-[var(--ink)]">
+          <span className="completion-mark grid h-12 w-12 place-items-center bg-[var(--mint)] text-[var(--ink)]">
             <Icon name="check" size={25} />
           </span>
           <div>
@@ -57,10 +57,15 @@ export function CompletionCard({
             label="Points"
             value={`+${result.score}`}
             accent="var(--coral)"
+            delay={120}
           />
-          <ResultStat label="Time" value={formatDuration(result.timeSeconds)} />
-          <ResultStat label="Attempts" value={result.attempts} />
-          <ResultStat label="Hints" value={result.hintsUsed} />
+          <ResultStat
+            label="Time"
+            value={formatDuration(result.timeSeconds)}
+            delay={170}
+          />
+          <ResultStat label="Attempts" value={result.attempts} delay={220} />
+          <ResultStat label="Hints" value={result.hintsUsed} delay={270} />
         </div>
         {daily ? (
           <div className="mt-5 flex items-center gap-2 border border-[#4f655e] bg-[#2b3c38] p-4 font-extrabold">
@@ -112,7 +117,7 @@ export function FailedPuzzle({
       </Button>
       <Card
         tone="danger"
-        className="mt-8 border-[var(--coral-border)] p-7 sm:p-10"
+        className="feedback-settle mt-8 border-[var(--coral-border)] p-7 sm:p-10"
       >
         <p className="eyebrow">Almost there</p>
         <h1 className="mt-2 text-4xl font-semibold">That one got away.</h1>
@@ -139,13 +144,18 @@ function ResultStat({
   label,
   value,
   accent,
+  delay = 0,
 }: {
   label: string;
   value: string | number;
   accent?: string;
+  delay?: number;
 }) {
   return (
-    <div className="border border-[#4f655e] bg-[#2b3c38] p-4">
+    <div
+      className="completion-stat border border-[#4f655e] bg-[#2b3c38] p-4"
+      style={{ animationDelay: `${delay}ms` }}
+    >
       <p className="text-xs font-black uppercase tracking-[0.1em] text-[#b6c7bc]">
         {label}
       </p>

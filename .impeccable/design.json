@@ -1,65 +1,243 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-23T21:00:00+10:00",
+  "generatedAt": "2026-08-23T23:12:44+10:00",
   "title": "Design System: Puzzie",
   "extensions": {
-    "shadows": [
-      {
-        "name": "ambient-low",
-        "value": "0 4px 12px rgba(38, 33, 25, 0.08)",
-        "purpose": "Resting cards, logos, and compact actions."
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "canonical": "#f3eee5",
+        "tonalRamp": ["#292621", "#4d4942", "#716c63", "#958f85", "#b9b3aa", "#d4cec5", "#e8e2da", "#f8f4ed"]
       },
-      {
-        "name": "ambient-high",
-        "value": "0 14px 30px rgba(38, 33, 25, 0.1)",
-        "purpose": "Featured daily surfaces and completion states."
+      "surface": {
+        "role": "neutral",
+        "displayName": "Soft Surface",
+        "canonical": "#fffdf8",
+        "tonalRamp": ["#292823", "#4f4d47", "#75736c", "#9b9992", "#c1bfb8", "#dcdad3", "#eeece6", "#fffdf8"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Dark Ink",
+        "canonical": "#17252c",
+        "tonalRamp": ["#0c1317", "#17252c", "#304047", "#4c5c63", "#69787e", "#8a989d", "#b3bec2", "#e6ecee"]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "#617077",
+        "tonalRamp": ["#162025", "#2f3b40", "#49575d", "#617077", "#7f8d93", "#a0abb0", "#c4cccf", "#edf0f1"]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Desk Line",
+        "canonical": "#d5ccc0",
+        "tonalRamp": ["#28231d", "#4d453b", "#71685d", "#958b80", "#b9afa4", "#d5ccc0", "#e7e0d7", "#f7f3ed"]
+      },
+      "coral": {
+        "role": "primary",
+        "displayName": "Coral Action",
+        "canonical": "#e9655e",
+        "tonalRamp": ["#34100f", "#67201e", "#96332f", "#bd4944", "#e9655e", "#ef8c86", "#f5b7b2", "#fce9e7"]
+      },
+      "coral-dark": {
+        "role": "primary",
+        "displayName": "Deep Coral",
+        "canonical": "#b94d49",
+        "tonalRamp": ["#2f0f0e", "#5a1e1c", "#832f2c", "#a9403d", "#c95a55", "#df817d", "#efb0ad", "#fae7e5"]
+      },
+      "mint": {
+        "role": "secondary",
+        "displayName": "Desk Mint",
+        "canonical": "#dcebe3",
+        "tonalRamp": ["#12261d", "#244638", "#3d6654", "#628675", "#8eaa9b", "#b7ccbf", "#dcebe3", "#f1f8f4"]
+      },
+      "mint-dark": {
+        "role": "secondary",
+        "displayName": "Deep Mint",
+        "canonical": "#2d7165",
+        "tonalRamp": ["#0c211d", "#173d36", "#23594f", "#2d7165", "#4f9186", "#7eb1a8", "#b3d4cd", "#e4f1ee"]
+      },
+      "sun": {
+        "role": "tertiary",
+        "displayName": "Puzzle Sun",
+        "canonical": "#f3ce79",
+        "tonalRamp": ["#302508", "#5b4611", "#86681f", "#b28e38", "#d9b558", "#f3ce79", "#f8dfa6", "#fdf3da"]
+      },
+      "lavender": {
+        "role": "tertiary",
+        "displayName": "Puzzle Lavender",
+        "canonical": "#e9e4f3",
+        "tonalRamp": ["#241d31", "#453958", "#685879", "#8d79a0", "#b1a1c3", "#d0c6df", "#e9e4f3", "#f7f4fb"]
+      },
+      "blue": {
+        "role": "tertiary",
+        "displayName": "Puzzle Blue",
+        "canonical": "#dcebf1",
+        "tonalRamp": ["#14242b", "#29444f", "#466573", "#688793", "#8eabb5", "#b7cdd5", "#dcebf1", "#f1f7f9"]
       }
-    ],
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Space Grotesk",
+        "purpose": "Headlines, puzzle marks, scores, and the Puzzie wordmark."
+      },
+      "body": {
+        "displayName": "DM Sans",
+        "purpose": "Instructions, descriptions, metadata, and feedback."
+      },
+      "label": {
+        "displayName": "DM Sans Label",
+        "purpose": "Category labels, state labels, and compact metadata."
+      }
+    },
+    "shadows": [],
     "motion": [
       {
-        "name": "state-standard",
-        "value": "180ms ease",
-        "purpose": "Button, border, background, and shadow state changes."
+        "name": "ease-settle",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Confident arrivals and spatial continuity."
       },
       {
-        "name": "stagger-rise",
-        "value": "420ms ease",
-        "purpose": "Single authored entrance for the primary home content."
+        "name": "ease-snap",
+        "value": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+        "purpose": "Immediate button, selection, and validation feedback."
+      },
+      {
+        "name": "route-entry",
+        "value": "360ms",
+        "purpose": "Brief continuity after navigation."
+      },
+      {
+        "name": "home-copy",
+        "value": "560ms",
+        "purpose": "The authored home headline reveal."
+      },
+      {
+        "name": "home-puzzle",
+        "value": "680ms",
+        "purpose": "The featured daily puzzle settling onto the desk."
+      },
+      {
+        "name": "feedback",
+        "value": "260ms",
+        "purpose": "Hint, status, and answer acknowledgement."
+      },
+      {
+        "name": "completion",
+        "value": "520ms",
+        "purpose": "Completion state and result hierarchy."
       }
     ],
     "breakpoints": [
       { "name": "sm", "value": "640px" },
       { "name": "md", "value": "768px" },
       { "name": "lg", "value": "1024px" }
-    ],
-    "typographyMeta": {
-      "display": { "displayName": "Space Grotesk", "purpose": "Headlines, puzzle marks, scores, and the Puzzie wordmark." },
-      "body": { "displayName": "DM Sans", "purpose": "Instructions, descriptions, metadata, and feedback." }
-    }
+    ]
   },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The coral action used for the next meaningful step.",
+      "html": "<button class=\"ds-button-primary\">CHECK ANSWER</button>",
+      "css": ".ds-button-primary { min-height: 48px; padding: 8px 18px; border: 1px solid var(--coral-dark, #b94d49); border-radius: 0; background: var(--coral, #e9655e); color: #fffaf7; font: 800 14px/1.2 var(--font-body, sans-serif); transition: background-color 160ms ease, transform 120ms cubic-bezier(0.2, 0.8, 0.2, 1); } .ds-button-primary:hover { background: var(--coral-dark, #b94d49); } .ds-button-primary:active { transform: translateY(1px); } .ds-button-primary:focus-visible { outline: 3px solid var(--coral, #e9655e); outline-offset: 3px; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "A bordered secondary action that inverts on hover.",
+      "html": "<button class=\"ds-button-outline\">VIEW ALL</button>",
+      "css": ".ds-button-outline { min-height: 48px; padding: 8px 18px; border: 1px solid var(--ink, #17252c); border-radius: 0; background: transparent; color: var(--ink, #17252c); font: 800 14px/1.2 var(--font-body, sans-serif); transition: background-color 160ms ease, color 160ms ease, transform 120ms cubic-bezier(0.2, 0.8, 0.2, 1); } .ds-button-outline:hover { background: var(--ink, #17252c); color: var(--paper, #f3eee5); } .ds-button-outline:active { transform: translateY(1px); } .ds-button-outline:focus-visible { outline: 3px solid var(--coral, #e9655e); outline-offset: 3px; }"
+    },
+    {
+      "name": "Surface Card",
+      "kind": "card",
+      "refersTo": "surface-card",
+      "description": "A flat, bordered paper plane for grouped content.",
+      "html": "<article class=\"ds-card\"><strong>Double down</strong><p>What number comes next?</p></article>",
+      "css": ".ds-card { padding: 20px; border: 1px solid var(--line, #d5ccc0); border-radius: 0; background: var(--surface, #fffdf8); color: var(--ink, #17252c); } .ds-card strong { display: block; font: 600 20px/1.2 var(--font-display, sans-serif); } .ds-card p { margin: 8px 0 0; color: var(--ink-muted, #617077); font: 400 14px/1.5 var(--font-body, sans-serif); }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "A substantial square field for puzzle answers.",
+      "html": "<input class=\"ds-input\" placeholder=\"Your answer\" />",
+      "css": ".ds-input { min-height: 52px; padding: 8px 15px; border: 1px solid var(--line, #d5ccc0); border-radius: 0; background: var(--surface, #fffdf8); color: var(--ink, #17252c); font: 700 16px/1.5 var(--font-body, sans-serif); transition: border-color 160ms ease; } .ds-input:focus-visible { border-color: var(--coral, #e9655e); outline: 3px solid color-mix(in srgb, var(--coral, #e9655e) 30%, transparent); outline-offset: 0; }"
+    },
+    {
+      "name": "Difficulty Badge",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "A compact flat label for puzzle metadata.",
+      "html": "<span class=\"ds-badge\">MEDIUM</span>",
+      "css": ".ds-badge { display: inline-flex; padding: 4px 10px; border: 1px solid transparent; border-radius: 0; background: var(--mint, #dcebe3); color: var(--ink, #17252c); font: 800 11px/1.2 var(--font-body, sans-serif); letter-spacing: 0.08em; text-transform: uppercase; }"
+    },
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "description": "A quiet navigation item with a flat active plane.",
+      "html": "<a class=\"ds-nav-link\" aria-current=\"page\">PUZZLES</a>",
+      "css": ".ds-nav-link { display: inline-flex; min-height: 40px; align-items: center; padding: 8px 12px; border: 1px solid transparent; color: var(--ink-muted, #617077); font: 800 14px/1.2 var(--font-body, sans-serif); text-decoration: none; transition: background-color 160ms ease, color 160ms ease; } .ds-nav-link:hover { background: var(--mint, #dcebe3); color: var(--ink, #17252c); } .ds-nav-link[aria-current='page'] { background: var(--surface, #fffdf8); color: var(--ink, #17252c); } .ds-nav-link:focus-visible { outline: 3px solid var(--coral, #e9655e); outline-offset: 3px; }"
+    },
+    {
+      "name": "Puzzle Type Glyph",
+      "kind": "custom",
+      "description": "The compact colour-coded mark that identifies a puzzle family.",
+      "html": "<span class=\"ds-type-glyph\"><strong>123</strong><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 19V9m6 10V5m6 14v-7m4 7H2\" /></svg></span>",
+      "css": ".ds-type-glyph { position: relative; display: grid; width: 56px; height: 56px; place-items: center; border: 1px solid var(--line, #d5ccc0); border-radius: 0; background: var(--blue, #dcebf1); color: var(--ink, #17252c); } .ds-type-glyph strong { font: 600 18px/1 var(--font-display, sans-serif); } .ds-type-glyph svg { position: absolute; right: 4px; bottom: 4px; width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2.4; opacity: 0.45; }"
+    }
+  ],
   "narrative": {
     "northStar": "The Puzzle Desk",
-    "overview": "Puzzie feels like a well-made puzzle sheet laid out on a warm desk: direct, tactile, and inviting without being childish. The system uses a warm paper ground, dark ink, a coral action colour, and small blocks of mint, sun, lavender, and blue to distinguish puzzle types and progress states.\n\nThe visual language is crisp and editorial. Strong alignment, square corners, flat colour fields, and restrained ambient shadows create depth while keeping the game readable at a glance.",
+    "overview": "Puzzie feels like a well-made puzzle sheet laid out on a warm desk: direct, tactile, and inviting without being childish. The system uses a warm paper ground, dark ink, a coral action colour, and small blocks of mint, sun, lavender, and blue to distinguish puzzle types and progress states.\n\nThe visual language is crisp and editorial. Strong alignment, square corners, one-pixel borders, and flat colour fields establish hierarchy without relying on shadows or decorative effects. Purposeful motion makes the puzzle sheet feel handled: a featured tile settles into place, navigation maintains continuity, and feedback responds directly to the action that caused it.",
     "keyCharacteristics": [
       "Square-corner geometry with clear borders.",
       "Warm paper surfaces with dark ink contrast.",
-      "Space Grotesk display type paired with DM Sans body copy.",
-      "Flat colour accents and subtle ambient shadows."
+      "Distinctive Space Grotesk display type paired with readable DM Sans body copy.",
+      "Flat colour accents with border-led, shadow-free depth.",
+      "CSS-only motion that explains arrival, selection, feedback, and completion."
     ],
     "rules": [
-      { "name": "The Signal Colour Rule", "body": "Coral is reserved for actions and meaningful emphasis.", "section": "colors" },
-      { "name": "The Two-Voice Rule", "body": "Space Grotesk carries hierarchy and personality; DM Sans carries reading and interaction.", "section": "typography" },
-      { "name": "The Soft Lift Rule", "body": "Use spacing, layers, and subtle blurred shadows for depth. Never use hard offset block shadows as decoration.", "section": "elevation" }
+      {
+        "name": "The Puzzle-in-Hand Rule",
+        "body": "Motion should feel like arranging paper pieces on a desk: short, direct, and tied to a meaningful state change.",
+        "section": "overview"
+      },
+      {
+        "name": "The Signal Colour Rule",
+        "body": "Coral is reserved for actions and meaningful emphasis; do not turn every surface into an accent.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two-Voice Rule",
+        "body": "Space Grotesk carries hierarchy and personality; DM Sans carries reading and interaction. Do not add another family without a role the two cannot perform.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Desk Rule",
+        "body": "Use borders, contrast, spacing, and overlap for depth. Do not add shadows, gradients, glass, or blur.",
+        "section": "elevation"
+      }
     ],
     "dos": [
       "Do keep all UI corners square and consistent.",
-      "Do use flat colour fields and subtle blurred shadows to create hierarchy.",
+      "Do use Space Grotesk for display roles and DM Sans for reading roles.",
+      "Do keep body copy readable and limit prose to a comfortable measure.",
+      "Do use flat colour fields, borders, spacing, and overlap to create hierarchy.",
+      "Do reserve authored motion for navigation, state feedback, completion, and the featured home puzzle.",
       "Do keep success, error, disabled, and focus states explicit and accessible."
     ],
     "donts": [
-      "Don't reintroduce rounded cards, pills, or hard offset shadows.",
-      "Don't use gradients, glass effects, or decorative blur.",
-      "Don't use colour alone to communicate puzzle state."
+      "Don't reintroduce rounded cards, pills, or shadows.",
+      "Don't use gradients, glass effects, decorative blur, or looping ornamental motion.",
+      "Don't animate layout dimensions when a transform can communicate the same relationship.",
+      "Don't use colour alone to communicate puzzle state.",
+      "Don't substitute emoji or arbitrary glyphs for the existing SVG icon language.",
+      "Don't add display font weights that are not loaded through next/font."
     ]
   }
 }
