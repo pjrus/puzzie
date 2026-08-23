@@ -24,7 +24,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="app-shell">
-      <header className="border-b border-[var(--line)] bg-[var(--paper)]">
+      <header className="border-b border-(--line) bg-(--paper)">
         <div className="page-width flex min-h-[76px] items-center justify-between gap-6">
           <Link
             href="/"
@@ -46,7 +46,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 size="sm"
                 className={
                   isActive(pathname, link.href)
-                    ? "bg-[var(--surface)] text-[var(--ink)]"
+                    ? "bg-(--surface) text-(--ink)"
                     : undefined
                 }
               >
@@ -85,7 +85,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         {mobileOpen && (
           <nav
-            className="menu-settle page-width grid gap-2 border-t border-[var(--line)] py-3 md:hidden"
+            className="menu-settle page-width grid gap-2 border-t border-(--line) py-3 md:hidden"
             aria-label="Mobile navigation"
           >
             {links.map((link) => (
@@ -93,7 +93,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 key={link.href}
                 asChild
                 variant="ghost"
-                className={`justify-start ${isActive(pathname, link.href) ? "bg-[var(--surface)] text-[var(--ink)]" : ""}`}
+                className={`justify-start ${isActive(pathname, link.href) ? "bg-(--surface) text-(--ink)" : ""}`}
               >
                 <Link
                   href={link.href}
@@ -112,8 +112,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <main id="main-content" key={pathname} className="route-settle">
         {children}
       </main>
-      <footer className="page-width mt-16 flex flex-col gap-2 border-t border-[var(--line)] py-8 text-sm text-[var(--ink-muted)] sm:flex-row sm:items-center sm:justify-between">
-        <span className="font-extrabold text-[var(--ink)]">puzzie</span>
+      <footer className="page-width mt-16 flex flex-col gap-2 border-t border-(--line) py-8 text-sm text-(--ink-muted) sm:flex-row sm:items-center sm:justify-between">
+        <span className="font-extrabold text-(--ink)">puzzie</span>
         <span>A little puzzle for your brain.</span>
       </footer>
     </div>

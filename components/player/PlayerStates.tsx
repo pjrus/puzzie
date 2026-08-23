@@ -26,16 +26,16 @@ export function CompletionCard({
             Back to {daily ? "daily" : "puzzles"}
           </Link>
         </Button>
-        <span className="text-sm font-extrabold text-[var(--ink-muted)]">
+        <span className="text-sm font-extrabold text-(--ink-muted)">
           {daily ? "Daily puzzle" : "Puzzle complete"}
         </span>
       </div>
       <Card
         tone="dark"
-        className="completion-card mt-8 overflow-hidden border-[var(--ink)] p-7 sm:p-10"
+        className="completion-card mt-8 overflow-hidden border-(--ink) p-7 sm:p-10"
       >
         <div className="flex items-center gap-3">
-          <span className="completion-mark grid h-12 w-12 place-items-center bg-[var(--mint)] text-[var(--ink)]">
+          <span className="completion-mark grid h-12 w-12 place-items-center bg-(--mint) text-(--ink)">
             <Icon name="check" size={25} />
           </span>
           <div>
@@ -69,7 +69,7 @@ export function CompletionCard({
         </div>
         {daily ? (
           <div className="mt-5 flex items-center gap-2 border border-[#4f655e] bg-[#2b3c38] p-4 font-extrabold">
-            <Icon name="flame" size={19} className="text-[var(--sun)]" />
+            <Icon name="flame" size={19} className="text-(--sun)" />
             {result.streak} day streak. Keep it going tomorrow.
           </div>
         ) : null}
@@ -88,7 +88,7 @@ export function CompletionCard({
           <Button
             asChild
             variant="outline"
-            className="border-[#71837c] text-[var(--surface)] hover:bg-[var(--surface)] hover:text-[var(--ink)]"
+            className="border-[#71837c] text-(--surface) hover:bg-(--surface) hover:text-(--ink)"
           >
             <Link href="/stats">
               See my stats <Icon name="bar-chart" size={16} />
@@ -117,11 +117,11 @@ export function FailedPuzzle({
       </Button>
       <Card
         tone="danger"
-        className="feedback-settle mt-8 border-[var(--coral-border)] p-7 sm:p-10"
+        className="feedback-settle mt-8 border-(--coral-border) p-7 sm:p-10"
       >
         <p className="eyebrow">Almost there</p>
         <h1 className="mt-2 text-4xl font-semibold">That one got away.</h1>
-        <p className="mt-3 max-w-lg text-[var(--ink-muted)]">
+        <p className="mt-3 max-w-lg text-(--ink-muted)">
           No score this time, but the answer is still waiting for your next
           attempt. Give your brain a reset and try another puzzle.
         </p>
@@ -177,7 +177,7 @@ export function InvalidPuzzle() {
         <h1 className="mt-2 text-4xl font-semibold">
           That puzzle wandered off.
         </h1>
-        <p className="mt-3 text-[var(--ink-muted)]">
+        <p className="mt-3 text-(--ink-muted)">
           Try another one and your brain will be back on track.
         </p>
         <Button asChild className="mt-6">

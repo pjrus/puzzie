@@ -26,7 +26,7 @@ export function StatsHistory() {
         <h1 className="mt-2 text-5xl font-semibold leading-[0.95] sm:text-6xl">
           Puzzle history.
         </h1>
-        <p className="mt-4 text-lg leading-8 text-[var(--ink-muted)]">
+        <p className="mt-4 text-lg leading-8 text-(--ink-muted)">
           Your completed puzzles, newest first. Results are stored on this
           device.
         </p>
@@ -34,11 +34,11 @@ export function StatsHistory() {
 
       <Card className="mt-8 overflow-hidden" aria-live="polite">
         {!hydrated ? (
-          <p className="p-6 text-[var(--ink-muted)]">Loading results…</p>
+          <p className="p-6 text-(--ink-muted)">Loading results…</p>
         ) : history.length === 0 ? (
           <div className="p-8 text-center">
             <h2 className="text-2xl font-semibold">No results yet.</h2>
-            <p className="mt-2 text-[var(--ink-muted)]">
+            <p className="mt-2 text-(--ink-muted)">
               Complete a puzzle and it will appear here.
             </p>
             <Button asChild className="mt-6">
@@ -52,24 +52,24 @@ export function StatsHistory() {
             <article
               key={`${entry.id}-${entry.completedAt}`}
               className={`flex flex-wrap items-center justify-between gap-4 p-4 sm:p-5 ${
-                index > 0 ? "border-t border-[var(--line)]" : ""
+                index > 0 ? "border-t border-(--line)" : ""
               }`}
             >
               <div className="flex items-center gap-3">
                 <TypeGlyph type={entry.type} size="sm" />
                 <div>
                   <h2 className="font-extrabold">{entry.title}</h2>
-                  <p className="text-xs font-bold text-[var(--ink-muted)]">
+                  <p className="text-xs font-bold text-(--ink-muted)">
                     {puzzleTypeLabels[entry.type]} ·{" "}
                     {formatDate(entry.completedAt.slice(0, 10))}
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-5 text-sm">
-                <span className="font-extrabold text-[var(--ink-muted)]">
+                <span className="font-extrabold text-(--ink-muted)">
                   {formatDuration(entry.timeSeconds)}
                 </span>
-                <span className="display-font text-xl font-semibold text-[var(--coral-dark)]">
+                <span className="display-font text-xl font-semibold text-(--coral-dark)">
                   +{entry.score}
                 </span>
               </div>

@@ -29,7 +29,7 @@ export const typeAccent: Record<
 export function DifficultyBadge({ difficulty }: { difficulty: Difficulty }) {
   const className =
     difficulty === "Easy"
-      ? "bg-[var(--mint)] text-[var(--mint-dark)]"
+      ? "bg-(--mint) text-(--mint-dark)"
       : difficulty === "Medium"
         ? "bg-[#f8e8bb] text-[#785b1e]"
         : "bg-[#f4d9d6] text-[#95403d]";
@@ -55,7 +55,7 @@ export function TypeGlyph({
   };
   return (
     <span
-      className={`relative grid shrink-0 place-items-center border border-[var(--line)] ${sizes[size]}`}
+      className={`relative grid shrink-0 place-items-center border border-(--line) ${sizes[size]}`}
       style={{ backgroundColor: accent.bg }}
       aria-hidden="true"
     >
@@ -90,10 +90,10 @@ export function StatCard({
       style={{ backgroundColor: accent }}
     >
       <div className="flex items-center justify-between gap-3">
-        <span className="text-sm font-extrabold text-[var(--ink-muted)]">
+        <span className="text-sm font-extrabold text-(--ink-muted)">
           {label}
         </span>
-        <span className="text-[var(--coral-dark)]">
+        <span className="text-(--coral-dark)">
           <Icon name={icon} size={18} />
         </span>
       </div>
@@ -102,7 +102,7 @@ export function StatCard({
           {value}
         </div>
         {detail && (
-          <div className="mt-1 text-xs font-bold text-[var(--ink-muted)]">
+          <div className="mt-1 text-xs font-bold text-(--ink-muted)">
             {detail}
           </div>
         )}
@@ -132,14 +132,14 @@ export function PuzzleCard({
           >
             {puzzle.title}
           </h3>
-          <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">
+          <p className="mt-2 text-sm leading-6 text-(--ink-muted)">
             {puzzle.description}
           </p>
         </div>
         <div className="mt-5">
           <Separator />
           <div className="flex items-center justify-between gap-3 pt-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[var(--ink-muted)]">
+            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-(--ink-muted)">
               <Icon name="clock" size={14} />
               {puzzle.estimatedTime}
             </span>
@@ -172,9 +172,7 @@ export function SectionHeading({
         {eyebrow && <p className="eyebrow">{eyebrow}</p>}
         <h2 className="mt-1 text-3xl font-semibold sm:text-4xl">{title}</h2>
         {description && (
-          <p className="mt-2 max-w-2xl text-[var(--ink-muted)]">
-            {description}
-          </p>
+          <p className="mt-2 max-w-2xl text-(--ink-muted)">{description}</p>
         )}
       </div>
       {action}

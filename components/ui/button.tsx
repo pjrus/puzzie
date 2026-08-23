@@ -8,20 +8,20 @@ const buttonBase =
 
 const buttonVariants = {
   default:
-    "border-[var(--coral-dark)] bg-primary text-primary-foreground hover:bg-[var(--coral-dark)]",
+    "border-(--coral-dark) bg-primary text-primary-foreground hover:bg-(--coral-dark)",
   destructive:
-    "border-destructive bg-destructive text-destructive-foreground hover:bg-[var(--coral-dark)]",
+    "border-destructive bg-destructive text-destructive-foreground hover:bg-(--coral-dark)",
   outline:
     "border-foreground bg-transparent text-foreground hover:bg-foreground hover:text-background",
   secondary:
-    "border-secondary-foreground bg-secondary text-secondary-foreground hover:bg-[var(--line)]",
+    "border-secondary-foreground bg-secondary text-secondary-foreground hover:bg-(--line)",
   ghost:
     "border-transparent text-muted-foreground hover:bg-accent hover:text-accent-foreground",
   inverse:
-    "border-foreground bg-foreground text-background hover:bg-[var(--ink-muted)]",
+    "border-foreground bg-foreground text-background hover:bg-(--ink-muted)",
   link: "border-transparent bg-transparent px-0 text-primary underline-offset-4 hover:underline",
   choice:
-    "h-auto min-h-14 w-full justify-start border-border bg-card px-3.5 py-2.5 text-left text-foreground hover:border-primary data-[selected=true]:border-primary data-[selected=true]:bg-[var(--coral-soft)] data-[selected=true]:text-[var(--coral-dark)]",
+    "h-auto min-h-14 w-full justify-start border-border bg-card px-3.5 py-2.5 text-left text-foreground hover:border-primary data-[selected=true]:border-primary data-[selected=true]:bg-(--coral-soft) data-[selected=true]:text-(--coral-dark)",
 } as const;
 
 const buttonSizes = {

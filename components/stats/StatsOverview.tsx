@@ -49,7 +49,7 @@ export function StatsOverview() {
           <h1 className="mt-2 text-5xl font-semibold leading-[0.95]">
             Progress feels good.
           </h1>
-          <p className="mt-4 max-w-xl text-lg leading-8 text-[var(--ink-muted)]">
+          <p className="mt-4 max-w-xl text-lg leading-8 text-(--ink-muted)">
             A running tally of your little wins, kept right here on this device.
           </p>
         </div>
@@ -147,7 +147,7 @@ export function StatsOverview() {
               <h2 className="mt-1 text-2xl font-semibold">
                 Every result, in one place.
               </h2>
-              <p className="mt-2 text-[var(--ink-muted)]">
+              <p className="mt-2 text-(--ink-muted)">
                 Review your completed puzzles, scores and solve times.
               </p>
             </div>
@@ -166,7 +166,7 @@ export function StatsOverview() {
 function EmptyStats() {
   return (
     <Card className="mt-8 grid gap-6 p-8 sm:grid-cols-[auto_1fr] sm:items-center">
-      <div className="grid h-20 w-20 place-items-center bg-[var(--coral)]">
+      <div className="grid h-20 w-20 place-items-center bg-(--coral)">
         <Icon name="bar-chart" size={34} />
       </div>
       <div>
@@ -174,7 +174,7 @@ function EmptyStats() {
         <h2 className="mt-1 text-3xl font-semibold">
           Your first result is one puzzle away.
         </h2>
-        <p className="mt-2 text-[var(--ink-muted)]">
+        <p className="mt-2 text-(--ink-muted)">
           Solve something small and this page will start keeping score.
         </p>
         <Button asChild variant="outline" className="mt-5">
@@ -189,8 +189,8 @@ function EmptyStats() {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="bg-[var(--paper)] p-4">
-      <p className="text-xs font-black uppercase tracking-[0.1em] text-[var(--ink-muted)]">
+    <div className="bg-(--paper) p-4">
+      <p className="text-xs font-black uppercase tracking-[0.1em] text-(--ink-muted)">
         {label}
       </p>
       <p className="display-font mt-1 text-xl font-semibold">{value}</p>

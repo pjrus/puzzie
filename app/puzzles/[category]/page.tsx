@@ -51,7 +51,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         <h1 className="mt-2 text-5xl font-semibold leading-[0.95] sm:text-6xl">
           {category.label} puzzles.
         </h1>
-        <p className="mt-4 text-lg leading-8 text-[var(--ink-muted)]">
+        <p className="mt-4 text-lg leading-8 text-(--ink-muted)">
           {category.description}
         </p>
       </header>
@@ -68,7 +68,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             className={
               item.slug === category.slug
                 ? undefined
-                : "bg-[var(--surface)] text-[var(--ink-muted)]"
+                : "bg-(--surface) text-(--ink-muted)"
             }
           >
             <Link

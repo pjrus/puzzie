@@ -1,3 +1,6 @@
 .next
 .playwright-cli
 node_modules
+.claude
+.codex
+.agents

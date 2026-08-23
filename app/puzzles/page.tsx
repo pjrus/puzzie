@@ -27,7 +27,7 @@ export default function PuzzlesPage() {
             Something for every kind of curious.
           </h1>
         </div>
-        <p className="max-w-xl text-lg leading-8 text-[var(--ink-muted)]">
+        <p className="max-w-xl text-lg leading-8 text-(--ink-muted)">
           Pick a lane or wander around. Every puzzle is short enough to start
           now, with just enough bite to make the answer feel earned.
         </p>
@@ -41,7 +41,7 @@ export default function PuzzlesPage() {
               Browse by category
             </h2>
           </div>
-          <span className="hidden text-sm font-extrabold text-[var(--ink-muted)] sm:block">
+          <span className="hidden text-sm font-extrabold text-(--ink-muted) sm:block">
             {puzzles.length} puzzles
           </span>
         </div>
@@ -57,14 +57,14 @@ export default function PuzzlesPage() {
                   <Icon
                     name="arrow-right"
                     size={18}
-                    className="text-[var(--ink-muted)]"
+                    className="text-(--ink-muted)"
                   />
                 </div>
                 <div>
                   <h3 className="mt-7 text-xl font-semibold">
                     {category.label}
                   </h3>
-                  <p className="mt-1 text-sm leading-6 text-[var(--ink-muted)]">
+                  <p className="mt-1 text-sm leading-6 text-(--ink-muted)">
                     {category.description}
                   </p>
                 </div>

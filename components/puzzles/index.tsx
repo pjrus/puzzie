@@ -72,7 +72,7 @@ function ChoiceList({
           disabled={disabled}
         >
           <span
-            className={`grid size-[30px] shrink-0 place-items-center border text-xs font-extrabold ${selected === option ? "border-[var(--coral)] bg-[var(--coral)] text-white" : "border-[var(--line)] bg-[var(--surface)] text-[var(--ink-muted)]"}`}
+            className={`grid size-[30px] shrink-0 place-items-center border text-xs font-extrabold ${selected === option ? "border-(--coral) bg-(--coral) text-white" : "border-(--line) bg-(--surface) text-(--ink-muted)"}`}
           >
             {String.fromCharCode(65 + index)}
           </span>
@@ -107,11 +107,11 @@ export function SequencePuzzle({
       >
         What comes next?
       </label>
-      <div className="flex flex-wrap items-center gap-2 bg-[var(--mint)] p-4 sm:gap-3">
+      <div className="flex flex-wrap items-center gap-2 bg-(--mint) p-4 sm:gap-3">
         {puzzle.sequence.map((item, index) => (
           <span
             key={`${item}-${index}`}
-            className={`grid h-12 min-w-12 place-items-center border border-[var(--line)] bg-[var(--surface)] px-3 display-font text-xl font-semibold ${item === "?" ? "border-[var(--coral)] bg-[var(--coral-soft)] text-[var(--coral-dark)]" : ""}`}
+            className={`grid h-12 min-w-12 place-items-center border border-(--line) bg-(--surface) px-3 display-font text-xl font-semibold ${item === "?" ? "border-(--coral) bg-(--coral-soft) text-(--coral-dark)" : ""}`}
           >
             {item}
           </span>
@@ -156,7 +156,7 @@ export function WordScramblePuzzle({
         {puzzle.letters.map((letter, index) => (
           <span
             key={`${letter}-${index}`}
-            className="grid h-14 w-12 place-items-center border border-[var(--line)] bg-[var(--sun)] display-font text-2xl font-semibold"
+            className="grid h-14 w-12 place-items-center border border-(--line) bg-(--sun) display-font text-2xl font-semibold"
           >
             {letter}
           </span>
@@ -235,11 +235,11 @@ export function PatternPuzzle({
       disabled={disabled}
     >
       <p className="text-sm font-black">Which tile completes the pattern?</p>
-      <div className="mt-4 flex flex-wrap gap-2 bg-[var(--blue)] p-4">
+      <div className="mt-4 flex flex-wrap gap-2 bg-(--blue) p-4">
         {puzzle.pattern.map((item, index) => (
           <span
             key={`${item}-${index}`}
-            className={`grid h-16 min-w-16 place-items-center border border-[var(--line)] bg-[var(--surface)] px-4 display-font text-3xl font-semibold ${item === "?" ? "border-[var(--coral)] bg-[var(--coral-soft)] text-[var(--coral-dark)]" : ""}`}
+            className={`grid h-16 min-w-16 place-items-center border border-(--line) bg-(--surface) px-4 display-font text-3xl font-semibold ${item === "?" ? "border-(--coral) bg-(--coral-soft) text-(--coral-dark)" : ""}`}
           >
             {item}
           </span>
@@ -312,7 +312,7 @@ export function RiddlePuzzle({
       }}
       disabled={disabled}
     >
-      <div className="border border-[var(--line)] bg-[#f7f1e8] p-5 text-lg font-extrabold leading-8">
+      <div className="border border-(--line) bg-[#f7f1e8] p-5 text-lg font-extrabold leading-8">
         {puzzle.riddle}
       </div>
       <label htmlFor="riddle-answer" className="sr-only">
@@ -377,7 +377,7 @@ export function ConnectionsPuzzle({
     <div className="mt-7">
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm font-black">Select four related words</p>
-        <span className="text-xs font-black text-[var(--ink-muted)]">
+        <span className="text-xs font-black text-(--ink-muted)">
           {mistakes}/4 wrong guesses
         </span>
       </div>
@@ -396,7 +396,7 @@ export function ConnectionsPuzzle({
                   ?.words.includes(word),
               )
             }
-            className={`min-h-16 justify-center px-2 text-center text-xs ${found.some((group) => puzzle.groups.find((item) => item.name === group)?.words.includes(word)) ? "border-[var(--mint-dark)] bg-[var(--mint)] text-[var(--mint-dark)]" : selected.includes(word) ? "border-[var(--coral)] bg-[var(--coral-soft)] text-[var(--coral-dark)]" : ""}`}
+            className={`min-h-16 justify-center px-2 text-center text-xs ${found.some((group) => puzzle.groups.find((item) => item.name === group)?.words.includes(word)) ? "border-(--mint-dark) bg-(--mint) text-(--mint-dark)" : selected.includes(word) ? "border-(--coral) bg-(--coral-soft) text-(--coral-dark)" : ""}`}
           >
             {word}
           </Button>
@@ -404,7 +404,7 @@ export function ConnectionsPuzzle({
       </div>
       {message && (
         <p
-          className="mt-4 text-sm font-extrabold text-[var(--mint-dark)]"
+          className="mt-4 text-sm font-extrabold text-(--mint-dark)"
           aria-live="polite"
         >
           {message}
@@ -464,18 +464,18 @@ export function WordLadderPuzzle({
         {path.map((word, index) => (
           <span
             key={`${word}-${index}`}
-            className={`border px-3 py-2 display-font font-semibold ${word === puzzle.target ? "border-[var(--mint-dark)] bg-[var(--mint)]" : "border-[var(--line)] bg-[var(--surface)]"}`}
+            className={`border px-3 py-2 display-font font-semibold ${word === puzzle.target ? "border-(--mint-dark) bg-(--mint)" : "border-(--line) bg-(--surface)"}`}
           >
             {word}
           </span>
         ))}
-        <span className="text-sm font-black text-[var(--ink-muted)]">
+        <span className="text-sm font-black text-(--ink-muted)">
           → {puzzle.target}
         </span>
       </div>
       {message && (
         <p
-          className="mt-4 text-sm font-extrabold text-[var(--mint-dark)]"
+          className="mt-4 text-sm font-extrabold text-(--mint-dark)"
           aria-live="polite"
         >
           {message}
@@ -497,7 +497,7 @@ export function WordLadderPuzzle({
           Add rung
         </Button>
       </form>
-      <p className="mt-3 text-xs font-bold text-[var(--ink-muted)]">
+      <p className="mt-3 text-xs font-bold text-(--ink-muted)">
         {path.length - 1} steps · change exactly one letter each time
       </p>
     </div>
@@ -591,7 +591,7 @@ export function CodeBreakerPuzzle({
   };
   return (
     <div className="mt-7">
-      <Card tone="dark" className="border-[var(--line)] p-5">
+      <Card tone="dark" className="border-(--line) p-5">
         <p className="text-xs font-black uppercase tracking-[0.12em] text-[#b6c7bc]">
           Clue grid
         </p>
@@ -632,7 +632,7 @@ export function CodeBreakerPuzzle({
           Try code
         </Button>
       </form>
-      <p className="mt-3 text-xs font-bold text-[var(--ink-muted)]">
+      <p className="mt-3 text-xs font-bold text-(--ink-muted)">
         {guesses.length} of {puzzle.maxAttempts} attempts used
       </p>
     </div>
@@ -681,7 +681,7 @@ export function SudokuPuzzle({
   };
   return (
     <div className="mt-7 grid gap-6 sm:grid-cols-[auto_1fr] sm:items-start">
-      <div className="w-fit overflow-hidden border-2 border-[var(--ink)] bg-[var(--ink)] p-1">
+      <div className="w-fit overflow-hidden border-2 border-(--ink) bg-(--ink) p-1">
         <div className="grid grid-cols-4 gap-1">
           {grid.flatMap((row, rowIndex) =>
             row.map((cell, columnIndex) => (
@@ -690,7 +690,7 @@ export function SudokuPuzzle({
                 type="button"
                 variant="choice"
                 onClick={() => setSelected([rowIndex, columnIndex])}
-                className={`grid h-16 min-h-0 w-16 place-items-center justify-center border border-[var(--line)] p-0 display-font text-2xl font-semibold sm:h-18 sm:w-18 ${given(rowIndex, columnIndex) ? "bg-[var(--mint)]" : selected?.[0] === rowIndex && selected?.[1] === columnIndex ? "bg-[var(--coral-soft)] text-[var(--coral-dark)]" : "bg-[var(--surface)]"}`}
+                className={`grid h-16 min-h-0 w-16 place-items-center justify-center border border-(--line) p-0 display-font text-2xl font-semibold sm:h-18 sm:w-18 ${given(rowIndex, columnIndex) ? "bg-(--mint)" : selected?.[0] === rowIndex && selected?.[1] === columnIndex ? "bg-(--coral-soft) text-(--coral-dark)" : "bg-(--surface)"}`}
                 aria-label={`Row ${rowIndex + 1}, column ${columnIndex + 1}, ${given(rowIndex, columnIndex) ? `given ${cell}` : cell ? `entered ${cell}` : "blank"}`}
               >
                 {cell || ""}
@@ -819,7 +819,7 @@ export function QuickfirePuzzle({
       <Card className="mt-7 p-6">
         <p className="eyebrow">Sprint complete</p>
         <h3 className="mt-2 text-3xl font-semibold">Nice pace.</h3>
-        <p className="mt-2 text-[var(--ink-muted)]">
+        <p className="mt-2 text-(--ink-muted)">
           Your results are being counted.
         </p>
       </Card>
@@ -831,7 +831,7 @@ export function QuickfirePuzzle({
           Question {index + 1} of {puzzle.questions.length}
         </span>
         <span
-          className={`display-font text-3xl font-semibold ${seconds <= 10 ? "text-[var(--coral-dark)]" : ""}`}
+          className={`display-font text-3xl font-semibold ${seconds <= 10 ? "text-(--coral-dark)" : ""}`}
           aria-live="polite"
         >
           {seconds}s
@@ -868,7 +868,7 @@ export function QuickfirePuzzle({
           />
         )}
         {question.kind === "word" && (
-          <p className="mt-2 text-xs font-bold text-[var(--ink-muted)]">
+          <p className="mt-2 text-xs font-bold text-(--ink-muted)">
             Words are not case-sensitive.
           </p>
         )}
@@ -882,7 +882,7 @@ export function QuickfirePuzzle({
           Next answer <span aria-hidden="true">↗</span>
         </Button>
       </form>
-      <p className="mt-5 text-sm font-extrabold text-[var(--ink-muted)]">
+      <p className="mt-5 text-sm font-extrabold text-(--ink-muted)">
         {correct} correct · {score} points
       </p>
     </div>

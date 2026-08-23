@@ -30,7 +30,7 @@ export function PuzzleCollection({ puzzles }: PuzzleCollectionProps) {
 
         return (
           <section key={group.type} aria-labelledby={`${group.type}-heading`}>
-            <div className="mb-5 flex items-center justify-between gap-3 border-b border-[var(--line)] pb-4">
+            <div className="mb-5 flex items-center justify-between gap-3 border-b border-(--line) pb-4">
               <div className="flex items-center gap-3">
                 <TypeGlyph type={group.type} size="sm" />
                 <div>
@@ -43,7 +43,7 @@ export function PuzzleCollection({ puzzles }: PuzzleCollectionProps) {
                   </h2>
                 </div>
               </div>
-              <span className="hidden text-sm font-extrabold text-[var(--ink-muted)] sm:block">
+              <span className="hidden text-sm font-extrabold text-(--ink-muted) sm:block">
                 {group.items.length}{" "}
                 {group.items.length === 1 ? "puzzle" : "puzzles"}
               </span>
@@ -53,7 +53,7 @@ export function PuzzleCollection({ puzzles }: PuzzleCollectionProps) {
                 <PuzzleCard key={puzzle.id} puzzle={puzzle} compact />
               ))}
             </div>
-            <p className="mt-3 text-xs font-bold text-[var(--ink-muted)]">
+            <p className="mt-3 text-xs font-bold text-(--ink-muted)">
               {difficultyNote[representative.difficulty]} · From{" "}
               {representative.estimatedTime}
             </p>

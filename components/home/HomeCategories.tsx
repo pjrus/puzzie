@@ -26,12 +26,12 @@ export function HomeCategories() {
                 <Icon
                   name="arrow-right"
                   size={18}
-                  className="text-[var(--ink-muted)]"
+                  className="text-(--ink-muted)"
                 />
               </div>
               <div>
                 <h3 className="mt-7 text-xl font-semibold">{category.label}</h3>
-                <p className="mt-1 text-sm leading-6 text-[var(--ink-muted)]">
+                <p className="mt-1 text-sm leading-6 text-(--ink-muted)">
                   {category.description}
                 </p>
               </div>

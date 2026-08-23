@@ -4,11 +4,9 @@ import { cn } from "@/lib/utils";
 
 const alertVariants = {
   default: "border-border bg-card text-card-foreground",
-  info: "border-[var(--sun-border)] bg-[var(--sun-soft)] text-[var(--sun-foreground)]",
-  success:
-    "border-[var(--mint-border)] bg-[var(--mint)] text-[var(--mint-dark)]",
-  destructive:
-    "border-[var(--coral-border)] bg-[var(--coral-soft)] text-destructive",
+  info: "border-(--sun-border) bg-(--sun-soft) text-(--sun-foreground)",
+  success: "border-(--mint-border) bg-(--mint) text-(--mint-dark)",
+  destructive: "border-(--coral-border) bg-(--coral-soft) text-destructive",
 } as const;
 
 type AlertVariant = keyof typeof alertVariants;

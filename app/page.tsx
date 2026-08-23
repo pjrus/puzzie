@@ -34,13 +34,13 @@ export default function HomePage() {
         <div className="flex flex-col justify-center">
           <div className="home-copy-settle max-w-xl">
             <p className="eyebrow inline-flex items-center gap-2">
-              <span className="h-2 w-2 bg-[var(--coral)]" />
+              <span className="h-2 w-2 bg-(--coral)" />
               Your five-minute brain break
             </p>
             <h1 className="mt-5 text-[clamp(3.4rem,9vw,6rem)] font-semibold leading-[0.9] tracking-[-0.03em]">
               A little puzzle for your brain.
             </h1>
-            <p className="mt-7 max-w-md text-lg leading-8 text-[var(--ink-muted)]">
+            <p className="mt-7 max-w-md text-lg leading-8 text-(--ink-muted)">
               Pick a puzzle, solve it, earn a few points, and keep your streak
               moving.
             </p>
@@ -93,7 +93,7 @@ export default function HomePage() {
 
         <Card
           tone="dark"
-          className="home-puzzle-settle relative min-h-[420px] overflow-hidden border-[var(--ink)] p-6 sm:p-8"
+          className="home-puzzle-settle relative min-h-[420px] overflow-hidden border-(--ink) p-6 sm:p-8"
         >
           <div className="relative z-10 flex h-full flex-col justify-between">
             <div className="flex items-start justify-between gap-4">
@@ -114,7 +114,7 @@ export default function HomePage() {
             </div>
 
             <div className="my-8 flex items-center justify-center">
-              <div className="relative grid h-52 w-52 rotate-[-5deg] place-items-center border-2 border-[var(--ink)] bg-[var(--coral)] text-[var(--ink)]">
+              <div className="relative grid h-52 w-52 rotate-[-5deg] place-items-center border-2 border-(--ink) bg-(--coral) text-(--ink)">
                 <div className="text-center">
                   <span className="display-font block text-7xl font-semibold leading-none">
                     ?
@@ -123,7 +123,7 @@ export default function HomePage() {
                     solve me
                   </span>
                 </div>
-                <span className="absolute -right-5 -top-5 grid h-14 w-14 place-items-center border-2 border-[var(--ink)] bg-[var(--mint)] text-[var(--ink)]">
+                <span className="absolute -right-5 -top-5 grid h-14 w-14 place-items-center border-2 border-(--ink) bg-(--mint) text-(--ink)">
                   <Icon name="spark" size={24} />
                 </span>
               </div>
@@ -139,7 +139,7 @@ export default function HomePage() {
                 </p>
               </div>
               {dailyComplete ? (
-                <Badge className="gap-2 bg-[var(--mint)] px-3 py-2 text-[var(--ink)]">
+                <Badge className="gap-2 bg-(--mint) px-3 py-2 text-(--ink)">
                   <Icon name="check" size={15} />
                   Done today
                 </Badge>
@@ -191,7 +191,7 @@ export default function HomePage() {
             <h2 className="mt-1 text-3xl font-semibold">
               Your best streak is {hydrated ? progress.bestStreak : "—"} days.
             </h2>
-            <p className="mt-2 max-w-lg text-[var(--ink-muted)]">
+            <p className="mt-2 max-w-lg text-(--ink-muted)">
               Come back tomorrow for a fresh daily puzzle and keep your little
               brain gym habit going.
             </p>

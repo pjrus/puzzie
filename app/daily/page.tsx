@@ -38,7 +38,7 @@ export default function DailyPage() {
             <div>
               <p className="eyebrow">Today's puzzle · {formatDate(today)}</p>
               <h1 className="mt-2 text-5xl font-semibold">You showed up.</h1>
-              <p className="mt-3 max-w-xl text-lg leading-8 text-[var(--ink-muted)]">
+              <p className="mt-3 max-w-xl text-lg leading-8 text-(--ink-muted)">
                 The daily puzzle is tucked away until tomorrow. Your result is
                 safe, and your streak is still warm.
               </p>
@@ -53,11 +53,11 @@ export default function DailyPage() {
               <div>
                 <p className="eyebrow">Daily result</p>
                 <h2 className="mt-1 text-3xl font-semibold">{puzzle.title}</h2>
-                <p className="mt-2 text-[var(--ink-muted)]">
+                <p className="mt-2 text-(--ink-muted)">
                   {puzzleTypeLabels[puzzle.type]} · {puzzle.difficulty}
                 </p>
               </div>
-              <Badge className="gap-2 bg-[var(--surface)] px-4 py-2 text-[var(--ink)]">
+              <Badge className="gap-2 bg-(--surface) px-4 py-2 text-(--ink)">
                 <Icon name="check" size={17} />
                 Complete
               </Badge>
@@ -73,7 +73,7 @@ export default function DailyPage() {
                 value={`${progress.currentStreak} days`}
               />
             </div>
-            <p className="mt-6 border-t border-[#bad7ca] pt-5 font-extrabold text-[var(--mint-dark)]">
+            <p className="mt-6 border-t border-[#bad7ca] pt-5 font-extrabold text-(--mint-dark)">
               Come back tomorrow for a fresh little challenge.
             </p>
           </Card>
@@ -104,7 +104,7 @@ export default function DailyPage() {
               <h1 className="mt-3 text-5xl font-semibold leading-[0.95] sm:text-6xl">
                 Today's puzzle.
               </h1>
-              <p className="mt-4 max-w-xl text-lg leading-8 text-[var(--ink-muted)]">
+              <p className="mt-4 max-w-xl text-lg leading-8 text-(--ink-muted)">
                 One fresh challenge, picked for today. Take a breath, have a go,
                 and let your streak do the cheering.
               </p>
@@ -114,12 +114,12 @@ export default function DailyPage() {
           <div className="mt-7 flex flex-wrap items-center gap-2">
             <Badge
               variant="outline"
-              className="bg-[var(--surface)] text-sm normal-case tracking-normal"
+              className="bg-(--surface) text-sm normal-case tracking-normal"
             >
               {puzzleTypeLabels[puzzle.type]}
             </Badge>
             <DifficultyBadge difficulty={puzzle.difficulty} />
-            <span className="text-sm font-extrabold text-[var(--ink-muted)]">
+            <span className="text-sm font-extrabold text-(--ink-muted)">
               {puzzle.estimatedTime} · {puzzle.points} points
             </span>
           </div>
@@ -132,8 +132,8 @@ export default function DailyPage() {
 
 function ResultTile({ label, value }: { label: string; value: string }) {
   return (
-    <Card className="border-[#bad7ca] bg-[var(--surface)] p-4">
-      <p className="text-xs font-black uppercase tracking-[0.1em] text-[var(--ink-muted)]">
+    <Card className="border-[#bad7ca] bg-(--surface) p-4">
+      <p className="text-xs font-black uppercase tracking-[0.1em] text-(--ink-muted)">
         {label}
       </p>
       <p className="display-font mt-1 text-2xl font-semibold">{value}</p>

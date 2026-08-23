@@ -135,11 +135,11 @@ export function PuzzlePlayer({
             Back
           </Link>
         </Button>
-        <span className="text-sm font-extrabold text-[var(--ink-muted)]">
+        <span className="text-sm font-extrabold text-(--ink-muted)">
           {daily ? "Daily puzzle" : "Puzzle player"}
         </span>
       </div>
-      <div className="mt-8 flex flex-wrap items-start justify-between gap-5 border-b border-[var(--line)] pb-7">
+      <div className="mt-8 flex flex-wrap items-start justify-between gap-5 border-b border-(--line) pb-7">
         <div className="flex items-start gap-4">
           <span
             className="grid h-12 w-12 shrink-0 place-items-center"
@@ -154,7 +154,7 @@ export function PuzzlePlayer({
             <h1 className="mt-1 text-4xl font-semibold leading-tight sm:text-5xl">
               {puzzle.title}
             </h1>
-            <p className="mt-2 max-w-xl text-[var(--ink-muted)]">
+            <p className="mt-2 max-w-xl text-(--ink-muted)">
               {puzzle.description}
             </p>
           </div>
@@ -163,7 +163,7 @@ export function PuzzlePlayer({
           <DifficultyBadge difficulty={puzzle.difficulty} />
           <Badge
             variant="outline"
-            className="gap-1.5 bg-[var(--surface)] text-[var(--ink-muted)]"
+            className="gap-1.5 bg-(--surface) text-(--ink-muted)"
           >
             <Icon name="clock" size={14} />
             {puzzle.estimatedTime}
@@ -173,7 +173,7 @@ export function PuzzlePlayer({
 
       <div className="mt-7 grid gap-3 sm:grid-cols-3">
         <Card className="flex-row items-center justify-between p-4">
-          <span className="text-sm font-extrabold text-[var(--ink-muted)]">
+          <span className="text-sm font-extrabold text-(--ink-muted)">
             Score
           </span>
           <span className="display-font text-2xl font-semibold">
@@ -181,7 +181,7 @@ export function PuzzlePlayer({
           </span>
         </Card>
         <Card className="flex-row items-center justify-between p-4">
-          <span className="text-sm font-extrabold text-[var(--ink-muted)]">
+          <span className="text-sm font-extrabold text-(--ink-muted)">
             Attempts
           </span>
           <span className="display-font text-2xl font-semibold">
@@ -189,7 +189,7 @@ export function PuzzlePlayer({
           </span>
         </Card>
         <Card className="flex-row items-center justify-between p-4">
-          <span className="text-sm font-extrabold text-[var(--ink-muted)]">
+          <span className="text-sm font-extrabold text-(--ink-muted)">
             Time
           </span>
           <span className="display-font text-2xl font-semibold">
@@ -215,7 +215,7 @@ export function PuzzlePlayer({
           >
             <Icon name="lightbulb" size={16} />
             Hint{" "}
-            <span className="bg-[var(--mint)] px-2 py-0.5 text-xs">
+            <span className="bg-(--mint) px-2 py-0.5 text-xs">
               {Math.max(0, puzzle.hints.length - hintsUsed)}
             </span>
           </Button>
@@ -262,12 +262,12 @@ export function PuzzlePlayer({
           </AlertDescription>
         </Alert>
       )}
-      <p className="mt-5 text-center text-xs font-bold text-[var(--ink-muted)]">
+      <p className="mt-5 text-center text-xs font-bold text-(--ink-muted)">
         Hints cost 25 points · incorrect attempts cost 10 points · score never
         goes below zero
       </p>
       {daily && (
-        <p className="mt-2 text-center text-xs font-black text-[var(--coral-dark)]">
+        <p className="mt-2 text-center text-xs font-black text-(--coral-dark)">
           Complete today's puzzle to keep your streak going.
         </p>
       )}

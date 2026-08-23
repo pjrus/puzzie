@@ -4,9 +4,9 @@ import { cn } from "@/lib/utils";
 
 const cardTones = {
   default: "bg-card text-card-foreground",
-  mint: "bg-[var(--mint)] text-card-foreground",
-  dark: "bg-[var(--ink)] text-[var(--surface)]",
-  danger: "bg-[var(--coral-soft)] text-card-foreground",
+  mint: "bg-(--mint) text-card-foreground",
+  dark: "bg-(--ink) text-(--surface)",
+  danger: "bg-(--coral-soft) text-card-foreground",
 } as const;
 
 function Card({
