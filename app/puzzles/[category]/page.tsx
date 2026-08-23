@@ -64,10 +64,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <Button
             key={item.slug}
             asChild
-            variant={item.slug === category.slug ? "outline" : "secondary"}
+            variant={item.slug === category.slug ? "inverse" : "ghost"}
             className={
               item.slug === category.slug
-                ? "bg-[var(--ink)] text-[var(--surface)]"
+                ? undefined
                 : "bg-[var(--surface)] text-[var(--ink-muted)]"
             }
           >

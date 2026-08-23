@@ -30,7 +30,10 @@ export function CompletionCard({
           {daily ? "Daily puzzle" : "Puzzle complete"}
         </span>
       </div>
-      <Card className="mt-8 overflow-hidden border-[var(--ink)] bg-[var(--ink)] p-7 text-[var(--surface)] sm:p-10">
+      <Card
+        tone="dark"
+        className="mt-8 overflow-hidden border-[var(--ink)] p-7 sm:p-10"
+      >
         <div className="flex items-center gap-3">
           <span className="grid h-12 w-12 place-items-center bg-[var(--mint)] text-[var(--ink)]">
             <Icon name="check" size={25} />
@@ -107,7 +110,10 @@ export function FailedPuzzle({
           Back to {daily ? "daily" : "puzzles"}
         </Link>
       </Button>
-      <Card className="mt-8 border-[var(--coral-border)] bg-[var(--coral-soft)] p-7 sm:p-10">
+      <Card
+        tone="danger"
+        className="mt-8 border-[var(--coral-border)] p-7 sm:p-10"
+      >
         <p className="eyebrow">Almost there</p>
         <h1 className="mt-2 text-4xl font-semibold">That one got away.</h1>
         <p className="mt-3 max-w-lg text-[var(--ink-muted)]">

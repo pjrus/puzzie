@@ -89,7 +89,10 @@ export default function HomePage() {
           </div>
         </div>
 
-        <Card className="relative min-h-[420px] overflow-hidden border-[var(--ink)] bg-[var(--ink)] p-6 text-[var(--surface)] sm:p-8">
+        <Card
+          tone="dark"
+          className="relative min-h-[420px] overflow-hidden border-[var(--ink)] p-6 sm:p-8"
+        >
           <div className="relative z-10 flex h-full flex-col justify-between">
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -177,7 +180,10 @@ export default function HomePage() {
       <HomeCategories />
 
       <section className="page-width pb-20 pt-4">
-        <Card className="grid gap-6 bg-[var(--mint)] p-6 sm:grid-cols-[1fr_auto] sm:items-center sm:p-8">
+        <Card
+          tone="mint"
+          className="grid gap-6 p-6 sm:grid-cols-[1fr_auto] sm:items-center sm:p-8"
+        >
           <div>
             <p className="eyebrow">Small steps count</p>
             <h2 className="mt-1 text-3xl font-semibold">

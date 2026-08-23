@@ -2,12 +2,24 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+const cardTones = {
+  default: "bg-card text-card-foreground",
+  mint: "bg-[var(--mint)] text-card-foreground",
+  dark: "bg-[var(--ink)] text-[var(--surface)]",
+  danger: "bg-[var(--coral-soft)] text-card-foreground",
+} as const;
+
+function Card({
+  className,
+  tone = "default",
+  ...props
+}: React.ComponentProps<"div"> & { tone?: keyof typeof cardTones }) {
   return (
     <div
       data-slot="card"
       className={cn(
-        "flex flex-col border border-border bg-card text-card-foreground",
+        "flex flex-col border border-border",
+        cardTones[tone],
         className,
       )}
       {...props}

@@ -8,7 +8,7 @@ const badgeVariants = {
   secondary: "border-secondary bg-secondary text-secondary-foreground",
   destructive: "border-destructive bg-destructive text-destructive-foreground",
   outline: "border-border bg-transparent text-foreground",
-  ghost: "border-transparent bg-transparent text-foreground",
+  ghost: "border-transparent text-foreground",
 } as const;
 
 type BadgeVariant = keyof typeof badgeVariants;

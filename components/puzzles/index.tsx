@@ -590,7 +590,7 @@ export function CodeBreakerPuzzle({
   };
   return (
     <div className="mt-7">
-      <Card className="border-[var(--line)] bg-[var(--ink)] p-5 text-[var(--surface)]">
+      <Card tone="dark" className="border-[var(--line)] p-5">
         <p className="text-xs font-black uppercase tracking-[0.12em] text-[#b6c7bc]">
           Clue grid
         </p>

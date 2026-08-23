@@ -16,7 +16,9 @@ const buttonVariants = {
   secondary:
     "border-secondary-foreground bg-secondary text-secondary-foreground hover:bg-[var(--line)]",
   ghost:
-    "border-transparent bg-transparent text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+    "border-transparent text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+  inverse:
+    "border-foreground bg-foreground text-background hover:bg-[var(--ink-muted)]",
   link: "border-transparent bg-transparent px-0 text-primary underline-offset-4 hover:underline",
   choice:
     "h-auto min-h-14 w-full justify-start border-border bg-card px-3.5 py-2.5 text-left text-foreground hover:border-primary data-[selected=true]:border-primary data-[selected=true]:bg-[var(--coral-soft)] data-[selected=true]:text-[var(--coral-dark)]",
