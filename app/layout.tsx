@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-AU">
-      <body className={`${bodyFont.variable} ${displayFont.variable}`}>
+      <body className={`${bodyFont.variable} ${displayFont.variable}`} suppressHydrationWarning>
         <AppShell>{children}</AppShell>
       </body>
     </html>
