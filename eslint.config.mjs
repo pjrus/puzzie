@@ -7,11 +7,11 @@ export default [
     plugins: { "@next/next": nextPlugin },
     languageOptions: {
       parser,
-      parserOptions: { ecmaFeatures: { jsx: true } }
+      parserOptions: { ecmaFeatures: { jsx: true } },
     },
-    rules: nextPlugin.configs.recommended.rules
+    rules: nextPlugin.configs.recommended.rules,
   },
   {
-    ignores: [".next/**", "out/**", "build/**", "next-env.d.ts"]
-  }
+    ignores: [".next/**", "out/**", "build/**", "next-env.d.ts"],
+  },
 ];

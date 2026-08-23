@@ -1,10 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { defaultProgress, loadProgress, saveProgress, type PlayerProgress } from "@/lib/storage";
+import {
+  defaultProgress,
+  loadProgress,
+  saveProgress,
+  type PlayerProgress,
+} from "@/lib/storage";
 
 export function useProgress() {
-  const [progress, setProgress] = useState<PlayerProgress>(() => defaultProgress());
+  const [progress, setProgress] = useState<PlayerProgress>(() =>
+    defaultProgress(),
+  );
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {

@@ -1,0 +1,11 @@
+.next
+.impeccable
+node_modules
+out
+build
+coverage
+output
+design-system
+DESIGN.md
+package-lock.json
+tsconfig.tsbuildinfo

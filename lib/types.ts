@@ -157,8 +157,6 @@ export type Puzzle =
   | SudokuPuzzle
   | QuickfirePuzzle;
 
-export type CategoryFilter = "All" | "Word" | "Numbers" | "Logic" | "Visual" | "Trivia";
-
 export const puzzleTypeLabels: Record<PuzzleType, string> = {
   sequence: "Number sequence",
   "word-scramble": "Word scramble",
@@ -172,7 +170,7 @@ export const puzzleTypeLabels: Record<PuzzleType, string> = {
   trivia: "Trivia",
   "code-breaker": "Code breaker",
   sudoku: "4×4 sudoku",
-  quickfire: "Quickfire"
+  quickfire: "Quickfire",
 };
 
 export const puzzleTypeDescriptions: Record<PuzzleType, string> = {
@@ -188,21 +186,5 @@ export const puzzleTypeDescriptions: Record<PuzzleType, string> = {
   trivia: "A quick question worth knowing.",
   "code-breaker": "Crack the code from the clues.",
   sudoku: "Fill every row, column, and square.",
-  quickfire: "How many can you solve in 60 seconds?"
-};
-
-export const typeCategory: Record<PuzzleType, CategoryFilter> = {
-  sequence: "Numbers",
-  "word-scramble": "Word",
-  logic: "Logic",
-  pattern: "Visual",
-  maths: "Numbers",
-  riddle: "Word",
-  connections: "Word",
-  "word-ladder": "Word",
-  "odd-one-out": "Logic",
-  trivia: "Trivia",
-  "code-breaker": "Logic",
-  sudoku: "Logic",
-  quickfire: "All"
+  quickfire: "How many can you solve in 60 seconds?",
 };

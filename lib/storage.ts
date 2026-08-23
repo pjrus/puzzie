@@ -39,7 +39,7 @@ export const emptyCategoryStats = (): Record<PuzzleType, number> => ({
   trivia: 0,
   "code-breaker": 0,
   sudoku: 0,
-  quickfire: 0
+  quickfire: 0,
 });
 
 export const defaultProgress = (): PlayerProgress => ({
@@ -51,7 +51,7 @@ export const defaultProgress = (): PlayerProgress => ({
   dailyPuzzleCompleted: false,
   puzzleHistory: [],
   categoryStats: emptyCategoryStats(),
-  bestQuickfireScore: 0
+  bestQuickfireScore: 0,
 });
 
 export function localDateKey(date = new Date()) {
@@ -71,8 +71,13 @@ export function loadProgress(): PlayerProgress {
     return {
       ...defaultProgress(),
       ...parsed,
-      categoryStats: { ...emptyCategoryStats(), ...(parsed.categoryStats ?? {}) },
-      puzzleHistory: Array.isArray(parsed.puzzleHistory) ? parsed.puzzleHistory : []
+      categoryStats: {
+        ...emptyCategoryStats(),
+        ...(parsed.categoryStats ?? {}),
+      },
+      puzzleHistory: Array.isArray(parsed.puzzleHistory)
+        ? parsed.puzzleHistory
+        : [],
     };
   } catch {
     return defaultProgress();
@@ -90,9 +95,24 @@ function previousDateKey(date: Date) {
   return localDateKey(previous);
 }
 
-export function scoreForPuzzle(puzzle: Puzzle, attempts: number, hintsUsed: number, fastBonus = 0) {
-  const difficultyScore: Record<Difficulty, number> = { Easy: 100, Medium: 150, Hard: 200 };
-  return Math.max(0, difficultyScore[puzzle.difficulty] - Math.max(0, attempts - 1) * 10 - hintsUsed * 25 + fastBonus);
+export function scoreForPuzzle(
+  puzzle: Puzzle,
+  attempts: number,
+  hintsUsed: number,
+  fastBonus = 0,
+) {
+  const difficultyScore: Record<Difficulty, number> = {
+    Easy: 100,
+    Medium: 150,
+    Hard: 200,
+  };
+  return Math.max(
+    0,
+    difficultyScore[puzzle.difficulty] -
+      Math.max(0, attempts - 1) * 10 -
+      hintsUsed * 25 +
+      fastBonus,
+  );
 }
 
 export function recordCompletion(
@@ -102,7 +122,7 @@ export function recordCompletion(
   attempts: number,
   hintsUsed: number,
   timeSeconds: number,
-  options: { daily?: boolean; completedAt?: Date } = {}
+  options: { daily?: boolean; completedAt?: Date } = {},
 ) {
   const completedAt = options.completedAt ?? new Date();
   const dateKey = localDateKey(completedAt);
@@ -116,7 +136,7 @@ export function recordCompletion(
     attempts,
     hintsUsed,
     timeSeconds,
-    completedAt: completedAt.toISOString()
+    completedAt: completedAt.toISOString(),
   };
 
   next.puzzlesSolved += 1;
@@ -130,8 +150,13 @@ export function recordCompletion(
 
   if (options.daily) {
     const isSameDay = next.lastDailyPuzzleDate === dateKey;
-    const completedYesterday = next.lastDailyPuzzleDate === previousDateKey(completedAt);
-    next.currentStreak = isSameDay ? next.currentStreak : completedYesterday ? next.currentStreak + 1 : 1;
+    const completedYesterday =
+      next.lastDailyPuzzleDate === previousDateKey(completedAt);
+    next.currentStreak = isSameDay
+      ? next.currentStreak
+      : completedYesterday
+        ? next.currentStreak + 1
+        : 1;
     next.bestStreak = Math.max(next.bestStreak, next.currentStreak);
     next.lastDailyPuzzleDate = dateKey;
     next.dailyPuzzleCompleted = true;
@@ -143,7 +168,11 @@ export function recordCompletion(
 
 export function formatDate(dateString: string | null) {
   if (!dateString) return "—";
-  return new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", year: "numeric" }).format(new Date(`${dateString}T12:00:00`));
+  return new Intl.DateTimeFormat("en-AU", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  }).format(new Date(`${dateString}T12:00:00`));
 }
 
 export function formatDuration(seconds: number) {

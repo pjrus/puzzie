@@ -1,40 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { HomeCategories } from "@/components/home/HomeCategories";
 import { Icon } from "@/components/Icon";
-import {
-  PuzzleCard,
-  SectionHeading,
-  StatCard,
-  TypeGlyph,
-} from "@/components/Ui";
+import { PuzzleCard, SectionHeading, StatCard } from "@/components/Ui";
 import { useProgress } from "@/hooks/useProgress";
 import { getDailyPuzzle, puzzles } from "@/lib/puzzles";
 import { localDateKey } from "@/lib/storage";
-import { puzzleTypeLabels, type PuzzleType } from "@/lib/types";
-
-const categories: Array<{ type: PuzzleType; label: string; copy: string }> = [
-  {
-    type: "word-scramble",
-    label: "Word",
-    copy: "Untangle, ladder, and find the word.",
-  },
-  {
-    type: "logic",
-    label: "Logic",
-    copy: "Follow the clues to the clever answer.",
-  },
-  {
-    type: "sequence",
-    label: "Numbers",
-    copy: "Spot the rule. Trust the pattern.",
-  },
-  {
-    type: "pattern",
-    label: "Visual",
-    copy: "See what your eyes notice first.",
-  },
-];
+import { puzzleTypeLabels } from "@/lib/types";
 
 export default function HomePage() {
   const { progress, hydrated } = useProgress();
@@ -191,35 +164,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="page-width pb-14 pt-4">
-        <SectionHeading
-          eyebrow="Find your flavour"
-          title="Explore by category"
-          description="Choose the kind of thinking your brain is asking for."
-        />
-        <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {categories.map((category) => (
-            <Link
-              key={category.type}
-              href={`/puzzles?category=${category.label}`}
-              className="surface-card group flex min-h-[172px] flex-col justify-between p-5 transition-transform duration-200 hover:-translate-y-1"
-            >
-              <div className="flex items-start justify-between">
-                <TypeGlyph type={category.type} size="sm" />
-                <span className="text-[var(--ink-muted)] transition-transform group-hover:translate-x-1">
-                  <Icon name="arrow-right" size={18} />
-                </span>
-              </div>
-              <div>
-                <h3 className="mt-7 text-xl font-semibold">{category.label}</h3>
-                <p className="mt-1 text-sm leading-6 text-[var(--ink-muted)]">
-                  {category.copy}
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <HomeCategories />
 
       <section className="page-width pb-20 pt-4">
         <div className="surface-card grid gap-6 bg-[var(--mint)] p-6 sm:grid-cols-[1fr_auto] sm:items-center sm:p-8">
