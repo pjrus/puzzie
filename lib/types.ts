@@ -130,11 +130,17 @@ export interface SudokuPuzzle extends PuzzleBase {
   explanation: string;
 }
 
+export type ZipWall = {
+  from: [number, number];
+  to: [number, number];
+};
+
 export interface ZipPuzzle extends PuzzleBase {
   type: "zip";
   size: number;
   grid: number[][];
   solution: number[][];
+  walls: ZipWall[];
   explanation: string;
 }
 

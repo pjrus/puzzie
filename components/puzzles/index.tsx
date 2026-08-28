@@ -27,6 +27,8 @@ type AnswerProps = {
   onCorrect: (message?: string) => void;
   onIncorrect: (message: string) => void;
   disabled?: boolean;
+  onStarted?: () => void;
+  onHint?: () => void;
 };
 
 function AnswerForm({
@@ -744,55 +746,80 @@ export function SudokuPuzzle({
 export function ZipPuzzle({
   puzzle,
   onCorrect,
-  onIncorrect,
   disabled,
+  onStarted,
+  onHint,
 }: { puzzle: ZipPuzzleData } & AnswerProps) {
-  const [path, setPath] = useState<[number, number][]>(() => {
-    const start = puzzle.grid
-      .flatMap((row, rowIndex) =>
-        row.map((value, columnIndex) =>
-          value === 1 ? ([rowIndex, columnIndex] as [number, number]) : null,
-        ),
-      )
-      .find(
-        (coordinate): coordinate is [number, number] => coordinate !== null,
-      );
-    return start ? [start] : [];
-  });
+  type Coordinate = [number, number];
+  const [started, setStarted] = useState(false);
+  const [path, setPath] = useState<Coordinate[]>([]);
+  const [dragging, setDragging] = useState(false);
+  const [message, setMessage] = useState("");
+  const pointerInput = useRef(false);
   const totalCells = puzzle.size * puzzle.size;
+  const clueCount = Math.max(...puzzle.grid.flat());
+  const start = puzzle.grid
+    .flatMap((row, rowIndex) =>
+      row.map((value, columnIndex) =>
+        value === 1 ? ([rowIndex, columnIndex] as Coordinate) : null,
+      ),
+    )
+    .find((coordinate): coordinate is Coordinate => coordinate !== null);
   const pathKey = (row: number, column: number) => `${row}:${column}`;
   const pathSet = new Set(path.map(([row, column]) => pathKey(row, column)));
-  const isAdjacent = (from: [number, number], to: [number, number]) =>
+  const edgeKey = (left: Coordinate, right: Coordinate) => {
+    const [first, second] =
+      left[0] < right[0] || (left[0] === right[0] && left[1] < right[1])
+        ? [left, right]
+        : [right, left];
+    return `${first[0]}:${first[1]}-${second[0]}:${second[1]}`;
+  };
+  const walls = new Set(
+    puzzle.walls.map((wall) => edgeKey(wall.from, wall.to)),
+  );
+  const isAdjacent = (from: Coordinate, to: Coordinate) =>
     Math.abs(from[0] - to[0]) + Math.abs(from[1] - to[1]) === 1;
+  const hasWall = (from: Coordinate, to: Coordinate) =>
+    walls.has(edgeKey(from, to));
+  const clueAt = ([row, column]: Coordinate) => puzzle.grid[row][column];
+  const nextClue =
+    path.reduce(
+      (highest, coordinate) => Math.max(highest, clueAt(coordinate)),
+      0,
+    ) + 1;
 
-  const selectCell = (row: number, column: number) => {
-    if (disabled) return;
-    const coordinate: [number, number] = [row, column];
+  const extendPath = (row: number, column: number) => {
+    if (disabled || !started || !path.length) return;
+    const coordinate: Coordinate = [row, column];
     const key = pathKey(row, column);
     if (pathSet.has(key)) {
-      const previous = path[path.length - 2];
-      if (previous && pathKey(previous[0], previous[1]) === key) {
+      const existingIndex = path.findIndex(
+        ([pathRow, pathColumn]) =>
+          pathRow === coordinate[0] && pathColumn === coordinate[1],
+      );
+      if (existingIndex === path.length - 2) {
         setPath((current) => current.slice(0, -1));
-      } else {
-        onIncorrect(
-          "That square is already in the route. Keep moving forward.",
-        );
+        setMessage("Route stepped back.");
+      } else if (existingIndex !== path.length - 1) {
+        setPath((current) => current.slice(0, existingIndex + 1));
+        setMessage("Route trimmed back to that square.");
       }
       return;
     }
-    if (!path.length || !isAdjacent(path[path.length - 1], coordinate)) {
-      onIncorrect("Zip moves one square at a time. Choose a neighbour.");
+    const previous = path[path.length - 1];
+    if (!isAdjacent(previous, coordinate)) {
+      setMessage("Move one square at a time — no diagonals.");
       return;
     }
-    const expected = path.length + 1;
+    if (hasWall(previous, coordinate)) {
+      setMessage("There is a wall between those squares.");
+      return;
+    }
     const clue = puzzle.grid[row][column];
-    if (clue && clue !== expected) {
-      onIncorrect(
-        `That landmark is ${clue}. The next square must be ${expected}.`,
-      );
+    if (clue && clue !== nextClue) {
+      setMessage(`Pass landmark ${nextClue} before landmark ${clue}.`);
       return;
     }
-
     const nextPath = [...path, coordinate];
     setPath(nextPath);
     if (nextPath.length === totalCells) {
@@ -802,78 +829,249 @@ export function ZipPuzzle({
       );
       complete
         ? onCorrect(puzzle.explanation)
-        : onIncorrect(
-            "The route is full, but one of the landmarks is out of order.",
-          );
+        : setMessage("Every square is filled, but a landmark is out of order.");
     }
   };
 
-  const reset = () => {
-    if (!disabled && path[0]) setPath([path[0]]);
+  const startGame = () => {
+    if (!start) return;
+    setStarted(true);
+    setPath([start]);
+    setMessage("Keep drawing through the grid.");
+    onStarted?.();
+  };
+
+  const clearPath = () => {
+    if (!disabled && start) {
+      setPath([start]);
+      setMessage("The route is clear.");
+    }
+  };
+
+  const undo = () => {
+    if (!disabled && path.length > 1) {
+      setPath((current) => current.slice(0, -1));
+      setMessage("Last move undone.");
+    }
+  };
+
+  const hint = () => {
+    if (disabled || !started) return;
+    const solutionPath = puzzle.solution
+      .flatMap((row, rowIndex) =>
+        row.map(
+          (value, columnIndex) =>
+            [value, rowIndex, columnIndex] as [number, number, number],
+        ),
+      )
+      .sort((left, right) => left[0] - right[0])
+      .map(([, row, column]) => [row, column] as Coordinate);
+    const validPrefix = path.findIndex(
+      (coordinate, index) =>
+        coordinate[0] !== solutionPath[index][0] ||
+        coordinate[1] !== solutionPath[index][1],
+    );
+    const prefixLength = validPrefix === -1 ? path.length : validPrefix;
+    setPath(solutionPath.slice(0, Math.min(prefixLength + 1, totalCells)));
+    setMessage("Hint added the next correct square.");
+    onHint?.();
+  };
+
+  const wallStyle = (from: Coordinate, to: Coordinate) => {
+    const [row, column] = from;
+    const [nextRow, nextColumn] = to;
+    if (row === nextRow) {
+      return {
+        left: `${((Math.min(column, nextColumn) + 1) / puzzle.size) * 100}%`,
+        top: `${(row / puzzle.size) * 100}%`,
+        width: "3px",
+        height: `${100 / puzzle.size}%`,
+        transform: "translateX(-50%)",
+      };
+    }
+    return {
+      left: `${(column / puzzle.size) * 100}%`,
+      top: `${((Math.min(row, nextRow) + 1) / puzzle.size) * 100}%`,
+      width: `${100 / puzzle.size}%`,
+      height: "3px",
+      transform: "translateY(-50%)",
+    };
   };
 
   return (
     <div className="mt-7">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="text-sm font-black">Zip from 1 to {totalCells}</p>
-          <p className="mt-1 text-sm text-(--ink-muted)">
-            Move to a neighbouring square. No diagonals, no repeats.
-          </p>
+      {!started ? (
+        <div className="grid gap-5 border border-(--line) bg-(--blue) p-5 sm:p-7">
+          <div>
+            <p className="eyebrow">How to play</p>
+            <h3 className="mt-2 text-3xl font-semibold">
+              Draw one clean line.
+            </h3>
+            <p className="mt-3 max-w-lg text-(--ink-muted)">
+              Start at 1, pass each numbered landmark in order, and fill every
+              square. Move up, down, left, or right — but never through a wall
+              or over a square twice.
+            </p>
+          </div>
+          <Button type="button" className="w-fit" onClick={startGame}>
+            Start game
+          </Button>
         </div>
-        <span
-          className="display-font text-2xl font-semibold"
-          aria-live="polite"
-        >
-          {path.length}/{totalCells}
-        </span>
-      </div>
-      <div
-        className="mx-auto mt-6 grid max-w-[390px] gap-1 border-2 border-(--ink) bg-(--ink) p-1 sm:gap-1.5 sm:p-1.5"
-        style={{
-          gridTemplateColumns: `repeat(${puzzle.size}, minmax(0, 1fr))`,
-        }}
-        role="grid"
-        aria-label={`Zip puzzle, ${path.length} of ${totalCells} squares connected`}
-      >
-        {puzzle.grid.flatMap((row, rowIndex) =>
-          row.map((clue, columnIndex) => {
-            const numberAt = path.findIndex(
-              ([pathRow, pathColumn]) =>
-                pathRow === rowIndex && pathColumn === columnIndex,
-            );
-            const isInPath = numberAt !== -1;
-            return (
-              <Button
-                key={`${rowIndex}-${columnIndex}`}
-                type="button"
-                variant="choice"
-                role="gridcell"
-                aria-label={`Row ${rowIndex + 1}, column ${columnIndex + 1}${clue ? `, landmark ${clue}` : ""}${isInPath ? `, path number ${numberAt + 1}` : ", empty"}`}
-                onClick={() => selectCell(rowIndex, columnIndex)}
-                disabled={disabled}
-                className={`relative aspect-square min-h-0 justify-center p-0 display-font text-lg font-semibold sm:text-2xl ${isInPath ? "border-(--coral-dark) bg-(--coral) text-(--ink)" : clue ? "border-(--sun) bg-(--sun) text-(--ink)" : "border-(--line) bg-(--surface)"}`}
-              >
-                {isInPath ? numberAt + 1 : clue || ""}
-              </Button>
-            );
-          }),
-        )}
-      </div>
-      <div className="mt-5 flex flex-wrap items-center gap-2">
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={reset}
-          disabled={disabled || path.length <= 1}
-        >
-          Reset route
-        </Button>
-        <span className="text-xs font-bold text-(--ink-muted)">
-          Tap the previous square to step back.
-        </span>
-      </div>
+      ) : (
+        <>
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <p className="text-sm font-black">Draw from 1 to {clueCount}</p>
+              <p className="mt-1 text-sm text-(--ink-muted)">
+                Hold and drag through every square. No diagonals or repeats.
+              </p>
+            </div>
+            <span
+              className="display-font text-2xl font-semibold"
+              aria-live="polite"
+            >
+              {path.length}/{totalCells}
+            </span>
+          </div>
+          <div
+            className="relative mx-auto mt-6 aspect-square w-full max-w-[390px] touch-none border-2 border-(--ink) bg-(--ink) p-1 sm:p-1.5"
+            onPointerUp={() => setDragging(false)}
+            onPointerCancel={() => setDragging(false)}
+            onPointerLeave={() => setDragging(false)}
+          >
+            <svg
+              className="pointer-events-none absolute left-1 top-1 z-10 h-[calc(100%-0.5rem)] w-[calc(100%-0.5rem)] sm:left-1.5 sm:top-1.5 sm:h-[calc(100%-0.75rem)] sm:w-[calc(100%-0.75rem)]"
+              viewBox={`0 0 ${puzzle.size} ${puzzle.size}`}
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              {path.length > 1 && (
+                <polyline
+                  points={path
+                    .map(([row, column]) => `${column + 0.5},${row + 0.5}`)
+                    .join(" ")}
+                  fill="none"
+                  stroke="var(--coral)"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="0.42"
+                />
+              )}
+              {path[0] && (
+                <circle
+                  cx={path.at(-1)![1] + 0.5}
+                  cy={path.at(-1)![0] + 0.5}
+                  r="0.25"
+                  fill="var(--coral)"
+                  stroke="var(--ink)"
+                  strokeWidth="0.06"
+                />
+              )}
+            </svg>
+            {puzzle.walls.map((wall) => (
+              <span
+                key={`${wall.from.join("-")}-${wall.to.join("-")}`}
+                className="pointer-events-none absolute z-30 bg-(--ink)"
+                style={wallStyle(wall.from, wall.to)}
+                aria-hidden="true"
+              />
+            ))}
+            <div
+              className="relative z-20 grid h-full w-full gap-px bg-(--surface)"
+              role="grid"
+              aria-label={`Zip puzzle, ${path.length} of ${totalCells} squares connected`}
+              style={{
+                gridTemplateColumns: `repeat(${puzzle.size}, minmax(0, 1fr))`,
+              }}
+            >
+              {puzzle.grid.flatMap((row, rowIndex) =>
+                row.map((clue, columnIndex) => {
+                  const isInPath = pathSet.has(pathKey(rowIndex, columnIndex));
+                  return (
+                    <Button
+                      key={`${rowIndex}-${columnIndex}`}
+                      type="button"
+                      variant="choice"
+                      role="gridcell"
+                      aria-label={`Row ${rowIndex + 1}, column ${columnIndex + 1}${clue ? `, landmark ${clue}` : ""}${isInPath ? ", connected" : ", empty"}`}
+                      onPointerDown={(event) => {
+                        event.preventDefault();
+                        pointerInput.current = true;
+                        setDragging(true);
+                        if (
+                          path.length &&
+                          pathKey(rowIndex, columnIndex) !== pathKey(...path[0])
+                        )
+                          extendPath(rowIndex, columnIndex);
+                      }}
+                      onPointerEnter={() => {
+                        if (dragging) extendPath(rowIndex, columnIndex);
+                      }}
+                      onPointerUp={() => setDragging(false)}
+                      onClick={() => {
+                        if (pointerInput.current) pointerInput.current = false;
+                        else extendPath(rowIndex, columnIndex);
+                      }}
+                      disabled={disabled}
+                      className={`relative aspect-square min-h-0 justify-center p-0 display-font text-base font-semibold sm:text-xl ${isInPath ? "bg-transparent" : "bg-(--surface)"}`}
+                    >
+                      {clue ? (
+                        <span className="relative z-30 grid size-[56%] place-items-center rounded-full bg-(--ink) text-sm text-(--surface) sm:text-lg">
+                          {clue}
+                        </span>
+                      ) : null}
+                    </Button>
+                  );
+                }),
+              )}
+            </div>
+          </div>
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={undo}
+              disabled={disabled || path.length <= 1}
+            >
+              Undo
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={hint}
+              disabled={disabled}
+            >
+              Hint
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={clearPath}
+              disabled={disabled || path.length <= 1}
+            >
+              Clear
+            </Button>
+          </div>
+          <p
+            className="mt-3 min-h-6 text-sm font-extrabold text-(--ink-muted)"
+            aria-live="polite"
+          >
+            {message}
+          </p>
+          <details className="mt-3 border-t border-(--line) pt-4 text-sm">
+            <summary className="cursor-pointer font-extrabold">
+              How to play Zip
+            </summary>
+            <p className="mt-3 leading-6 text-(--ink-muted)">
+              Draw a single path from 1 through the landmarks in order. Fill
+              every cell exactly once and follow the walls around the grid.
+            </p>
+          </details>
+        </>
+      )}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import {
   seededShuffle,
   type PuzzleMetadata,
 } from "@/lib/puzzles/generators/shared";
-import type { ZipPuzzle } from "@/lib/types";
+import type { ZipPuzzle, ZipWall } from "@/lib/types";
 
 type Coordinate = [number, number];
 
@@ -60,6 +60,46 @@ function createPath(size: number, seed: string): Coordinate[] {
   return seededShuffle(paths, `${seed}:paths`)[0];
 }
 
+function edgeKey(left: Coordinate, right: Coordinate) {
+  const [first, second] =
+    left[0] < right[0] || (left[0] === right[0] && left[1] < right[1])
+      ? [left, right]
+      : [right, left];
+  return `${first[0]}:${first[1]}-${second[0]}:${second[1]}`;
+}
+
+function createWalls(
+  size: number,
+  path: Coordinate[],
+  seed: string,
+): ZipWall[] {
+  const pathEdges = new Set(
+    path.slice(1).map((cell, index) => edgeKey(path[index], cell)),
+  );
+  const candidates: ZipWall[] = [];
+
+  for (let row = 0; row < size; row += 1) {
+    for (let column = 0; column < size; column += 1) {
+      const cell: Coordinate = [row, column];
+      if (column < size - 1) {
+        const right: Coordinate = [row, column + 1];
+        if (!pathEdges.has(edgeKey(cell, right)))
+          candidates.push({ from: cell, to: right });
+      }
+      if (row < size - 1) {
+        const below: Coordinate = [row + 1, column];
+        if (!pathEdges.has(edgeKey(cell, below)))
+          candidates.push({ from: cell, to: below });
+      }
+    }
+  }
+
+  return seededShuffle(candidates, `${seed}:walls`).slice(
+    0,
+    Math.floor(size * 1.25),
+  );
+}
+
 export function createZipPuzzle(spec: ZipPuzzleSpec): ZipPuzzle {
   const { seed, size = 5, ...metadata } = spec;
   const path = createPath(size, seed);
@@ -71,13 +111,13 @@ export function createZipPuzzle(spec: ZipPuzzleSpec): ZipPuzzle {
 
   // Landmarks make the route deducible without giving away every turn.
   const clueNumbers = Array.from(
-    { length: Math.ceil((size * size) / 4) },
-    (_, index) => 1 + index * 4,
+    { length: Math.ceil((size * size) / 5) },
+    (_, index) => index * 5,
   );
   const grid = solution.map((row) => row.map(() => 0));
-  clueNumbers.forEach((number) => {
-    const [row, column] = path[number - 1];
-    grid[row][column] = number;
+  clueNumbers.forEach((pathIndex, index) => {
+    const [row, column] = path[pathIndex];
+    grid[row][column] = index + 1;
   });
 
   return {
@@ -91,6 +131,7 @@ export function createZipPuzzle(spec: ZipPuzzleSpec): ZipPuzzle {
     size,
     grid,
     solution,
+    walls: createWalls(size, path, seed),
     explanation:
       "You zipped through every square in order. Nice route planning.",
   };

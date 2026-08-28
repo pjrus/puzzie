@@ -30,6 +30,8 @@ export type PuzzleRendererProps = {
   onIncorrect: (message: string) => void;
   onFailed: () => void;
   onQuickfireFinished: (result: QuickfireResult) => void;
+  onStarted?: () => void;
+  onHint?: () => void;
 };
 
 export function PuzzleRenderer({
@@ -39,6 +41,8 @@ export function PuzzleRenderer({
   onIncorrect,
   onFailed,
   onQuickfireFinished,
+  onStarted,
+  onHint,
 }: PuzzleRendererProps) {
   const answerProps = { onCorrect, onIncorrect, disabled };
 
@@ -80,7 +84,14 @@ export function PuzzleRenderer({
     case "sudoku":
       return <SudokuPuzzle puzzle={puzzle} {...answerProps} />;
     case "zip":
-      return <ZipPuzzle puzzle={puzzle} {...answerProps} />;
+      return (
+        <ZipPuzzle
+          puzzle={puzzle}
+          {...answerProps}
+          onStarted={onStarted}
+          onHint={onHint}
+        />
+      );
     case "quickfire":
       return (
         <QuickfirePuzzle

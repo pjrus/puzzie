@@ -1,6 +1,6 @@
 import { countCodeBreakerSolutions } from "@/lib/puzzles/generators/code-breaker";
 import { countSudokuSolutions } from "@/lib/puzzles/generators/sudoku";
-import type { Puzzle, SudokuPuzzle } from "@/lib/types";
+import type { Puzzle, SudokuPuzzle, ZipWall } from "@/lib/types";
 
 function normaliseLetters(value: string): string {
   return [...value.toLowerCase()].sort().join("");
@@ -45,6 +45,22 @@ function isAdjacent(left: [number, number], right: [number, number]) {
   return Math.abs(left[0] - right[0]) + Math.abs(left[1] - right[1]) === 1;
 }
 
+function zipEdgeKey(left: [number, number], right: [number, number]) {
+  const [first, second] =
+    left[0] < right[0] || (left[0] === right[0] && left[1] < right[1])
+      ? [left, right]
+      : [right, left];
+  return `${first[0]}:${first[1]}-${second[0]}:${second[1]}`;
+}
+
+function isValidZipWall(wall: ZipWall, size: number) {
+  return (
+    wall.from.every((value) => value >= 0 && value < size) &&
+    wall.to.every((value) => value >= 0 && value < size) &&
+    isAdjacent(wall.from, wall.to)
+  );
+}
+
 function isValidZipPuzzle(puzzle: Extract<Puzzle, { type: "zip" }>): boolean {
   const cells = puzzle.solution.flatMap((row, rowIndex) =>
     row.map((value, columnIndex) => ({ value, rowIndex, columnIndex })),
@@ -62,8 +78,21 @@ function isValidZipPuzzle(puzzle: Extract<Puzzle, { type: "zip" }>): boolean {
       [cell.rowIndex, cell.columnIndex] as [number, number],
     ]),
   );
+  const pathEdges = new Set(
+    expected
+      .slice(1)
+      .map((value) =>
+        zipEdgeKey(positions.get(value - 1)!, positions.get(value)!),
+      ),
+  );
+  const walls = new Set(
+    puzzle.walls.map((wall) => zipEdgeKey(wall.from, wall.to)),
+  );
+  const clueStep = 5;
 
   return (
+    puzzle.solution.length === puzzle.size &&
+    puzzle.solution.every((row) => row.length === puzzle.size) &&
     puzzle.grid.length === puzzle.size &&
     puzzle.grid.every((row) => row.length === puzzle.size) &&
     values.every((value, index) => value === expected[index]) &&
@@ -72,10 +101,19 @@ function isValidZipPuzzle(puzzle: Extract<Puzzle, { type: "zip" }>): boolean {
       .every((value) =>
         isAdjacent(positions.get(value - 1)!, positions.get(value)!),
       ) &&
+    puzzle.walls.every((wall) => isValidZipWall(wall, puzzle.size)) &&
+    walls.size === puzzle.walls.length &&
+    puzzle.walls.every(
+      (wall) => !pathEdges.has(zipEdgeKey(wall.from, wall.to)),
+    ) &&
     puzzle.grid.every((row, rowIndex) =>
       row.every(
         (value, columnIndex) =>
-          value === 0 || value === puzzle.solution[rowIndex][columnIndex],
+          value === 0 ||
+          (value >= 1 &&
+            value <= Math.ceil((puzzle.size * puzzle.size) / clueStep) &&
+            puzzle.solution[rowIndex][columnIndex] ===
+              (value - 1) * clueStep + 1),
       ),
     ) &&
     puzzle.grid.some((row) => row.includes(0))

@@ -37,17 +37,23 @@ export function PuzzlePlayer({
   const [feedback, setFeedback] = useState<PlayerFeedback | null>(null);
   const [elapsed, setElapsed] = useState(0);
   const [result, setResult] = useState<PlayerResult | null>(null);
+  const [gameStarted, setGameStarted] = useState(puzzle.type !== "zip");
   const startedAt = useRef(Date.now());
   const dailyDate = localDateKey();
 
   useEffect(() => {
-    if (status !== "playing" || puzzle.type === "quickfire") return;
+    if (
+      status !== "playing" ||
+      puzzle.type === "quickfire" ||
+      (puzzle.type === "zip" && !gameStarted)
+    )
+      return;
     const timer = window.setInterval(
       () => setElapsed(Math.floor((Date.now() - startedAt.current) / 1000)),
       1000,
     );
     return () => window.clearInterval(timer);
-  }, [status, puzzle.type]);
+  }, [gameStarted, status, puzzle.type]);
 
   const currentScore = useMemo(
     () => scoreForPuzzle(puzzle, Math.max(1, attempts + 1), hintsUsed),
@@ -247,6 +253,12 @@ export function PuzzlePlayer({
               quickfireResult.timeSeconds,
             )
           }
+          onStarted={() => {
+            startedAt.current = Date.now();
+            setElapsed(0);
+            setGameStarted(true);
+          }}
+          onHint={useHint}
         />
       </Card>
       {feedback && (
