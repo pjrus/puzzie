@@ -11,6 +11,7 @@ import { oddOneOutPuzzles } from "@/lib/puzzles/data/odd-one-outs";
 import { triviaPuzzles } from "@/lib/puzzles/data/trivia";
 import { codeBreakerPuzzles } from "@/lib/puzzles/data/code-breakers";
 import { sudokuPuzzles } from "@/lib/puzzles/data/sudoku";
+import { zipPuzzles } from "@/lib/puzzles/data/zip";
 import { quickfirePuzzles } from "@/lib/puzzles/data/quickfire";
 import { validatePuzzleCatalogue } from "@/lib/puzzles/validation";
 
@@ -27,6 +28,7 @@ export const puzzles = [
   ...triviaPuzzles,
   ...codeBreakerPuzzles,
   ...sudokuPuzzles,
+  ...zipPuzzles,
   ...quickfirePuzzles,
 ] satisfies Puzzle[];
 

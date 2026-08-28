@@ -28,7 +28,7 @@ Sessions are short and self-directed. Visitors browse puzzle categories, play in
 
 ## Capabilities and Constraints
 
-The MVP must include playable interactions for number sequence, word scramble, logic, pattern, maths, riddle, connections, word ladder, odd one out, trivia, code breaker, 4×4 sudoku, and quickfire. Puzzle data is strongly typed and local. Progress and statistics are persisted through a small localStorage utility that is safe during server rendering. Difficulty affects complexity, hints, and scoring. Dates use the user's local date.
+The MVP must include playable interactions for number sequence, word scramble, logic, pattern, maths, riddle, connections, word ladder, odd one out, trivia, code breaker, 4×4 sudoku, Zip, and quickfire. Puzzle data is strongly typed and local. Progress and statistics are persisted through a small localStorage utility that is safe during server rendering. Difficulty affects complexity, hints, and scoring. Dates use the user's local date.
 
 ## Brand Commitments
 

@@ -41,6 +41,47 @@ function isValidSudokuSolution(puzzle: SudokuPuzzle): boolean {
   return rowsValid && columnsValid && boxesValid;
 }
 
+function isAdjacent(left: [number, number], right: [number, number]) {
+  return Math.abs(left[0] - right[0]) + Math.abs(left[1] - right[1]) === 1;
+}
+
+function isValidZipPuzzle(puzzle: Extract<Puzzle, { type: "zip" }>): boolean {
+  const cells = puzzle.solution.flatMap((row, rowIndex) =>
+    row.map((value, columnIndex) => ({ value, rowIndex, columnIndex })),
+  );
+  const values = cells
+    .map((cell) => cell.value)
+    .sort((left, right) => left - right);
+  const expected = Array.from(
+    { length: puzzle.size * puzzle.size },
+    (_, index) => index + 1,
+  );
+  const positions = new Map(
+    cells.map((cell) => [
+      cell.value,
+      [cell.rowIndex, cell.columnIndex] as [number, number],
+    ]),
+  );
+
+  return (
+    puzzle.grid.length === puzzle.size &&
+    puzzle.grid.every((row) => row.length === puzzle.size) &&
+    values.every((value, index) => value === expected[index]) &&
+    expected
+      .slice(1)
+      .every((value) =>
+        isAdjacent(positions.get(value - 1)!, positions.get(value)!),
+      ) &&
+    puzzle.grid.every((row, rowIndex) =>
+      row.every(
+        (value, columnIndex) =>
+          value === 0 || value === puzzle.solution[rowIndex][columnIndex],
+      ),
+    ) &&
+    puzzle.grid.some((row) => row.includes(0))
+  );
+}
+
 export function validatePuzzleCatalogue(puzzles: readonly Puzzle[]): void {
   const errors: string[] = [];
   const puzzleIds = new Set<string>();
@@ -134,6 +175,10 @@ export function validatePuzzleCatalogue(puzzles: readonly Puzzle[]): void {
       ) {
         errors.push(`${puzzle.id} is not a valid, uniquely solvable Sudoku.`);
       }
+    }
+
+    if (puzzle.type === "zip" && !isValidZipPuzzle(puzzle)) {
+      errors.push(`${puzzle.id} is not a valid Zip path puzzle.`);
     }
 
     if (puzzle.type === "quickfire") {

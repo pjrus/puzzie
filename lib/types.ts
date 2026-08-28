@@ -11,6 +11,7 @@ export type PuzzleType =
   | "trivia"
   | "code-breaker"
   | "sudoku"
+  | "zip"
   | "quickfire";
 
 export type Difficulty = "Easy" | "Medium" | "Hard";
@@ -129,6 +130,14 @@ export interface SudokuPuzzle extends PuzzleBase {
   explanation: string;
 }
 
+export interface ZipPuzzle extends PuzzleBase {
+  type: "zip";
+  size: number;
+  grid: number[][];
+  solution: number[][];
+  explanation: string;
+}
+
 export type QuickfireQuestion = {
   id: string;
   prompt: string;
@@ -156,6 +165,7 @@ export type Puzzle =
   | TriviaPuzzle
   | CodeBreakerPuzzle
   | SudokuPuzzle
+  | ZipPuzzle
   | QuickfirePuzzle;
 
 export const puzzleTypeLabels: Record<PuzzleType, string> = {
@@ -170,7 +180,8 @@ export const puzzleTypeLabels: Record<PuzzleType, string> = {
   "odd-one-out": "Odd one out",
   trivia: "Trivia",
   "code-breaker": "Code breaker",
-  sudoku: "4×4 sudoku",
+  sudoku: "Sudoku",
+  zip: "Zip",
   quickfire: "Quickfire",
 };
 
@@ -187,5 +198,6 @@ export const puzzleTypeDescriptions: Record<PuzzleType, string> = {
   trivia: "A quick question worth knowing.",
   "code-breaker": "Crack the code from the clues.",
   sudoku: "Fill every row, column, and square.",
+  zip: "Connect the numbers in order without lifting your finger.",
   quickfire: "How many can you solve in 60 seconds?",
 };
