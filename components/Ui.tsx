@@ -23,6 +23,7 @@ export const typeAccent: Record<
   trivia: { bg: "#dce9e6", icon: "trophy", mark: "Q" },
   "code-breaker": { bg: "#e9ded4", icon: "grid", mark: "#" },
   sudoku: { bg: "#e0e6f2", icon: "grid", mark: "4" },
+  zip: { bg: "#f5dce1", icon: "arrow-right", mark: "↗" },
   quickfire: { bg: "#f4d6d3", icon: "flame", mark: "60" },
 };
 

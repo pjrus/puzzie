@@ -39,6 +39,7 @@ export const emptyCategoryStats = (): Record<PuzzleType, number> => ({
   trivia: 0,
   "code-breaker": 0,
   sudoku: 0,
+  zip: 0,
   quickfire: 0,
 });
 

@@ -13,5 +13,6 @@ export const statTypes: PuzzleType[] = [
   "trivia",
   "code-breaker",
   "sudoku",
+  "zip",
   "quickfire",
 ];

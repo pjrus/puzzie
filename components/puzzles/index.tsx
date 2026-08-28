@@ -19,6 +19,7 @@ import type {
   TriviaPuzzle,
   WordLadderPuzzle,
   WordScramblePuzzle,
+  ZipPuzzle as ZipPuzzleData,
 } from "@/lib/types";
 import { formatCodeBreakerClue } from "@/lib/puzzles/code-breaker";
 
@@ -735,6 +736,143 @@ export function SudokuPuzzle({
             Check grid
           </Button>
         </div>
+      </div>
+    </div>
+  );
+}
+
+export function ZipPuzzle({
+  puzzle,
+  onCorrect,
+  onIncorrect,
+  disabled,
+}: { puzzle: ZipPuzzleData } & AnswerProps) {
+  const [path, setPath] = useState<[number, number][]>(() => {
+    const start = puzzle.grid
+      .flatMap((row, rowIndex) =>
+        row.map((value, columnIndex) =>
+          value === 1 ? ([rowIndex, columnIndex] as [number, number]) : null,
+        ),
+      )
+      .find(
+        (coordinate): coordinate is [number, number] => coordinate !== null,
+      );
+    return start ? [start] : [];
+  });
+  const totalCells = puzzle.size * puzzle.size;
+  const pathKey = (row: number, column: number) => `${row}:${column}`;
+  const pathSet = new Set(path.map(([row, column]) => pathKey(row, column)));
+  const isAdjacent = (from: [number, number], to: [number, number]) =>
+    Math.abs(from[0] - to[0]) + Math.abs(from[1] - to[1]) === 1;
+
+  const selectCell = (row: number, column: number) => {
+    if (disabled) return;
+    const coordinate: [number, number] = [row, column];
+    const key = pathKey(row, column);
+    if (pathSet.has(key)) {
+      const previous = path[path.length - 2];
+      if (previous && pathKey(previous[0], previous[1]) === key) {
+        setPath((current) => current.slice(0, -1));
+      } else {
+        onIncorrect(
+          "That square is already in the route. Keep moving forward.",
+        );
+      }
+      return;
+    }
+    if (!path.length || !isAdjacent(path[path.length - 1], coordinate)) {
+      onIncorrect("Zip moves one square at a time. Choose a neighbour.");
+      return;
+    }
+    const expected = path.length + 1;
+    const clue = puzzle.grid[row][column];
+    if (clue && clue !== expected) {
+      onIncorrect(
+        `That landmark is ${clue}. The next square must be ${expected}.`,
+      );
+      return;
+    }
+
+    const nextPath = [...path, coordinate];
+    setPath(nextPath);
+    if (nextPath.length === totalCells) {
+      const complete = nextPath.every(
+        ([pathRow, pathColumn], index) =>
+          puzzle.solution[pathRow][pathColumn] === index + 1,
+      );
+      complete
+        ? onCorrect(puzzle.explanation)
+        : onIncorrect(
+            "The route is full, but one of the landmarks is out of order.",
+          );
+    }
+  };
+
+  const reset = () => {
+    if (!disabled && path[0]) setPath([path[0]]);
+  };
+
+  return (
+    <div className="mt-7">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-sm font-black">Zip from 1 to {totalCells}</p>
+          <p className="mt-1 text-sm text-(--ink-muted)">
+            Move to a neighbouring square. No diagonals, no repeats.
+          </p>
+        </div>
+        <span
+          className="display-font text-2xl font-semibold"
+          aria-live="polite"
+        >
+          {path.length}/{totalCells}
+        </span>
+      </div>
+      <div
+        className="mx-auto mt-6 grid max-w-[390px] gap-1 border-2 border-(--ink) bg-(--ink) p-1 sm:gap-1.5 sm:p-1.5"
+        style={{
+          gridTemplateColumns: `repeat(${puzzle.size}, minmax(0, 1fr))`,
+        }}
+        role="grid"
+        aria-label={`Zip puzzle, ${path.length} of ${totalCells} squares connected`}
+      >
+        {puzzle.grid.flatMap((row, rowIndex) =>
+          row.map((clue, columnIndex) => {
+            const numberAt = path.findIndex(
+              ([pathRow, pathColumn]) =>
+                pathRow === rowIndex && pathColumn === columnIndex,
+            );
+            const isInPath = numberAt !== -1;
+            return (
+              <Button
+                key={`${rowIndex}-${columnIndex}`}
+                type="button"
+                variant="choice"
+                role="gridcell"
+                aria-label={`Row ${rowIndex + 1}, column ${columnIndex + 1}${clue ? `, landmark ${clue}` : ""}${isInPath ? `, path number ${numberAt + 1}` : ", empty"}`}
+                onClick={() => selectCell(rowIndex, columnIndex)}
+                disabled={disabled}
+                className={`relative aspect-square min-h-0 justify-center p-0 display-font text-lg font-semibold sm:text-2xl ${isInPath ? "border-(--coral-dark) bg-(--coral) text-(--ink)" : clue ? "border-(--sun) bg-(--sun) text-(--ink)" : "border-(--line) bg-(--surface)"}`}
+              >
+                {isInPath ? numberAt + 1 : clue || ""}
+              </Button>
+            );
+          }),
+        )}
+      </div>
+      <div className="mt-5 flex flex-wrap items-center gap-2">
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={reset}
+          disabled={disabled || path.length <= 1}
+        >
+          Reset route
+        </Button>
+        <span className="text-xs font-bold text-(--ink-muted)">
+          Tap the previous square to step back.
+        </span>
       </div>
     </div>
   );

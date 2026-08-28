@@ -12,6 +12,7 @@ import {
   TriviaPuzzle,
   WordLadderPuzzle,
   WordScramblePuzzle,
+  ZipPuzzle,
 } from "@/components/puzzles";
 import type { Puzzle } from "@/lib/types";
 
@@ -78,6 +79,8 @@ export function PuzzleRenderer({
       );
     case "sudoku":
       return <SudokuPuzzle puzzle={puzzle} {...answerProps} />;
+    case "zip":
+      return <ZipPuzzle puzzle={puzzle} {...answerProps} />;
     case "quickfire":
       return (
         <QuickfirePuzzle

@@ -2,7 +2,7 @@ import { puzzles } from "@/lib/puzzles/catalogue";
 import type { PuzzleType } from "@/lib/types";
 
 export type PuzzleCategorySlug =
-  "word" | "numbers" | "logic" | "visual" | "trivia" | "quickfire";
+  "games" | "word" | "numbers" | "logic" | "visual" | "trivia" | "quickfire";
 
 export type PuzzleCategory = {
   slug: PuzzleCategorySlug;
@@ -13,6 +13,13 @@ export type PuzzleCategory = {
 };
 
 export const puzzleCategories: PuzzleCategory[] = [
+  {
+    slug: "games",
+    label: "Games",
+    description: "Play the daily-style grid games: Sudoku and Zip.",
+    type: "sudoku",
+    types: ["sudoku", "zip"],
+  },
   {
     slug: "word",
     label: "Word",
@@ -32,7 +39,7 @@ export const puzzleCategories: PuzzleCategory[] = [
     label: "Logic",
     description: "Follow each clue to the answer that fits.",
     type: "logic",
-    types: ["logic", "odd-one-out", "code-breaker", "sudoku"],
+    types: ["logic", "odd-one-out", "code-breaker"],
   },
   {
     slug: "visual",
@@ -70,6 +77,7 @@ export const puzzleTypeOrder: PuzzleType[] = [
   "trivia",
   "code-breaker",
   "sudoku",
+  "zip",
   "quickfire",
 ];
 
